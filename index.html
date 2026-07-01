@@ -215,9 +215,9 @@
             <!-- Tabs Menu -->
             <div class="wood-board w-full md:w-1/4 p-4 flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-y-auto">
                 <button onclick="showTab(1)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-1">1. การวิเคราะห์ระบุปัญหา 🔎</button>
-                <button onclick="showTab(2)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-2">2. วางแผนด้วย Gantt Chart 📊</button>
-                <button onclick="showTab(3)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-3">3. เกณฑ์การประเมินผล (Rubrics) 📝</button>
-                <button onclick="showTab(4)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-4">4. สิ่งประดิษฐ์ vs นวัตกรรม 💡</button>
+                <button onclick="showTab(2)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-2">2. การรวบรวมข้อมูล 📂</button>
+                <button onclick="showTab(3)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-3">3. วางแผน Gantt Chart 📊</button>
+                <button onclick="showTab(4)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-4">4. เกณฑ์ Rubrics & ปรับปรุง 🔄</button>
                 <button onclick="showTab(5)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-5">5. ทรัพย์สินทางปัญญา (IP) 🛡️</button>
             </div>
             
@@ -226,16 +226,16 @@
                 
                 <!-- Tab 1: 5W1H & Problem Analysis Table -->
                 <div id="tab-content-1" class="tab-content">
-                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 1: การระบุปัญหา & ตารางวิเคราะห์รายละเอียด 🔎</h3>
-                    <p class="mb-4 text-base md:text-lg leading-relaxed text-yellow-50">เมื่อพบปัญหาหรือความต้องการ นวัตกรและวิศวกรจะต้องใช้ <b>กรอบ 5W1H</b> นำมาจัดทำเป็น <b>"ตารางวิเคราะห์รายละเอียดของปัญหา"</b> เพื่อทำความเข้าใจปัญหาอย่างถ่องแท้ก่อนเริ่มลงมือออกแบบและพัฒนา</p>
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 1: การระบุปัญหาด้วยกรอบ 5W1H 🔎</h3>
+                    <p class="mb-4 text-base md:text-lg leading-relaxed text-yellow-50">เมื่อพบปัญหาหรือความต้องการ นวัตกรจะต้องใช้ <b>กรอบ 5W1H</b> นำมาจัดทำเป็น <b>"ตารางวิเคราะห์รายละเอียดของปัญหา"</b> เพื่อทำความเข้าใจปัญหาอย่างถ่องแท้ก่อนเริ่มลงมืออกแบบและแก้ปัญหาจริง</p>
                     
                     <!-- Interactive Case Study Selector -->
                     <div class="bg-amber-100 p-3 rounded-lg border-2 border-amber-400 text-slate-900 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3">
                         <span class="font-heading text-base font-semibold">🔄 เลือกกรณีศึกษาเพื่อดูตัวอย่างตาราง:</span>
                         <div class="flex gap-2">
-                            <button onclick="switchCaseStudy('garbage')" id="btn-case-garbage" class="px-3 py-1 rounded bg-blue-600 text-white font-semibold text-xs md:text-sm">1) กลิ่นขยะใน รร.</button>
-                            <button onclick="switchCaseStudy('pm25')" id="btn-case-pm25" class="px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm">2) ฝุ่น PM 2.5</button>
-                            <button onclick="switchCaseStudy('elderly')" id="btn-case-elderly" class="px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm">3) ลืมกินยา</button>
+                            <button onclick="switchCaseStudy('garbage')" id="btn-case-garbage-t1" class="case-btn-t1 px-3 py-1 rounded bg-blue-600 text-white font-semibold text-xs md:text-sm">1) กลิ่นขยะใน รร.</button>
+                            <button onclick="switchCaseStudy('pm25')" id="btn-case-pm25-t1" class="case-btn-t1 px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm">2) ฝุ่น PM 2.5</button>
+                            <button onclick="switchCaseStudy('elderly')" id="btn-case-elderly-t1" class="case-btn-t1 px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm">3) ลืมกินยา</button>
                         </div>
                     </div>
 
@@ -254,36 +254,36 @@
                                         <th class="border border-amber-300 p-2 text-left">รายละเอียดผลการวิเคราะห์</th>
                                     </tr>
                                 </thead>
-                                <tbody class="text-slate-800">
+                                <tbody class="text-slate-800 bg-white">
                                     <tr>
                                         <td class="border border-amber-300 p-2 font-bold text-center bg-blue-50">Who</td>
                                         <td class="border border-amber-300 p-2 font-semibold bg-blue-50 text-center">ใครคือผู้เผชิญปัญหา?</td>
-                                        <td id="td-who" class="border border-amber-300 p-2 bg-white">นักเรียน ครู และบุคลากรที่ต้องเดินผ่านบริเวณถังขยะ</td>
+                                        <td id="td-who" class="border border-amber-300 p-2">นักเรียน ครู และบุคลากรที่ต้องเดินผ่านบริเวณถังขยะ</td>
                                     </tr>
                                     <tr>
                                         <td class="border border-amber-300 p-2 font-bold text-center bg-red-50">What</td>
                                         <td class="border border-amber-300 p-2 font-semibold bg-red-50 text-center">ปัญหาที่ต้องแก้ไขคืออะไร?</td>
-                                        <td id="td-what" class="border border-amber-300 p-2 bg-white">กลิ่นเหม็นอับจากเศษอาหารในถังขยะและมีแมลงวันตอมส่งผลเสียต่อสุขอนามัย</td>
+                                        <td id="td-what" class="border border-amber-300 p-2">กลิ่นเหม็นอับจากเศษอาหารในถังขยะและมีแมลงวันตอมส่งผลเสียต่อสุขอนามัย</td>
                                     </tr>
                                     <tr>
                                         <td class="border border-amber-300 p-2 font-bold text-center bg-green-50">Where</td>
                                         <td class="border border-amber-300 p-2 font-semibold bg-green-50 text-center">ปัญหาเกิดขึ้นที่ไหน?</td>
-                                        <td id="td-where" class="border border-amber-300 p-2 bg-white">บริเวณจุดพักขยะข้างโรงอาหารและใต้อาคารเรียน 1</td>
+                                        <td id="td-where" class="border border-amber-300 p-2">บริเวณจุดพักขยะข้างโรงอาหารและใต้อาคารเรียน 1</td>
                                     </tr>
                                     <tr>
                                         <td class="border border-amber-300 p-2 font-bold text-center bg-amber-50">When</td>
                                         <td class="border border-amber-300 p-2 font-semibold bg-amber-50 text-center">ปัญหาเกิดเมื่อใด?</td>
-                                        <td id="td-when" class="border border-amber-300 p-2 bg-white">ช่วงพักกลางวันจนถึงช่วงเย็นหลังเลิกเรียนที่มีเศษอาหารสะสมมาก</td>
+                                        <td id="td-when" class="border border-amber-300 p-2">ช่วงพักกลางวันจนถึงช่วงเย็นหลังเลิกเรียนที่มีเศษอาหารสะสมมาก</td>
                                     </tr>
                                     <tr>
                                         <td class="border border-amber-300 p-2 font-bold text-center bg-purple-50">Why</td>
                                         <td class="border border-amber-300 p-2 font-semibold bg-purple-50 text-center">ทำไมต้องแก้ไขปัญหานี้?</td>
-                                        <td id="td-why" class="border border-amber-300 p-2 bg-white">เพื่อปรับปรุงทัศนียภาพ ป้องกันกลิ่นรบกวนสมาธิเรียน และลดความเสี่ยงโรคทางเดินอาหาร</td>
+                                        <td id="td-why" class="border border-amber-300 p-2">เพื่อปรับปรุงทัศนียภาพ ป้องกันกลิ่นรบกวนสมาธิเรียน และลดความเสี่ยงโรคทางเดินอาหาร</td>
                                     </tr>
                                     <tr>
                                         <td class="border border-amber-300 p-2 font-bold text-center bg-orange-50">How</td>
                                         <td class="border border-amber-300 p-2 font-semibold bg-orange-50 text-center">จะแก้ไขปัญหานี้อย่างไร?</td>
-                                        <td id="td-how" class="border border-amber-300 p-2 bg-white">ออกแบบถังขยะที่มีฝาเปิด-ปิดอัตโนมัติเมื่อยื่นมือเข้าใกล้ และมีตัวกรองกลิ่นอับด้านใน</td>
+                                        <td id="td-how" class="border border-amber-300 p-2">ออกแบบถังขยะที่มีฝาเปิด-ปิดอัตโนมัติเมื่อยื่นมือเข้าใกล้ และมีตัวกรองกลิ่นอับด้านใน</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -291,10 +291,61 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: Gantt Chart -->
+                <!-- Tab 2: Gathering Information (New Textbook Page 55 Update) -->
                 <div id="tab-content-2" class="tab-content hidden">
-                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 4: การวางแผนการทำงานด้วย Gantt Chart 📊</h3>
-                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">ในการพัฒนาเทคโนโลยี การวางแผนและกำหนดเวลาเป็นสิ่งสำคัญมาก วิศวกรจะใช้ <b>Gantt Chart (แผนภูมิแกนต์)</b> เพื่อระบุกิจกรรมย่อย ระยะเวลา และผู้รับผิดชอบอย่างเป็นระบบ</p>
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 2: การรวบรวมข้อมูลที่เกี่ยวข้องกับปัญหา 📂</h3>
+                    <p class="mb-4 text-base md:text-lg leading-relaxed text-yellow-50">หลังจากวิเคราะห์ระบุเป้าหมายแล้ว วิศวกรต้องตั้งโจทย์เพื่อระบุ <b>ขอบเขตข้อมูลที่จำเป็น แหล่งข้อมูล และวิธีการรวบรวมข้อมูล</b> ที่เหมาะสม เพื่อใช้เป็นแนวทางการสร้างสิ่งประดิษฐ์</p>
+                    
+                    <!-- Case Study Selector syncs with Tab 1 -->
+                    <div class="bg-amber-100 p-3 rounded-lg border-2 border-amber-400 text-slate-900 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <span class="font-heading text-base font-semibold">🔄 เลือกกรณีศึกษาเพื่อดูตารางรวบรวมข้อมูล:</span>
+                        <div class="flex gap-2">
+                            <button onclick="switchCaseStudy('garbage')" id="btn-case-garbage-t2" class="case-btn-t2 px-3 py-1 rounded bg-blue-600 text-white font-semibold text-xs md:text-sm">1) กลิ่นขยะใน รร.</button>
+                            <button onclick="switchCaseStudy('pm25')" id="btn-case-pm25-t2" class="case-btn-t2 px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm">2) ฝุ่น PM 2.5</button>
+                            <button onclick="switchCaseStudy('elderly')" id="btn-case-elderly-t2" class="case-btn-t2 px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm">3) ลืมกินยา</button>
+                        </div>
+                    </div>
+
+                    <!-- Problem Data Gathering Table Widget -->
+                    <div class="bg-amber-50 p-4 rounded-xl border-4 border-amber-200 text-slate-900 shadow-lg">
+                        <h4 class="font-heading text-lg text-amber-900 mb-3 text-center border-b border-amber-300 pb-1 flex justify-center items-center gap-2">
+                            📂 ตารางรวบรวมข้อมูลที่เกี่ยวข้อง: <span id="gather-case-title" class="text-blue-800">ปัญหาถังขยะโรงเรียนส่งกลิ่นรบกวน</span>
+                        </h4>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs md:text-sm border-collapse">
+                                <thead>
+                                    <tr class="bg-amber-200 text-slate-900 font-heading">
+                                        <th class="border border-amber-300 p-3 text-left w-1/3">ข้อมูลที่จำเป็น (Required Data)</th>
+                                        <th class="border border-amber-300 p-3 text-left w-1/3">แหล่งข้อมูล (Data Source)</th>
+                                        <th class="border border-amber-300 p-3 text-left w-1/3">วิธีการรวบรวมข้อมูล (Method)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="gather-table-body" class="text-slate-800 bg-white">
+                                    <!-- Dynamic content inserted by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Summary of popular gathering methods -->
+                        <div class="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200 text-xs md:text-sm text-slate-700">
+                            <h5 class="font-heading text-blue-900 mb-1">📌 เทคนิคการเลือกวิธีการรวบรวมข้อมูลของวิศวกร:</h5>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mt-2">
+                                <div>💬 <b>การสัมภาษณ์ (Interview):</b> เพื่อรับฟังความคิดเห็นเชิงลึก</div>
+                                <div>👀 <b>การสังเกต (Observation):</b> เพื่อดูพฤติกรรมจริงของผู้ใช้</div>
+                                <div>📝 <b>การสอบถาม (Questionnaire):</b> เพื่อรวบรวมสถิติจากคนส่วนใหญ่</div>
+                                <div>🌐 <b>สืบค้นข้อมูลอินเทอร์เน็ต:</b> เพื่อค้นหาวงจร กลไก หรือทฤษฎี</div>
+                                <div>🔬 <b>การทดลอง (Experiment):</b> เพื่อพิสูจน์สมมติฐานและสูตรเคมี</div>
+                                <div>📊 <b>การสำรวจ (Survey):</b> เพื่อตรวจวัดขนาดหรือเก็บตัวเลขทางกายภาพ</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Gantt Chart -->
+                <div id="tab-content-3" class="tab-content hidden">
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 4: การวางแผนด้วย Gantt Chart 📊</h3>
+                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">วิศวกรและผู้พัฒนาเทคโนโลยีจะเลือกใช้ <b>Gantt Chart (แผนภูมิแกนต์)</b> เพื่อระบุกิจกรรมหลักและกิจกรรมย่อย ระยะเวลาทำงาน และผู้รับผิดชอบอย่างเป็นระบบเพื่อไม่ให้งานล่าช้า</p>
                     
                     <div class="bg-amber-50 p-4 rounded-xl border-4 border-amber-200 text-slate-900 overflow-x-auto shadow-inner">
                         <table class="w-full text-sm border-collapse min-w-[500px]">
@@ -341,10 +392,10 @@
                     </div>
                 </div>
 
-                <!-- Tab 3: Rubrics -->
-                <div id="tab-content-3" class="tab-content hidden">
-                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 5: เกณฑ์การประเมินผล (Testing Criteria) 📝</h3>
-                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">การทดสอบชิ้นงานไม่ใช่เรื่องของการเดาสุ่ม แต่ต้องตั้งเป้าเกณฑ์การวัดผลที่มีขอบเขตชัดเจนและทำออกมาเป็นรูปแบบ <b>เกณฑ์ระดับคะแนน (Rubrics)</b> เพื่อประเมินว่าเทคโนโลยีนั้นทำงานได้สำเร็จจริงหรือไม่</p>
+                <!-- Tab 4: Rubrics & Loop -->
+                <div id="tab-content-4" class="tab-content hidden">
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 5-6: เกณฑ์ประเมินผล (Rubrics) & ปรับปรุงแก้ไข 🔄</h3>
+                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">เมื่อสร้างชิ้นงานเสร็จแล้ว ต้องตรวจสอบผ่าน **เกณฑ์ระดับคะแนน (Rubrics)** และหากไม่ผ่านเกณฑ์จะเข้าสู่ **ลูปการปรับปรุงแก้ไข** จนกว่างานจะสมบูรณ์</p>
                     
                     <div class="bg-amber-50 text-slate-900 p-6 rounded-lg border-2 border-yellow-600 shadow-md">
                         <h4 class="font-heading text-xl text-amber-900 mb-4 flex items-center gap-2">
@@ -353,72 +404,44 @@
                         <div class="space-y-4">
                             <div class="border-l-4 border-blue-500 pl-4">
                                 <strong class="font-heading text-base md:text-lg block text-slate-800">1. ด้านการใช้งานตรงเป้าหมาย (Functionality)</strong>
-                                <span class="text-sm md:text-base text-slate-600">สามารถทำงานได้ตรงตามกรอบขอบเขตของปัญหาที่วิเคราะห์ไว้ (เช่น ถังขยะต้องเปิดฝาเองอัตโนมัติเมื่อยื่นมือเข้าไปในระยะ 30 ซม. ได้ถูกต้องสม่ำเสมอ)</span>
+                                <span class="text-sm md:text-base text-slate-600">สามารถทำงานได้ตรงตามกรอบขอบเขตของปัญหาที่วิเคราะห์ไว้ (เช่น พัดลมหมุนส่ายรอบทิศทาง และตรวจวัดอุณหภูมิห้องเพื่อปรับระดับแรงลมเองได้สม่ำเสมอ)</span>
                             </div>
                             <div class="border-l-4 border-green-500 pl-4">
                                 <strong class="font-heading text-base md:text-lg block text-slate-800">2. ด้านความแข็งแรงและปลอดภัย (Safety & Durability)</strong>
-                                <span class="text-sm md:text-base text-slate-600">โครงสร้างชิ้นงานมีความมั่นคง ไม่พังทลายง่ายระหว่างใช้งาน และไม่มีวัสดุที่เป็นเหลี่ยมคมหรือสารอันตรายที่จะส่งผลเสียต่อตัวผู้ใช้งาน</span>
+                                <span class="text-sm md:text-base text-slate-600">โครงสร้างชิ้นงานมีความมั่นคง ไม่พังทลายง่ายระหว่างใช้งาน และไม่มีวัสดุที่เป็นเหลี่ยมคมหรือกระแสไฟฟ้ารั่วไหลสู่ภายนอก</span>
                             </div>
                             <div class="border-l-4 border-orange-500 pl-4">
                                 <strong class="font-heading text-base md:text-lg block text-slate-800">3. ด้านความคุ้มค่าและสิ่งแวดล้อม (Eco-Friendly & Value)</strong>
-                                <span class="text-sm md:text-base text-slate-600">การประหยัดทรัพยากร การเลือกใช้วัสดุที่ประหยัด หาได้ง่ายในท้องถิ่น และไม่ก่อเกิดมลพิษหรือย่อยสลายได้ง่ายหลังสิ้นอายุการใช้งาน</span>
+                                <span class="text-sm md:text-base text-slate-600">การประหยัดทรัพยากร การเลือกใช้วัสดุที่ประหยัด หาได้ง่ายในท้องถิ่น และมีอายุการใช้งานคุ้มค่ากับต้นทุน</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tab 4: Invention vs Innovation -->
-                <div id="tab-content-4" class="tab-content hidden">
-                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">สิ่งประดิษฐ์ vs นวัตกรรม 💡</h3>
-                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">เทคโนโลยีที่สร้างการเปลี่ยนแปลงที่ดีควรได้รับการต่อยอดพัฒนาไปสู่ระดับ <b>"นวัตกรรม" (Innovation)</b> มากกว่าจบลงที่เพียงการเป็น <b>"สิ่งประดิษฐ์" (Invention)</b> เท่านั้น</p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                        <div class="bg-amber-50 p-5 rounded-xl border-4 border-green-500 text-slate-900 shadow-md">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="text-3xl">🕯️</span>
-                                <h4 class="font-heading text-xl text-green-700">สิ่งประดิษฐ์ (Invention)</h4>
-                            </div>
-                            <p class="text-sm md:text-base text-slate-700 leading-relaxed">
-                                การประดิษฐ์คิดค้นสิ่งของเครื่องมือ หรือกระบวนการแนวคิดใหม่ ๆ ขึ้นมาเป็นครั้งแรกในโลก แต่อาจจะยังไม่ได้ต่อยอดในระดับอุตสาหกรรม หรือสร้างผลกระทบความคุ้งค่าในการแก้ปัญหาแก่คนหมู่มากอย่างยั่งยืน
-                            </p>
-                        </div>
-
-                        <div class="bg-amber-50 p-5 rounded-xl border-4 border-blue-500 text-slate-900 shadow-md">
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class="text-3xl">💡</span>
-                                <h4 class="font-heading text-xl text-blue-700">นวัตกรรม (Innovation)</h4>
-                            </div>
-                            <p class="text-sm md:text-base text-slate-700 leading-relaxed">
-                                การนำแนวคิดหรือสิ่งประดิษฐ์ที่มีอยู่แล้วมาผสมผสานความคิดสร้างสรรค์ร่วมกับ <b>Empathy</b> เพื่อสร้างสรรค์สิ่งที่ดีกว่าเดิมอย่างมีนัยสำคัญ เกิดการ <b>สร้างมูลค่าเพิ่ม (Value Creation)</b> และมีผู้คนจำนวนมากนำไปใช้งานได้จริงอย่างแพร่หลาย
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab 5: Intellectual Property -->
+                <!-- Tab 5: Intellectual Property & Innovation -->
                 <div id="tab-content-5" class="tab-content hidden">
-                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">กฎหมายคุ้มครองผลงาน: ทรัพย์สินทางปัญญา 🛡️</h3>
-                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">เมื่อคุณผ่านกระบวนการเทคโนโลยีจนได้ผลงานอันทรงคุณค่าแล้ว การคุ้มครองผลงานด้วยกฎหมายสิทธิ์ <b>ทรัพย์สินทางปัญญา (Intellectual Property)</b> คือสิ่งที่ขาดไม่ได้:</p>
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ทรัพย์สินทางปัญญา (IP) & ต่อยอดนวัตกรรม 🛡️</h3>
+                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">เมื่อได้นวัตกรรมที่ดีและมีมูลค่าแล้ว การคุ้มครองสิทธิ์ในแนวคิดด้วย **กฎหมายทรัพย์สินทางปัญญา** คือสิ่งสำคัญสูงสุด:</p>
 
                     <div class="space-y-4 text-slate-900">
                         <div class="bg-amber-50 p-4 rounded-lg border-2 border-purple-500 shadow-md">
                             <h4 class="font-heading text-lg text-purple-700 mb-1">⚙️ สิทธิบัตรการประดิษฐ์ (Patent)</h4>
-                            <p class="text-sm md:text-base text-slate-700">ให้การคุ้มครองแนวคิด โครงสร้าง กลไกการทำงาน ส่วนผสม หรือกระบวนการผลิตทางเทคโนโลยีใหม่ที่มีความซับซ้อนเชิงวิศวกรรมสูง (ระยะเวลาคุ้มครองยาวนานถึง 20 ปีนับแต่วันขอรับสิทธิบัตร)</p>
+                            <p class="text-sm md:text-base text-slate-700">คุ้มครองโครงสร้าง กลไกการทำงาน ส่วนประกอบ หรือเทคนิคใหม่ที่มีความซับซ้อนเชิงวิศวกรรมสูง (คุ้มครองยาวนาน 20 ปี)</p>
                         </div>
 
                         <div class="bg-amber-50 p-4 rounded-lg border-2 border-indigo-500 shadow-md">
                             <h4 class="font-heading text-lg text-indigo-700 mb-1">🛠️ อนุสิทธิบัตร (Petty Patent)</h4>
-                            <p class="text-sm md:text-base text-slate-700">คุ้มครองการประดิษฐ์ขนาดเล็กหรือเทคโนโลยีที่ได้รับการปรับแต่งเล็กน้อย ไม่ซับซ้อนมากนัก เพื่ออำนวยความสะดวกในชีวิตประจำวัน (มีอายุคุ้มครองรวมสูงสุดไม่เกิน 10 ปี)</p>
+                            <p class="text-sm md:text-base text-slate-700">คุ้มครองเทคโนโลยีหรือสิ่งประดิษฐ์ชิ้นเล็ก ๆ น้อย ๆ ที่กลไกเรียบง่าย ปรับปรุงจากเดิมเพื่อความสะดวกสบาย (คุ้มครองรวมสูงสุด 10 ปี)</p>
                         </div>
 
                         <div class="bg-amber-50 p-4 rounded-lg border-2 border-emerald-500 shadow-md">
                             <h4 class="font-heading text-lg text-emerald-700 mb-1">🎨 สิทธิบัตรการออกแบบผลิตภัณฑ์ (Design Patent)</h4>
-                            <p class="text-sm md:text-base text-slate-700">ให้สิทธิ์คุ้มครองเฉพาะลวดลาย รูปทรง สีสันภายนอก ความสวยงามของตัวผลิตภัณฑ์ทั้งหมด โดยกฎหมายจะไม่ให้ความคุ้มครองกลไกการทำหน้าที่ด้านในของเครื่องมือนั้น ๆ (มีระยะเวลาคุ้มครอง 10 ปี)</p>
+                            <p class="text-sm md:text-base text-slate-700">คุ้มครองรูปทรง สีสัน ลวดลายภายนอกเพื่อความสวยงามสะดุดตา โดยไม่ได้คำนึงถึงกลไกการทำหน้าที่ด้านใน (คุ้มครอง 10 ปี)</p>
                         </div>
 
                         <div class="bg-amber-50 p-4 rounded-lg border-2 border-pink-500 shadow-md">
                             <h4 class="font-heading text-lg text-pink-700 mb-1">📝 ลิขสิทธิ์ (Copyright)</h4>
-                            <p class="text-sm md:text-base text-slate-700">คุ้มครองผลงานสร้างสรรค์ประเภทวรรณกรรม ดนตรี ศิลปะ รวมถึง <b>โปรแกรมคอมพิวเตอร์ (Software/Application)</b> โดยจะ<b>ได้รับสิทธิ์ความคุ้มครองโดยอัตโนมัติทันทีที่สร้างผลงานเสร็จ</b> โดยไม่จำเป็นต้องยื่นจดทะเบียนอย่างเป็นทางการ</p>
+                            <p class="text-sm md:text-base text-slate-700">คุ้มครองงานสร้างสรรค์ วรรณกรรม ศิลปะ ดนตรี และรวมถึง **โปรแกรมคอมพิวเตอร์/ซอฟต์แวร์แอปพลิเคชัน** โดยจะได้รับการคุ้มครองโดยอัตโนมัติทันทีที่สร้างผลงานเสร็จโดยไม่จำต้องจดทะเบียน</p>
                         </div>
                     </div>
                 </div>
@@ -520,7 +543,7 @@
             <div class="absolute bottom-4 right-4 text-6xl select-none">🏆</div>
             
             <div class="border-4 border-green-600 p-8 text-center h-full flex flex-col justify-center bg-green-50">
-                <h1 class="font-heading text-4xl text-green-800 mb-2">กระบวนการเทคโนโลยี (Technological Process)</h1>
+                <h1 class="font-heading text-4xl text-green-800 mb-2 font-bold">กระบวนการเทคโนโลยี (Technological Process)</h1>
                 <h2 class="font-heading text-2xl text-gray-700 mb-8" id="cert-mode-title">Certificate of Completion</h2>
                 
                 <p class="text-lg text-gray-600 mb-4">ขอมอบเกียรติบัตรฉบับนี้เพื่อแสดงว่า</p>
@@ -600,7 +623,7 @@
         let currentExamIndex = 0;
         let examScore = 0;
 
-        // ข้อมูลตัวอย่างสำหรับ ตารางวิเคราะห์รายละเอียดของปัญหา
+        // ข้อมูลกรณีศึกษา (Case Studies) สำหรับวิเคราะห์ 5W1H (Tab 1) และ รวบรวมข้อมูล (Tab 2)
         const caseStudyData = {
             garbage: {
                 title: "ปัญหาถังขยะโรงเรียนส่งกลิ่นรบกวน",
@@ -609,7 +632,12 @@
                 where: "บริเวณโรงอาหาร ข้างตึกเรียน 1 และโรงคัดแยกขยะของโรงเรียน",
                 when: "เกิดบ่อยครั้งในช่วงพักกลางวัน ช่วงบ่าย และช่วงเย็นหลังรับประทานอาหาร",
                 why: "เพื่อปรับปรุงทัศนียภาพของโรงเรียน รักษาสุขอนามัย และป้องกันกลิ่นรบกวนสมาธิเรียน",
-                how: "ออกแบบกลไกถังขยะอัจฉริยะที่มีฝาเปิด-ปิดอัตโนมัติด้วยเซนเซอร์และระบบกรองกลิ่นคาร์บอนภายใน"
+                how: "ออกแบบกลไกถังขยะอัจฉริยะที่มีฝาเปิด-ปิดอัตโนมัติด้วยเซนเซอร์และระบบกรองกลิ่นคาร์บอนภายใน",
+                gathering: [
+                    { req: "วัสดุที่ใช้ทำถังขยะและฝาปิดป้องกันกลิ่น", source: "ร้านจำหน่ายวัสดุก่อสร้าง, เว็บไซต์ผู้จำหน่าย", method: "สืบค้นข้อมูลจากอินเทอร์เน็ต" },
+                    { req: "ปริมาณและประเภทเศษอาหารในแต่ละวัน", source: "แม่บ้านโรงอาหาร, นักเรียน ม.2", method: "สัมภาษณ์และสอบถามด้วยแบบสอบถาม" },
+                    { req: "กลไกการเปิด-ปิดฝาและวงจรเซนเซอร์ตรวจจับ", source: "หนังสือเรียนเทคโนโลยี, แหล่งความรู้ออนไลน์", method: "สืบค้นจากเอกสารและทดลองเชื่อมต่อวงจรจริง" }
+                ]
             },
             pm25: {
                 title: "ปัญหาฝุ่นละออง PM 2.5 ภายในห้องเรียน",
@@ -618,7 +646,12 @@
                 where: "ห้องเรียนวิชาเทคโนโลยี ชั้น 3 อาคารนวัตกรรม",
                 when: "ในช่วงฤดูแล้ง (ธันวาคม - มีนาคม) ที่มีสภาพอากาศปิดและปริมาณฝุ่นสะสมภายนอกสูง",
                 why: "เพื่อรักษาสุขภาพปอดของเด็ก ๆ ลดความเหนื่อยล้า และเพิ่มประสิทธิภาพในการเรียนรู้",
-                how: "สร้างตู้ระบายอากาศแรงดันบวกดึงอากาศจากภายนอกผ่านแผ่นกรอง HEPA เข้ามาฟอกอากาศในห้อง"
+                how: "สร้างตู้ระบายอากาศแรงดันบวกดึงอากาศจากภายนอกผ่านแผ่นกรอง HEPA เข้ามาฟอกอากาศในห้อง",
+                gathering: [
+                    { req: "แผ่นกรองอากาศดักจับฝุ่นละอองขนาดเล็ก (HEPA)", source: "ร้านจำหน่ายอุปกรณ์ฟอกอากาศ, วิศวกรระบบปรับอากาศ", method: "สืบค้นข้อมูลผลิตภัณฑ์และสัมภาษณ์ผู้เชี่ยวชาญ" },
+                    { req: "อัตราการไหลเวียนอากาศและขนาดของห้องเรียนจริง", source: "ครูประจำตึก, ข้อมูลแผนผังอาคารสถานที่โรงเรียน", method: "สำรวจวัดพื้นที่จริงและตรวจสอบพิมพ์เขียวอาคาร" },
+                    { req: "ระดับปริมาณฝุ่น PM 2.5 ปลอดภัยตามเกณฑ์มาตรฐาน", source: "เว็บไซต์กรมควบคุมมลพิษ, คู่มือวิชาการของสาธารณสุข", method: "สืบค้นข้อมูลจากอินเทอร์เน็ตและสำรวจคู่มือราชการ" }
+                ]
             },
             elderly: {
                 title: "ปัญหาการลืมทานยาตรงเวลาของผู้สูงอายุ",
@@ -627,16 +660,21 @@
                 where: "ที่บ้านพักอาศัยหรือห้องนั่งเล่นของผู้สูงอายุ",
                 when: "ทุกวันในช่วงเวลาหลังอาหารเช้า กลางวัน และก่อนนอน",
                 why: "เพื่อให้ผู้สูงอายุได้รับยาตามคำแนะนำแพทย์อย่างแม่นยำ ป้องกันอาการเจ็บป่วยกำเริบกะทันหัน",
-                how: "ออกแบบกล่องจ่ายยาสมาร์ทที่ส่งเสียงแจ้งเตือนและส่งข้อความไปหาญาติเมื่อถึงเวลาทานยา"
+                how: "ออกแบบกล่องจ่ายยาสมาร์ทที่ส่งเสียงแจ้งเตือนและส่งข้อความไปหาญาติเมื่อถึงเวลาทานยา",
+                gathering: [
+                    { req: "ชนิดและรอบเวลาการรับประทานยาประจำตัวผู้ป่วย", source: "ตัวผู้สูงอายุเอง, ญาติสนิทผู้ดูแลใกล้ชิด, ซองยาของโรงพยาบาล", method: "สัมภาษณ์ สอบถามข้อมูลโดยตรง และสังเกตพฤติกรรม" },
+                    { req: "วงจรสัญญาณแจ้งเตือนและระบบส่ง LINE Notify ผ่าน Wi-Fi", source: "เว็บไซต์และบอร์ดให้ความรู้ไมโครคอนโทรลเลอร์", method: "สืบค้นความรู้ทางอินเทอร์เน็ตและทำการทดลองวงจรต้นแบบ" },
+                    { req: "วัสดุในการผลิตกล่องจ่ายยาที่ปลอดภัยและหยิบใช้งานสะดวก", source: "ข้อมูลอ้างอิงของพลาสติก Food Grade และวัสดุรักษ์โลก", method: "สืบค้นข้อมูลผ่านอินเทอร์เน็ตและทดลองประกอบกล่องเปล่า" }
+                ]
             }
         };
 
-        // ฟังก์ชันสลับตัวอย่างตารางวิเคราะห์ใน Almanac
+        // ฟังก์ชันสลับกรณีศึกษาใน Almanac (จะประสานอัปเดตตารางทั้งใน Tab 1 และ Tab 2 พร้อมกัน)
         function switchCaseStudy(caseKey) {
             const data = caseStudyData[caseKey];
             if (!data) return;
 
-            // อัปเดตข้อมูลตาราง
+            // อัปเดตข้อมูลตาราง 5W1H ใน Tab 1
             document.getElementById('td-who').innerText = data.who;
             document.getElementById('td-what').innerText = data.what;
             document.getElementById('td-where').innerText = data.where;
@@ -645,24 +683,39 @@
             document.getElementById('td-how').innerText = data.how;
             document.getElementById('table-case-title').innerText = data.title;
 
-            // เปลี่ยนสีปุ่ม active
-            const buttons = ['garbage', 'pm25', 'elderly'];
-            buttons.forEach(b => {
-                const btn = document.getElementById(`btn-case-${b}`);
-                if (b === caseKey) {
-                    btn.className = "px-3 py-1 rounded bg-blue-600 text-white font-semibold text-xs md:text-sm";
+            // อัปเดตตารางรวบรวมข้อมูลใน Tab 2
+            document.getElementById('gather-case-title').innerText = data.title;
+            const gatherTableBody = document.getElementById('gather-table-body');
+            gatherTableBody.innerHTML = "";
+            
+            data.gathering.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="border border-amber-300 p-3 font-semibold bg-white">${item.req}</td>
+                    <td class="border border-amber-300 p-3 bg-amber-50/50">${item.source}</td>
+                    <td class="border border-amber-300 p-3 bg-white font-medium text-blue-900">${item.method}</td>
+                `;
+                gatherTableBody.appendChild(tr);
+            });
+
+            // เปลี่ยนสถานะปุ่ม Active ใน Tab 1
+            document.querySelectorAll('.case-btn-t1').forEach(btn => {
+                if (btn.id === `btn-case-${caseKey}-t1`) {
+                    btn.className = "case-btn-t1 px-3 py-1 rounded bg-blue-600 text-white font-semibold text-xs md:text-sm";
                 } else {
-                    btn.className = "px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm hover:bg-gray-400";
+                    btn.className = "case-btn-t1 px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm hover:bg-gray-400";
+                }
+            });
+
+            // เปลี่ยนสถานะปุ่ม Active ใน Tab 2
+            document.querySelectorAll('.case-btn-t2').forEach(btn => {
+                if (btn.id === `btn-case-${caseKey}-t2`) {
+                    btn.className = "case-btn-t2 px-3 py-1 rounded bg-blue-600 text-white font-semibold text-xs md:text-sm";
+                } else {
+                    btn.className = "case-btn-t2 px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm hover:bg-gray-400";
                 }
             });
         }
-
-        // เก็บข้อมูลในตัวแปรแยกเพื่อง่ายในการเข้าถึง
-        const caseStudyData = {
-            garbage: caseStudyData.garbage,
-            pm25: caseStudyData.pm25,
-            elderly: caseStudyData.elderly
-        };
 
         // ข้อมูลด่าน 15 ด่านผังงาน (ฝึกฝนทั่วไป)
         const levelData = [
@@ -721,7 +774,7 @@
               blankOptions: ["ส่งต่อเทคโนโลยีเพื่อพัฒนาและสร้างมูลค่าสู่สังคม", "ลบข้อมูลทุกอย่างทิ้งเมื่อเรียนจบ", "เลิกให้ความสนใจและเปลี่ยนบทเรียน"], answer: 0 }
         ];
 
-        // คลังข้อสอบโหมดสอบจริง 20 ข้อ
+        // คลังข้อสอบโหมดสอบจริง 20 ข้อ (ปรับโจทย์บางส่วนให้เน้นตารางรวบรวมข้อมูลตามหน้าหนังสือเรียนหน้า 55)
         const examQuestions = [
             { q: "ขั้นตอนแรกสุดในกระบวนการเทคโนโลยีและขั้นตอนแก้ปัญหาของวิศวกรคือข้อใด?",
               opt: ["ก. ค้นหาข้อมูลที่เกี่ยวข้อง", "ข. ออกแบบวิธีการแก้ปัญหา", "ค. ระบุปัญหาหรือความต้องการ", "ง. เลือกวิธีการแก้ปัญหา"], ans: 2 },
@@ -731,8 +784,8 @@
               opt: ["ก. แหล่งวัสดุมาจากไหน? ราคาเท่าไหร่? ทำอย่างไร?", "ข. ปัญหาคืออะไร? ใครเผชิญปัญหา? เหตุใดต้องแก้ไข?", "ค. ใครขายเก่งกว่า? ใช้แรงงานมากไหม? คุ้มทุนเมื่อใด?", "ง. โครงสร้างแข็งแรงไหม? สวยงามเพียงใด? ผลิตจำนวนเท่าไหร่?"], ans: 1 },
             { q: "คำถาม 'Where' ในตารางวิเคราะห์รายละเอียดของปัญหาด้วยกรอบ 5W1H มีจุดประสงค์เพื่อวิเคราะห์ประเด็นใด?",
               opt: ["ก. ช่วงเวลาที่เกิดสถานการณ์ปัญหาทั้งหมด", "ข. สถานที่ตั้ง สภาพแวดล้อม หรือพิกัดที่ปัญหานั้นเกิดขึ้น", "ค. รายชื่อบุคคลที่เป็นผู้ใช้งานหลัก", "ง. เหตุผลความจำเป็นในการลงมือวิจัย"], ans: 1 },
-            { q: "ในการสืบค้นรวบรวมข้อมูลเกี่ยวข้องกับปัญหา แหล่งข้อมูลประเภทใดมีความน่าเชื่อถือสูงสุดทางวิชาการ?",
-              opt: ["ก. บอร์ดกระทู้สนทนาออนไลน์ทั่วไป", "ข. เอกสารอ้างอิงสถาบันวิจัย/ตำราเรียนทางการศึกษา", "ค. การคุยและคาดคะเนของตนเองร่วมกับเพื่อน", "ง. ข้อมูลจากหน้าฟีดบนโซเชียลมีเดีย"], ans: 1 },
+            { q: "ในตารางรวบรวมข้อมูลที่เกี่ยวข้องกับปัญหา (ขั้นตอนที่ 2) คอลัมน์ 'ข้อมูลที่จำเป็น' มีความสำคัญอย่างไรต่อการพัฒนาเทคโนโลยี?",
+              opt: ["ก. บอกรายชื่อทีมงานทั้งหมดที่เข้าร่วมโครงการ", "ข. กำหนดขอบเขตข้อมูลความรู้ ทฤษฎี หรือวัสดุที่ต้องใช้เพื่อหาแนวทางแก้ไขปัญหา", "ค. สรุปความสวยงามของรูปทรงผลิตภัณฑ์ภายนอก", "ง. แสดงเวลาที่จะส่งฟีดแบ็กให้แก่ครูผู้สอน"], ans: 1 },
             { q: "การประยุกต์ใช้ความรู้วิศวกรรมศาสตร์ร่วมกับกระบวนการเทคโนโลยีจำเป็นต้องนำความรู้เรื่องใดมาร่วมผสมผสาน?",
               opt: ["ก. ศิลปะการป้องกันตัว", "ข. วิทยาศาสตร์และคณิตศาสตร์", "ค. ความเชื่อเรื่องการทำนายทายทัก", "ง. การจัดการการเงินอย่างง่าย"], ans: 1 },
             { q: "เครื่องมือในการควบคุมและจัดลำดับเวลาในการพัฒนาโครงการเทคโนโลยี เพื่อไม่ให้งานล่าช้า เรียกว่าอะไร?",
@@ -745,8 +798,8 @@
               opt: ["ก. นำเสนอสไลด์อธิบายว่าชิ้นงานใช้งานไม่ได้", "ข. นำกลับไปสืบค้นหาปัญหาใหม่ทั้งหมดตั้งแต่ต้น", "ค. ปรับปรุง แก้ไข และย้อนประเมินผลตรวจสอบซ้ำ", "ง. ถอดปลั๊กเก็บไว้ในตู้ล็อคเกอร์แล้วลืมมันไป"], ans: 2 },
             { q: "ความแตกต่างข้อใดที่แยก 'นวัตกรรม (Innovation)' ออกจาก 'สิ่งประดิษฐ์ (Invention)' ได้อย่างชัดเจน?",
               opt: ["ก. นวัตกรรมต้องมีราคาแพงกว่าเสมอ", "ข. นวัตกรรมส่งผลต่อการสร้างมูลค่าเพิ่มและแก้ปัญหาสังคมในวงกว้าง", "ค. นวัตกรรมทำได้ยากกว่าและไม่มีการต่อยอด", "ง. สิ่งประดิษฐ์เป็นสิ่งที่ถูกทำซ้ำ ๆ จากแนวคิดของผู้อื่น"], ans: 1 },
-            { q: "ตัวอย่างการพัฒนาต่อยอด 'ปากกาลูกลื่นธรรมดาเขียนผิดลบยาก' ไปสู่ 'ปากกาลบได้ด้วยปฏิกิริยาเคมีจากความร้อน' จัดเป็นอะไร?",
-              opt: ["ก. สิ่งประดิษฐ์ดั้งเดิม", "ข. การสวมสิทธิ์ลิขสิทธิ์", "ค. การสร้างนวัตกรรมที่แก้ปัญหาและตอบโจทย์ผู้ใช้", "ง. การทำสำเนางานวรรณกรรม"], ans: 2 },
+            { q: "หากนักเรียนต้องการทราบข้อมูลเชิงลึกเกี่ยวกับ 'พฤติกรรมการแยกเศษอาหารของนักเรียนในโรงเรียน' ข้อใดจับคู่ แหล่งข้อมูลและวิธีการรวบรวมข้อมูล ได้เหมาะสมที่สุด?",
+              opt: ["ก. แหล่งข้อมูล: เว็บไซต์ต่างประเทศ / วิธีการ: การสังเกตและจำลองสูตรเคมี", "ข. แหล่งข้อมูล: นักเรียนและแม่บ้าน / วิธีการ: การสังเกตและการสัมภาษณ์ทางตรง", "ค. แหล่งข้อมูล: ร้านจำหน่ายวัสดุ / วิธีการ: การทดสอบแรงดันมอเตอร์", "ง. แหล่งข้อมูล: ห้องสมุดโรงเรียน / วิธีการ: การตอบแบบสำรวจสถิติประชากรโลก"], ans: 1 },
             { q: "เมื่อสร้างสรรค์นวัตกรรมใหม่ที่กลไก โครงสร้าง มีความซับซ้อนและใช้เทคนิคการแก้ปัญหาขั้นสูง ควรจดสิทธิ์ข้อใดเพื่อปกป้องความลับ 20 ปี?",
               opt: ["ก. อนุสิทธิบัตร", "ข. สิทธิบัตรการประดิษฐ์", "ค. สิทธิบัตรการออกแบบผลิตภัณฑ์", "ง. การคุ้มครองลิขสิทธิ์"], ans: 1 },
             { q: "การประดิษฐ์อุปกรณ์ช่วยอำนวยความสะดวกเล็ก ๆ น้อย ๆ เช่น ตลับหมุนเก็บพลาสติกคลุมพัดลม ซึ่งมีกลไกเรียบง่าย ควรขอรับความคุ้มครองประเภทใด?",
@@ -757,8 +810,8 @@
               opt: ["ก. ลิขสิทธิ์ (Copyright)", "ข. สิทธิบัตรการประดิษฐ์", "ค. สิทธิบัตรการออกแบบ", "ง. อนุสิทธิบัตร"], ans: 0 },
             { q: "ลิขสิทธิ์ (Copyright) มีคุณลักษณะเด่นเรื่องการเริ่มต้นคุ้มครองสิทธิ์อย่างไร?",
               opt: ["ก. ได้รับการคุ้มครองทันทีที่สร้างสรรค์ผลงานขึ้นมาโดยไม่ต้องจดทะเบียน", "ข. คุ้มครองหลังจากยื่นเรื่องที่กระทรวงพาณิชย์ไปแล้ว 5 ปี", "ค. ต้องผ่านการทำระบบตรวจสอบความปลอดภัยของโรงเรียนก่อน", "ง. จะไม่ได้รับสิทธิ์ความคุ้มครองหากไม่มีการซื้อขายผลิตภัณฑ์จริง"], ans: 0 },
-            { q: "หากบุคคลใดแอบนำสไลด์พรีเซนต์ของกลุ่มอื่นไปอัปโหลดเป็นชื่อตัวเอง ถือว่าละเมิดกฎหมายทรัพย์สินทางปัญญาประเภทใด?",
-              opt: ["ก. สิทธิบัตรการประดิษฐ์", "ข. อนุสิทธิบัตร", "ค. ลิขสิทธิ์", "ง. สิทธิบัตรการออกแบบ"], ans: 2 },
+            { q: "หากต้องการรวบรวมข้อมูลเรื่อง 'กลไกวงจรควบคุมระบบเซนเซอร์' จากแหล่งข้อมูลอินเทอร์เน็ต วิธีการรวบรวมข้อมูลในตารางควรระบุข้อใดจึงจะสอดคล้องที่สุด?",
+              opt: ["ก. การสัมภาษณ์ผู้ขายหน้าร้าน", "ข. การสืบค้นข้อมูลจากอินเทอร์เน็ตและตำราวิชาการ", "ค. การจัดทำแบบสอบถามออนไลน์", "ง. การลงพื้นที่เก็บสถิติจำนวนประชากร"], ans: 1 },
             { q: "การนำกรอบคิด 5W1H มาจัดทำ 'ตารางวิเคราะห์รายละเอียดของปัญหา' มีประโยชน์สูงสุดอย่างไรต่อกระบวนการเทคโนโลยี?",
               opt: ["ก. ช่วยให้สามารถย่นระยะเวลาการจดทะเบียนสิทธิบัตรให้เร็วขึ้น", "ข. ช่วยแจกแจงขอบเขตปัญหาอย่างชัดเจนเพื่อป้องกันการวิเคราะห์ผิดจุด", "ค. ช่วยให้คำนวณราคาขายของผลิตภัณฑ์ได้ชัดเจนที่สุด", "ง. ช่วยสุ่มหาคำตอบแนวทางแก้ไขปัญหาโดยไม่ต้องวิจัย"], ans: 1 },
             { q: "กระบวนการเทคโนโลยีทั้ง 7 ขั้นตอน หากผู้ใช้ทำตามขั้นตอนครบถ้วนแต่ไม่มีจริยธรรมในการจดสิทธิ์สิทธิบัตรที่ถูกต้อง จะส่งผลต่อผลงานอย่างไร?",
@@ -1124,6 +1177,7 @@
         }
 
         // Init Setup
+        switchCaseStudy('garbage'); // โหลดเริ่มต้นกรณีขยะ
         showTab(1); // Default tab in lesson
     </script>
 </body>
