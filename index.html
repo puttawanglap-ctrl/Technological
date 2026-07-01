@@ -3,1445 +3,1128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM BUILDER: สร้างระบบคอมพิวเตอร์</title>
-    <!-- Tailwind CSS -->
+    <title>กระบวนการเทคโนโลยี - นวัตกรรมและสอบเก็บคะแนน</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Itim (Cartoonish) and Mitr -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* * ==========================================
-         * UI DESIGN SYSTEM (Plants vs Zombies Theme)
-         * ==========================================
-         */
+        /* CSS ตัวแปรและฟอนต์ */
         :root {
-            --border-color: #4e342e; /* Dark brown wood */
-            --shadow-color: #27140c;
-            --border-width: 4px;
-            --shadow-depth: 6px;
-            
-            /* Theme Colors */
-            --bg-main: #4ade80; /* Grass green */
-            --primary: #8b5a2b; /* Wood */
-            --secondary: #ffc107; /* Sun */
-            --success: #4caf50; 
-            --danger: #e53935; 
-            --card-bg: #fff8e1;
+            --wood-bg: #8B5A2B;
+            --wood-border: #5C3A21;
+            --lawn-light: #52c732;
+            --lawn-dark: #3ea024;
         }
-
         body {
-            font-family: 'Itim', 'Mitr', cursive, sans-serif;
-            background-color: var(--bg-main);
-            background-image: 
-                repeating-linear-gradient(45deg, #43c671 25%, transparent 25%, transparent 75%, #43c671 75%, #43c671), 
-                repeating-linear-gradient(45deg, #43c671 25%, #4ade80 25%, #4ade80 75%, #43c671 75%, #43c671);
-            background-size: 60px 60px;
-            background-position: 0 0, 30px 30px;
-            min-height: 100vh;
-            color: #3e2723;
+            font-family: 'Sarabun', sans-serif;
+            background-color: #222;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .font-heading { 
+            font-family: 'Kanit', sans-serif; 
+            font-weight: 700;
+        }
+        
+        /* พื้นหลังสนามหญ้า (Lawn Pattern) */
+        .bg-lawn {
+            background-color: var(--lawn-light);
+            background-image: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 50px,
+                rgba(0,0,0,0.1) 50px,
+                rgba(0,0,0,0.1) 100px
+            ), repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 50px,
+                rgba(0,0,0,0.1) 50px,
+                rgba(0,0,0,0.1) 100px
+            );
         }
 
-        /* Wooden Board Component Styles */
-        .blocky-element {
-            background: linear-gradient(to bottom, #f0e6d2, #d7ccc8) !important;
-            border: var(--border-width) solid var(--border-color) !important;
-            border-radius: 16px;
-            box-shadow: 0px 8px 0px rgba(0,0,0,0.3), inset 0px 0px 15px rgba(139, 69, 19, 0.2) !important;
+        /* ดีไซน์ป้ายไม้ (Wooden Board) */
+        .wood-board {
+            background-color: var(--wood-bg);
+            border: 6px solid var(--wood-border);
+            border-radius: 12px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.6), 4px 4px 0px rgba(0,0,0,0.4);
+            color: white;
+        }
+
+        /* เงาตัวอักษรสำหรับหัวข้อใหญ่เท่านั้น */
+        .text-stroke-wood {
+            text-shadow: 2px 2px 0px #3e2210, 4px 4px 0px rgba(0,0,0,0.5);
+        }
+
+        /* ปุ่มไม้ */
+        .btn-wood {
+            background-color: #A0522D;
+            border: 4px solid #5C3A21;
+            border-radius: 8px;
+            box-shadow: 0 6px 0 #3e2210, 0 8px 5px rgba(0,0,0,0.5);
+            color: white;
             transition: all 0.1s ease;
-            color: #3e2723;
-        }
-
-        /* Wooden Sign Button (Play Button Style) */
-        .blocky-btn {
-            background: linear-gradient(to bottom, #f3a64b, #cc7014) !important;
-            border: 4px solid #5c2c06 !important;
-            border-radius: 20px !important;
-            box-shadow: 0px 6px 0px #4a2100, 0px 8px 10px rgba(0,0,0,0.4) !important;
-            font-family: 'Itim', cursive;
-            font-size: 1.25rem;
-            font-weight: bold;
-            color: white !important;
-            text-shadow: 2px 2px 0px #5c2c06;
             cursor: pointer;
-            transition: all 0.1s ease;
-            text-align: center;
-            user-select: none;
-            min-height: 54px;
-            padding: 12px 32px;
-            letter-spacing: 1px;
+            text-shadow: 1px 1px 0px #000;
+            font-family: 'Kanit', sans-serif;
+            font-weight: 600;
         }
-
-        .blocky-btn:active {
+        .btn-wood:active {
             transform: translateY(6px);
-            box-shadow: 0px 0px 0px #4a2100, 0px 2px 5px rgba(0,0,0,0.4) !important;
+            box-shadow: 0 0 0 #3e2210, 0 2px 3px rgba(0,0,0,0.5);
         }
 
-        .blocky-btn:disabled {
-            background: linear-gradient(to bottom, #9ca3af, #6b7280) !important;
-            border-color: #4b5563 !important;
-            box-shadow: 0px 6px 0px #374151 !important;
-            color: #d1d5db !important;
-            text-shadow: none;
-            cursor: not-allowed;
+        /* อนิเมชั่น */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
-
-        /* Flowchart Styles */
-        .flow-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            padding: 20px 0;
+        @keyframes pulse-dirt {
+            0% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.05); filter: brightness(1.2); }
+            100% { transform: scale(1); filter: brightness(1); }
         }
-
-        .flow-node {
-            background: #fff8e1 !important;
-            border: 4px solid #8d6e63 !important;
-            padding: 16px;
-            border-radius: 12px;
-            min-width: 280px;
-            max-width: 100%;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            position: relative;
-            box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
-            z-index: 10;
-        }
-
-        .flow-diamond {
-            background: #ffe082 !important;
-            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-            border: none;
-            padding: 32px 16px;
-            min-width: 220px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.1rem;
-            position: relative;
-            filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.2));
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-        }
+        .animate-bounce-slow { animation: bounce 2s infinite ease-in-out; }
+        .animate-bounce-fast { animation: bounce 1.2s infinite ease-in-out; }
         
-        .flow-diamond-wrapper {
-            position: relative;
-            margin: 10px 0;
-            z-index: 10;
-        }
-
-        /* Blank Slot Styling - Looks like empty dirt plot */
-        .flow-slot {
-            background: #795548 !important;
-            color: white;
-            border: 3px dashed #d7ccc8 !important;
-            padding: 16px;
-            border-radius: 12px;
-            min-width: 280px;
-            text-align: center;
+        /* หลุมดิน (Blank Slot) */
+        .dirt-mound {
+            background: #5C3A21;
+            border: 3px dashed #F59E0B;
+            border-radius: 50%;
+            width: 130px;
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            min-height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            animation: pulse-border 2s infinite;
-            z-index: 10;
+            box-shadow: inset 0 -10px 10px rgba(0,0,0,0.6), 0 4px 6px rgba(0,0,0,0.3);
+            animation: pulse-dirt 1.5s infinite;
         }
 
-        .flow-slot.filled {
-            background: #81c784 !important;
-            color: #1b5e20 !important;
-            border: 4px solid #2e7d32 !important;
-            animation: none;
-            box-shadow: 4px 4px 0px 0px #1b5e20;
-        }
-
-        .flow-slot.error {
-            background: #e57373 !important;
-            color: white !important;
-            border: 4px solid #b71c1c !important;
-            box-shadow: 4px 4px 0px 0px #b71c1c;
-            animation: shake 0.5s;
-        }
-
-        @keyframes pulse-border {
-            0% { border-color: #d7ccc8; background: #795548; }
-            50% { border-color: #a1887f; background: #6d4c41; }
-            100% { border-color: #d7ccc8; background: #795548; }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .arrow-down {
-            font-size: 28px;
-            font-weight: bold;
-            color: #3e2723;
-            line-height: 1;
-            margin: -8px 0;
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.2);
-            z-index: 5;
-        }
-
-        /* Horizontal Split for Conditions */
-        .flow-split {
-            display: flex;
-            width: 100%;
-            justify-content: space-around;
-            gap: 20px;
+        /* เส้นผังงาน (Flowchart Lines) */
+        .flow-line-v {
+            width: 4px;
+            height: 35px;
+            background-color: #fff;
+            margin: 0 auto;
             position: relative;
-            z-index: 10;
         }
-        
-        .flow-branch {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            gap: 16px;
-        }
-
-        .branch-label {
-            background: var(--border-color);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
+        .flow-line-v::after {
+            content: '▼';
+            position: absolute;
+            bottom: -10px;
+            left: -5px;
+            color: #fff;
             font-size: 14px;
-            margin-bottom: -8px;
-            z-index: 20;
+        }
+        .flow-box {
+            background-color: #fff;
+            color: #1e293b;
+            padding: 12px 22px;
+            border-radius: 20px;
+            border: 3px solid #334155;
+            text-shadow: none;
+            font-weight: 600;
+            text-align: center;
+            min-width: 180px;
+            max-width: 290px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        }
+        .flow-diamond {
+            background-color: #fcd34d;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            padding: 10px 25px;
+            text-shadow: none;
+            color: #0f172a;
+            font-weight: 700;
+            width: 170px;
+            height: 170px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 3px solid #1e293b;
+            margin: 0 auto;
+            font-size: 13px;
+            line-height: 1.3;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
         }
 
-        /* PvZ Quiz Modal Styles */
-        .pvz-modal-overlay {
-            background-color: rgba(10, 15, 30, 0.9);
+        /* Modal ท้องฟ้ายามค่ำคืน */
+        .night-modal-content {
+            background: linear-gradient(to bottom, #0f172a, #1e1b4b);
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #475569;
         }
-        .pvz-night-sky {
-            background: linear-gradient(to bottom, #0b1021 0%, #1b2645 100%);
-            border-top: 8px solid #000;
-            border-bottom: 8px solid #000;
-        }
-        .pvz-fence {
-            background: repeating-linear-gradient(to right, #5d4037, #5d4037 40px, #4e342e 40px, #4e342e 44px);
-            box-shadow: inset 0 10px 30px rgba(0,0,0,0.8);
-        }
-        .pvz-choice-box {
-            background: linear-gradient(to bottom, #f44336, #c62828);
-            border: 4px solid #3e2723;
-            border-radius: 16px;
-            box-shadow: 0px 8px 0px #27140c;
-            color: white;
-            font-family: 'Itim', cursive;
-            font-size: 1.5rem;
-            text-shadow: 2px 2px 0px #000;
-            transition: all 0.1s ease;
-        }
-        .pvz-choice-box:hover {
-            background: linear-gradient(to bottom, #ef5350, #d32f2f);
-            transform: translateY(4px);
-            box-shadow: 0px 4px 0px #27140c;
-        }
-
-        /* PvZ Lawn Gameplay Area */
-        .pvz-lawn {
-            background-color: #4ade80;
-            background-image: 
-                linear-gradient(45deg, #43c671 25%, transparent 25%, transparent 75%, #43c671 75%, #43c671),
-                linear-gradient(45deg, #43c671 25%, transparent 25%, transparent 75%, #43c671 75%, #43c671);
-            background-position: 0 0, 40px 40px;
-            background-size: 80px 80px;
-            box-shadow: inset 0px 10px 30px rgba(0,0,0,0.5) !important;
-        }
-
-        /* Tree Diagram Styles for Tab 1 */
-        .system-tree-container {
+        .night-fence {
+            position: absolute;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            overflow-x: auto;
-            padding: 20px 0;
-            /* Scrollbar styling */
-            scrollbar-width: thin;
-            scrollbar-color: #8b5a2b #fff8e1;
-        }
-        .system-tree-container::-webkit-scrollbar {
-            height: 12px;
-        }
-        .system-tree-container::-webkit-scrollbar-track {
-            background: #fff8e1;
-            border-radius: 8px;
-            border: 2px solid #8b5a2b;
-        }
-        .system-tree-container::-webkit-scrollbar-thumb {
-            background-color: #8b5a2b;
-            border-radius: 8px;
-        }
-        .system-tree {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            min-width: max-content;
-        }
-        .tree-children {
-            position: relative;
-            padding-left: 30px;
-            margin-left: 30px;
-            border-left: 6px solid #4e342e; /* Wooden branch color */
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-        .tree-children::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -30px;
-            width: 30px;
-            border-top: 6px solid #4e342e;
-            transform: translateY(-50%);
-        }
-        .tree-node-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-        .tree-node-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -30px;
-            width: 30px;
-            border-top: 6px solid #4e342e;
-            transform: translateY(-50%);
-        }
-        /* Masking the extra vertical line on top and bottom */
-        .tree-node-wrapper:first-child::after {
-            content: ''; position: absolute; top: -20px; bottom: 50%; left: -36px; width: 12px; background-color: #fff8e1;
-        }
-        .tree-node-wrapper:last-child::after {
-            content: ''; position: absolute; top: 50%; bottom: -20px; left: -36px; width: 12px; background-color: #fff8e1;
+            height: 60px;
+            background-image: repeating-linear-gradient(90deg, #5C3A21, #5C3A21 20px, #3e2210 20px, #3e2210 22px);
         }
 
-        /* Print Media Query */
+        /* ซ่อนสิ่งที่ไม่จำเป็นตอนปริ้นต์ */
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            #screen-end, #screen-end * {
-                visibility: visible;
-            }
-            #screen-end {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                background: white !important;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .blocky-element, .blocky-btn {
-                box-shadow: none !important;
-                border-width: 2px !important;
-            }
-            /* Adjust for A4 */
-            #cert-container {
-                width: 100%;
-                height: 100%;
-                margin: 0;
-                padding: 20mm;
-            }
-        }
-
-        /* Hide Scrollbar but keep functionality */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary); 
-            border-radius: 4px;
+            body * { visibility: hidden; }
+            #cert-screen, #cert-screen * { visibility: visible; }
+            #cert-screen { position: absolute; left: 0; top: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+            .no-print { display: none !important; }
+            .bg-lawn { background: #fff !important; }
+            .wood-board { box-shadow: none; border-color: #000; color: #000; text-shadow: none;}
         }
     </style>
 </head>
-<body class="p-4 md:p-8 relative">
+<body class="bg-lawn min-h-screen text-gray-800">
 
-    <!-- ==========================================
-         SCREEN 1: HOME
-         ========================================== -->
-    <div id="screen-home" class="max-w-4xl mx-auto flex flex-col items-center justify-center min-h-[80vh] relative">
-        <!-- Background Decorations (Plants & Zombies) -->
-        <div class="pointer-events-none absolute bottom-4 left-0 md:-left-12 text-7xl md:text-9xl z-0 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] transition-transform hover:scale-110">🌱</div>
-        <div class="pointer-events-none absolute bottom-24 left-16 md:left-24 text-6xl md:text-8xl z-0 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] animate-bounce">🌻</div>
-        <div class="pointer-events-none absolute bottom-4 right-0 md:-right-12 text-7xl md:text-9xl z-0 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)]" style="transform: scaleX(-1);">🧟</div>
-        <div class="pointer-events-none absolute bottom-32 right-12 md:right-24 text-6xl md:text-8xl z-0 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)]" style="transform: scaleX(-1);">🧟‍♂️</div>
-        <div class="pointer-events-none absolute bottom-12 right-24 md:right-40 text-6xl z-0 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)]">🪦</div>
-
-        <!-- Main Card -->
-        <div class="blocky-element p-8 md:p-12 w-full max-w-3xl text-center relative z-10 overflow-hidden bg-opacity-90">
-            <!-- Decorative Elements -->
-            <div class="absolute -top-6 -left-6 w-24 h-24 bg-green-500 rounded-full opacity-30 border-4 border-green-800"></div>
-            <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-yellow-500 rounded-lg opacity-30 transform rotate-12 border-4 border-yellow-800"></div>
-            
-            <!-- Stylized Title (Plants vs Zombies Parody) -->
-            <div class="mb-8 flex flex-col items-center justify-center">
-                <h1 class="text-6xl md:text-8xl font-black text-[#58c02e] drop-shadow-[0_5px_0_rgba(0,0,0,1)] tracking-wider" style="-webkit-text-stroke: 3px #1a4314; font-family: 'Itim', cursive;">SYSTEM</h1>
-                <div class="flex items-center gap-2 -mt-4 z-10">
-                    <span class="text-2xl md:text-3xl font-black bg-[#999999] rounded-full px-3 py-1 border-4 border-black drop-shadow-[0_3px_0_rgba(0,0,0,1)]" style="-webkit-text-stroke: 1px black; color: white;">vs.</span>
-                    <h1 class="text-5xl md:text-7xl font-black text-[#d63434] drop-shadow-[0_5px_0_rgba(0,0,0,1)] tracking-widest" style="-webkit-text-stroke: 3px #4a1010; transform: rotate(-3deg); font-family: 'Itim', cursive;">BUILDER</h1>
-                </div>
-            </div>
-            
-            <p class="text-xl md:text-2xl mb-2 font-bold text-green-900 drop-shadow-md">ภารกิจสร้างและเรียนรู้ระบบคอมพิวเตอร์</p>
-            <p class="text-gray-800 font-medium mb-8 max-w-xl mx-auto bg-white/70 p-4 rounded-lg border-2 border-dashed border-gray-500 shadow-inner">
-                เรียนรู้หลักการทำงานของระบบคอมพิวเตอร์ (Input, Process, Output, Storage) 
-                ผ่านการต่อจิ๊กซอว์ผังงานตรรกะแบบลำดับ เงื่อนไข และการทำซ้ำ
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <button onclick="showScreen('screen-lesson')" class="blocky-btn w-full sm:w-auto text-xl bg-blue-500">
-                    📖 คู่มือการเรียนรู้
-                </button>
-                <button onclick="startGame()" class="blocky-btn w-full sm:w-auto text-3xl px-12 animate-pulse">
-                    Play!
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ==========================================
-         SCREEN 2: LESSON (Interactive Manual)
-         ========================================== -->
-    <div id="screen-lesson" class="w-full hidden flex-col min-h-[85vh]">
-        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-            <h2 class="text-3xl font-bold bg-white px-6 py-2 blocky-element inline-block">คู่มือวิศวกรระบบ</h2>
-            <button onclick="showScreen('screen-home')" class="blocky-btn bg-red-500 text-white w-full sm:w-auto">🏠 กลับหน้าหลัก</button>
-        </div>
-
-        <div class="blocky-element bg-white flex flex-col md:flex-row flex-grow overflow-hidden shadow-xl">
-            <!-- Tabs Sidebar -->
-            <div class="w-full md:w-64 lg:w-80 bg-[#f0e6d2] border-b md:border-b-0 md:border-r-8 border-[#4e342e] p-4 flex flex-row md:flex-col gap-3 overflow-x-auto shrink-0">
-                <button onclick="openTab('tab1')" id="btn-tab1" class="blocky-btn bg-blue-500 text-white whitespace-nowrap text-lg">1. ภาพรวมระบบ</button>
-                <button onclick="openTab('tab2')" id="btn-tab2" class="blocky-btn bg-white text-[#3e2723] whitespace-nowrap text-lg">2. รับข้อมูล (Input)</button>
-                <button onclick="openTab('tab3')" id="btn-tab3" class="blocky-btn bg-white text-[#3e2723] whitespace-nowrap text-lg">3. ประมวลผล (CPU)</button>
-                <button onclick="openTab('tab4')" id="btn-tab4" class="blocky-btn bg-white text-[#3e2723] whitespace-nowrap text-lg">4. หน่วยความจำ</button>
-                <button onclick="openTab('tab5')" id="btn-tab5" class="blocky-btn bg-white text-[#3e2723] whitespace-nowrap text-lg">5. แสดงผล (Output)</button>
-            </div>
-            
-            <!-- Tab Contents -->
-            <div class="flex-1 p-6 md:p-8 lg:p-12 overflow-y-auto bg-[#fff8e1] min-h-[60vh] md:min-h-[70vh]">
-                <!-- Tab 1 -->
-                <div id="tab1" class="tab-content">
-                    <h3 class="text-3xl font-black text-[#1b5e20] mb-4 drop-shadow-sm" style="font-family: 'Itim', cursive;">องค์ประกอบของระบบคอมพิวเตอร์</h3>
-                    <p class="mb-4 text-lg font-bold text-[#3e2723]">ระบบคอมพิวเตอร์ (Computer System) จะทำงานได้ต้องประกอบด้วยส่วนสำคัญ ดังแผนภาพด้านล่าง:</p>
-                    
-                    <div class="system-tree-container">
-                        <div class="system-tree">
-                            
-                            <!-- Root: Computer System -->
-                            <div class="blocky-element bg-yellow-400 p-4 border-4 border-[#8b5a2b] text-center z-10 min-w-[220px] shadow-lg">
-                                <div class="text-6xl mb-2 drop-shadow-md">💻</div>
-                                <h4 class="font-black text-xl text-yellow-900">ระบบคอมพิวเตอร์</h4>
-                                <p class="text-sm font-bold text-yellow-800">(Computer System)</p>
-                            </div>
-
-                            <!-- Level 1 Children -->
-                            <div class="tree-children">
-                                
-                                <!-- Hardware Node -->
-                                <div class="tree-node-wrapper">
-                                    <div class="system-tree">
-                                        <div class="blocky-element bg-blue-500 p-4 border-4 border-[#8b5a2b] text-center text-white min-w-[180px] shadow-lg z-10">
-                                            <div class="text-5xl mb-2 drop-shadow-md">🖥️</div>
-                                            <h4 class="font-black text-lg">ฮาร์ดแวร์</h4>
-                                            <p class="text-xs font-bold text-blue-200">(Hardware)</p>
-                                        </div>
-                                        
-                                        <!-- Hardware Children (Level 2) -->
-                                        <div class="tree-children" style="gap: 12px;">
-                                            <div class="tree-node-wrapper">
-                                                <div class="blocky-element bg-green-500 p-3 px-4 border-4 border-[#8b5a2b] flex items-center justify-between text-white min-w-[340px] shadow-lg">
-                                                    <div class="text-left">
-                                                        <h4 class="font-black text-[15px]">หน่วยประมวลผลกลาง</h4>
-                                                        <p class="text-xs font-bold text-green-200">(Central Processing Unit : CPU)</p>
-                                                    </div>
-                                                    <div class="text-4xl drop-shadow-md ml-3">🧠</div>
-                                                </div>
-                                            </div>
-                                            <div class="tree-node-wrapper">
-                                                <div class="blocky-element bg-green-500 p-3 px-4 border-4 border-[#8b5a2b] flex items-center justify-between text-white min-w-[340px] shadow-lg">
-                                                    <div class="text-left">
-                                                        <h4 class="font-black text-[15px]">หน่วยความจำและจัดเก็บข้อมูล</h4>
-                                                        <p class="text-xs font-bold text-green-200">(Memory and Storage Unit)</p>
-                                                    </div>
-                                                    <div class="text-4xl drop-shadow-md ml-3">💾</div>
-                                                </div>
-                                            </div>
-                                            <div class="tree-node-wrapper">
-                                                <div class="blocky-element bg-green-500 p-3 px-4 border-4 border-[#8b5a2b] flex items-center justify-between text-white min-w-[340px] shadow-lg">
-                                                    <div class="text-left">
-                                                        <h4 class="font-black text-[15px]">หน่วยรับเข้าและส่งออก</h4>
-                                                        <p class="text-xs font-bold text-green-200">(Input/Output Unit)</p>
-                                                    </div>
-                                                    <div class="text-4xl drop-shadow-md ml-3">⌨️</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Software Node -->
-                                <div class="tree-node-wrapper">
-                                    <div class="blocky-element bg-blue-500 p-4 border-4 border-[#8b5a2b] text-center text-white min-w-[180px] shadow-lg z-10">
-                                        <div class="text-5xl mb-2 drop-shadow-md">💽</div>
-                                        <h4 class="font-black text-lg">ซอฟต์แวร์</h4>
-                                        <p class="text-xs font-bold text-blue-200">(Software)</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-[#fff3e0] p-5 rounded-xl border-4 border-[#8b5a2b] shadow-[inset_0_4px_8px_rgba(0,0,0,0.1)] mt-6">
-                        <h4 class="font-black text-xl text-[#8b5a2b] flex items-center gap-2 mb-3" style="font-family: 'Itim', cursive;">
-                            <span class="text-3xl drop-shadow-sm">🌻</span> โครงสร้างผังงาน (Flowchart) ที่เกี่ยวข้อง:
-                        </h4>
-                        <ul class="list-none ml-2 space-y-3 font-medium text-[#3e2723]">
-                            <li class="flex items-start gap-3">
-                                <span class="text-green-600 text-xl mt-0">▶</span> 
-                                <span><strong>แบบลำดับ (Sequence):</strong> ทำงานจากบนลงล่างตามลำดับ (รับข้อมูล -> คิด -> แสดงผล)</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="text-green-600 text-xl mt-0">▶</span> 
-                                <span><strong>แบบมีเงื่อนไข (Condition):</strong> ตัดสินใจเลือกทางใดทางหนึ่ง เช่น "รหัสผ่านถูกหรือไม่?"</span>
-                            </li>
-                            <li class="flex items-start gap-3">
-                                <span class="text-green-600 text-xl mt-0">▶</span> 
-                                <span><strong>แบบทำซ้ำ (Loop):</strong> วนกลับไปทำงานเดิมจนกว่าจะบรรลุเงื่อนไข เช่น "โหลดข้อมูลจนกว่าจะครบ 100%"</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Tab 2 -->
-                <div id="tab2" class="tab-content hidden">
-                    <h3 class="text-2xl font-bold text-blue-800 mb-4">หน่วยรับข้อมูล (Input Unit)</h3>
-                    <p class="mb-4">ทำหน้าที่รับข้อมูล คำสั่ง หรือโปรแกรมจากผู้ใช้ส่งเข้าสู่ระบบคอมพิวเตอร์เพื่อนำไปประมวลผล</p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="blocky-element p-4 bg-white border-2">
-                            <span class="text-2xl">⌨️</span> <strong>คีย์บอร์ด (Keyboard)</strong> - รับตัวอักษร
-                        </div>
-                        <div class="blocky-element p-4 bg-white border-2">
-                            <span class="text-2xl">🖱️</span> <strong>เมาส์ (Mouse)</strong> - รับตำแหน่งพิกัด
-                        </div>
-                        <div class="blocky-element p-4 bg-white border-2">
-                            <span class="text-2xl">🎤</span> <strong>ไมโครโฟน (Mic)</strong> - รับเสียง
-                        </div>
-                        <div class="blocky-element p-4 bg-white border-2">
-                            <span class="text-2xl">📷</span> <strong>กล้อง (Camera)</strong> - รับภาพ/วิดีโอ
-                        </div>
-                        <div class="blocky-element p-4 bg-white col-span-2 text-center bg-yellow-50 border-2 border-yellow-400">
-                            <span class="text-2xl">🌡️</span> <strong>เซ็นเซอร์ (Sensor)</strong> - รับข้อมูลสภาพแวดล้อม (อุณหภูมิ, แสง)
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab 3 -->
-                <div id="tab3" class="tab-content hidden">
-                    <h3 class="text-2xl font-bold text-blue-800 mb-4">หน่วยประมวลผลกลาง (CPU)</h3>
-                    <p class="mb-4">เปรียบเสมือน <strong>"สมอง"</strong> ของคอมพิวเตอร์ ทำหน้าที่คำนวณ เปรียบเทียบ และควบคุมการทำงานของอุปกรณ์ต่างๆ</p>
-                    <div class="bg-blue-50 blocky-element p-6 mb-4 border-2 border-blue-300">
-                        <h4 class="font-bold text-xl mb-2">องค์ประกอบหลักของ CPU:</h4>
-                        <ol class="list-decimal ml-6 space-y-2 text-lg">
-                            <li><strong>ALU (Arithmetic Logic Unit):</strong> หน่วยคำนวณและตรรกะ ทำหน้าที่บวก ลบ คูณ หาร และเปรียบเทียบเงื่อนไข (จริง/เท็จ)</li>
-                            <li><strong>CU (Control Unit):</strong> หน่วยควบคุม คอยอ่านคำสั่ง สั่งการ และประสานงานอุปกรณ์อื่นๆ</li>
-                            <li><strong>Registers:</strong> หน่วยความจำขนาดเล็กมากๆ ใน CPU ที่ทำงานเร็วที่สุด ไว้เก็บข้อมูลชั่วคราวขณะคำนวณ</li>
-                        </ol>
-                    </div>
-                    <p class="text-red-600 font-bold bg-red-100 p-3 rounded-lg shadow-sm border border-red-300">
-                        ▶ วัฏจักรการทำงาน (Machine Cycle): Fetch (ดึงคำสั่ง) -> Decode (ถอดรหัส) -> Execute (กระทำการ) -> Store (เก็บผลลัพธ์) **ทำงานเป็น Loop ซ้ำๆ**
-                    </p>
-                </div>
-
-                <!-- Tab 4 -->
-                <div id="tab4" class="tab-content hidden">
-                    <h3 class="text-2xl font-bold text-blue-800 mb-4">หน่วยความจำ (Memory & Storage)</h3>
-                    <p class="mb-4">ที่เก็บข้อมูลของระบบ แบ่งออกเป็น 2 ประเภทหลักที่ทำงานร่วมกัน</p>
-                    <div class="flex flex-col gap-4">
-                        <div class="blocky-element p-4 border-l-8 border-green-500 bg-white border-y-2 border-r-2">
-                            <h4 class="font-bold text-xl text-green-700">1. หน่วยความจำหลัก (Primary Memory)</h4>
-                            <p>ต้องมีไฟเลี้ยง ข้อมูลจะหายไปเมื่อปิดเครื่อง ทำงานเร็วมาก (ทำงานร่วมกับ CPU โดยตรง)</p>
-                            <ul class="list-disc ml-5 mt-2">
-                                <li><strong>RAM (Random Access Memory):</strong> โต๊ะทำงานหลัก เปิดแอปเยอะ RAM ต้องเยอะ</li>
-                                <li><strong>ROM (Read Only Memory):</strong> อ่านได้อย่างเดียว เก็บโปรแกรมเริ่มต้นเครื่อง (BIOS/UEFI)</li>
-                            </ul>
-                        </div>
-                        <div class="blocky-element p-4 border-l-8 border-yellow-500 bg-white border-y-2 border-r-2">
-                            <h4 class="font-bold text-xl text-yellow-700">2. หน่วยความจำสำรอง (Secondary Storage)</h4>
-                            <p>ไม่มีไฟเลี้ยงข้อมูลก็ไม่หาย เป็นคลังเก็บของถาวร ทำงานช้ากว่า RAM</p>
-                            <ul class="list-disc ml-5 mt-2">
-                                <li><strong>HDD (Hard Disk Drive):</strong> จานแม่เหล็กหมุน ความจุสูง ราคาถูก ช้า</li>
-                                <li><strong>SSD (Solid State Drive):</strong> ชิปแฟลช ไม่มีชิ้นส่วนเคลื่อนไหว เร็วมาก ราคาสูงกว่า</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tab 5 -->
-                <div id="tab5" class="tab-content hidden">
-                    <h3 class="text-2xl font-bold text-blue-800 mb-4">หน่วยแสดงผล (Output Unit)</h3>
-                    <p class="mb-4">นำผลลัพธ์ที่ CPU ประมวลผลเสร็จแล้ว แปลงกลับมาเป็นรูปแบบที่มนุษย์เข้าใจได้</p>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                        <div class="blocky-element p-6 bg-white border-2">
-                            <div class="text-5xl mb-3">🖥️</div>
-                            <h4 class="font-bold text-lg">จอภาพ (Monitor)</h4>
-                            <p class="text-sm text-gray-600 mt-2">แสดงผลลัพธ์แบบชั่วคราว (Soft Copy) เป็นภาพหรือข้อความ</p>
-                        </div>
-                        <div class="blocky-element p-6 bg-white border-2">
-                            <div class="text-5xl mb-3">🖨️</div>
-                            <h4 class="font-bold text-lg">เครื่องพิมพ์ (Printer)</h4>
-                            <p class="text-sm text-gray-600 mt-2">แสดงผลลัพธ์แบบถาวร (Hard Copy) พิมพ์ลงบนกระดาษ</p>
-                        </div>
-                        <div class="blocky-element p-6 bg-white border-2">
-                            <div class="text-5xl mb-3">🔊</div>
-                            <h4 class="font-bold text-lg">ลำโพง (Speaker)</h4>
-                            <p class="text-sm text-gray-600 mt-2">แสดงผลลัพธ์ในรูปแบบของเสียง</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- ================= 1. HOME SCREEN ================= -->
+    <div id="home-screen" class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="text-center mb-8 relative max-w-2xl px-4">
+            <h1 class="font-heading text-4xl md:text-6xl text-white tracking-wider leading-tight" style="-webkit-text-stroke: 2px #000; text-shadow: 0 6px 0 #000;">
+                กระบวนการเทคโนโลยี<br><span class="text-green-400 text-3xl md:text-5xl">(Technological Process)</span>
+            </h1>
+            <p class="font-heading text-xl md:text-2xl text-yellow-300 mt-6 wood-board px-6 py-2 inline-block shadow-lg">เรื่อง กระบวนการเทคโนโลยี, นวัตกรรม & ทรัพย์สินทางปัญญา</p>
         </div>
         
-        <div class="mt-6 text-center">
-            <button onclick="startGame()" class="blocky-btn bg-green-500 text-white text-xl w-full md:w-auto px-12">
-                🎮 เข้าใจแล้ว! ลุยทำภารกิจกันเลย
-            </button>
+        <div class="flex justify-between w-full max-w-2xl mb-8 px-8">
+            <div class="text-7xl animate-bounce-slow">💡 🛡️ 👷‍♂️</div>
+            <div class="text-7xl animate-bounce-fast">🧟 🪦 🧟‍♂️</div>
+        </div>
+
+        <div class="flex flex-col gap-4 w-full max-w-md px-4">
+            <button onclick="switchScreen('lesson-screen')" class="btn-wood font-heading text-2xl py-4 w-full">📚 คู่มือวิศวกร (Almanac)</button>
+            <button onclick="startGame()" class="btn-wood font-heading text-2xl py-4 w-full bg-green-600 border-green-800">🎮 ภารกิจต่อผังงานปราบซอมบี้</button>
+            <button onclick="startExam()" class="btn-wood font-heading text-2xl py-4 w-full bg-indigo-600 border-indigo-800">📝 สอบเก็บคะแนน (20 ข้อ)</button>
         </div>
     </div>
 
-    <!-- ==========================================
-         SCREEN 3: GAMEPLAY
-         ========================================== -->
-    <div id="screen-game" class="max-w-5xl mx-auto hidden flex-col min-h-[90vh]">
-        <!-- HUD (Score & Progress) -->
-        <div class="blocky-element text-white p-4 mb-4 flex flex-wrap justify-between items-center sticky top-2 z-50" style="background: linear-gradient(to bottom, #8b5a2b, #5d4037);">
-            <div class="flex items-center gap-2">
-                <span class="text-4xl drop-shadow-md">🚩</span>
-                <div class="text-2xl font-bold text-white drop-shadow-[0_2px_0_#000]">ด่าน: <span id="level-display">1</span>/20</div>
-            </div>
-            <div class="flex items-center gap-2 bg-[#fff8e1] px-4 py-2 rounded-full border-4 border-[#4e342e] shadow-[inset_0_4px_8px_rgba(0,0,0,0.3)]">
-                <span class="text-4xl drop-shadow-md hover:animate-spin cursor-pointer">☀️</span>
-                <div class="text-2xl font-bold text-black">คะแนน: <span id="score-display">0</span></div>
-            </div>
-            <button onclick="quitGame()" class="blocky-btn bg-red-600 text-white text-sm py-2 px-4 mt-2 sm:mt-0">ออกจากเกม 🧟</button>
+    <!-- ================= 2. LESSON SCREEN (คู่มือวิศวกรระบบ) ================= -->
+    <div id="lesson-screen" class="hidden min-h-screen p-4 md:p-8 flex flex-col h-screen">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="font-heading text-2xl md:text-4xl text-white text-stroke-wood">📚 คู่มือวิศวกรและนวัตกร (Almanac)</h2>
+            <button onclick="switchScreen('home-screen')" class="btn-wood px-5 py-2 font-heading text-lg">🏠 กลับหน้าแรก</button>
         </div>
-
-        <!-- Scenario Info -->
-        <div class="blocky-element bg-white p-6 mb-4 border-b-8 z-40 relative">
-            <h3 class="text-xl font-bold text-[#8b5a2b] mb-2 drop-shadow-[0_1px_0_#fff]">📝 สถานการณ์ (Scenario):</h3>
-            <p id="scenario-text" class="text-xl md:text-2xl font-bold text-[#3e2723]"></p>
-            <div id="logic-type-badge" class="inline-block mt-3 px-3 py-1 rounded-lg text-sm font-bold shadow-md border-2 border-black"></div>
-        </div>
-
-        <!-- Flowchart Area wrapped with Lawn Grid and Characters -->
-        <div class="blocky-element bg-[#4ade80] border-8 border-[#27632a] w-full flex-grow flex flex-row overflow-hidden relative mb-6 rounded-2xl shadow-[inset_0_10px_30px_rgba(0,0,0,0.5)]">
-            
-            <!-- Left Side Characters (Peashooters) -->
-            <div class="w-16 md:w-28 flex flex-col justify-evenly items-center border-r-4 border-black/10 bg-[#4ade80]/40 z-20 py-8">
-                <span class="text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]">🌱</span>
-                <span class="text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]">🌱</span>
-                <span class="text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]">🌱</span>
-                <span class="text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]">🌱</span>
-                <span class="text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]">🌱</span>
-            </div>
-
-            <!-- Center Flowchart (The main lawn) -->
-            <div class="pvz-lawn flex-grow p-4 md:p-8 flex flex-col items-center overflow-y-auto relative z-30" id="flowchart-area">
-                <!-- JavaScript will render the flowchart nodes here -->
-            </div>
-
-            <!-- Right Side Characters (Zombies) -->
-            <div class="w-16 md:w-28 flex flex-col justify-evenly items-center border-l-4 border-black/10 bg-[#4ade80]/40 z-20 py-8">
-                <span class="text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]" style="transform: scaleX(-1);">🧟</span>
-                <span class="text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]" style="transform: scaleX(-1);">🧟‍♂️</span>
-                <span class="text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]" style="transform: scaleX(-1);">🧟</span>
-                <span class="text-5xl md:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)]" style="transform: scaleX(-1);">🧟‍♂️</span>
-            </div>
-
-        </div>
-
-        <!-- Action Button -->
-        <button id="btn-check" onclick="checkAnswer()" class="blocky-btn bg-green-500 text-white text-2xl py-4 w-full disabled:opacity-50" disabled>
-            🔍 ตรวจสอบระบบ
-        </button>
-    </div>
-
-    <!-- ==========================================
-         SCREEN 4: END / CERTIFICATE
-         ========================================== -->
-    <div id="screen-end" class="max-w-3xl mx-auto hidden flex-col items-center justify-center min-h-[90vh]">
-        <div class="no-print w-full bg-white p-8 blocky-element text-center mb-8 relative overflow-hidden">
-            <!-- Confetti/Sun Decorations -->
-            <div class="absolute top-4 left-4 text-4xl animate-spin">☀️</div>
-            <div class="absolute top-4 right-4 text-4xl animate-spin">☀️</div>
-
-            <h1 class="text-4xl md:text-5xl font-black text-green-600 mb-4 drop-shadow-[0_2px_0_#000]" style="-webkit-text-stroke: 1px black;">🎉 ยินดีด้วย! ภารกิจสำเร็จ 🎉</h1>
-            <p class="text-xl md:text-2xl mb-2 font-bold text-gray-700">คุณสามารถปกป้องบ้านและสร้างระบบได้สมบูรณ์!</p>
-            <p class="text-3xl font-bold text-[#d63434] mb-6 drop-shadow-[0_2px_0_#000]" style="-webkit-text-stroke: 1px black;">คะแนนของคุณ: <span id="final-score"></span> / 2000</p>
-            
-            <div class="mb-8 max-w-sm mx-auto bg-[#fff8e1] p-4 rounded-xl border-4 border-[#8b5a2b]">
-                <label class="block text-left font-bold mb-2 text-[#3e2723]">พิมพ์ชื่อของคุณเพื่อรับเกียรติบัตร:</label>
-                <input type="text" id="player-name" placeholder="ชื่อ-นามสกุล" class="w-full p-3 border-2 border-[#8b5a2b] rounded-lg outline-none focus:border-blue-500 font-bold text-lg">
+        
+        <div class="flex flex-col md:flex-row flex-grow gap-4 overflow-hidden">
+            <!-- Tabs Menu -->
+            <div class="wood-board w-full md:w-1/4 p-4 flex flex-row md:flex-col gap-2 overflow-x-auto md:overflow-y-auto">
+                <button onclick="showTab(1)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-1">1. การวิเคราะห์ระบุปัญหา 🔎</button>
+                <button onclick="showTab(2)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-2">2. วางแผนด้วย Gantt Chart 📊</button>
+                <button onclick="showTab(3)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-3">3. เกณฑ์การประเมินผล (Rubrics) 📝</button>
+                <button onclick="showTab(4)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-4">4. สิ่งประดิษฐ์ vs นวัตกรรม 💡</button>
+                <button onclick="showTab(5)" class="btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal" id="tab-btn-5">5. ทรัพย์สินทางปัญญา (IP) 🛡️</button>
             </div>
             
-            <div class="flex flex-col md:flex-row gap-4 justify-center">
-                <button onclick="generateCertificate()" class="blocky-btn bg-blue-500 text-white">📜 สร้างเกียรติบัตร</button>
-                <button onclick="showScreen('screen-home')" class="blocky-btn bg-yellow-400 text-black">🏠 กลับหน้าแรก</button>
-            </div>
-        </div>
-
-        <!-- Printable Certificate Area -->
-        <div id="certificateArea" class="hidden w-full bg-[#fff8e1] p-12 relative overflow-hidden shadow-2xl" style="border: 12px solid #8b5a2b; border-radius: 16px;">
-            <!-- Decor -->
-            <div class="absolute top-0 left-0 w-32 h-32 bg-green-200 rounded-br-[100px] border-b-8 border-r-8 border-green-600 opacity-50"></div>
-            <div class="absolute bottom-0 right-0 w-32 h-32 bg-yellow-200 rounded-tl-[100px] border-t-8 border-l-8 border-yellow-600 opacity-50"></div>
-            <div class="absolute top-10 right-10 text-6xl opacity-30">🌻</div>
-            <div class="absolute bottom-10 left-10 text-6xl opacity-30">🧠</div>
-            
-            <div class="text-center relative z-10">
-                <h2 class="text-5xl font-black text-[#1b5e20] mb-2 drop-shadow-[0_2px_0_#000]" style="-webkit-text-stroke: 1px black; font-family: 'Itim', cursive;">ใบประกาศเกียรติบัตร</h2>
-                <h3 class="text-xl font-bold text-gray-600 mb-8 border-b-4 border-dashed border-[#8b5a2b] inline-block pb-2 px-8">SYSTEM BUILDER ACADEMY</h3>
+            <!-- Tab Content -->
+            <div class="wood-board w-full md:w-3/4 p-6 overflow-y-auto relative">
                 
-                <p class="text-xl mb-2 font-bold text-[#3e2723]">ขอมอบเกียรติบัตรฉบับนี้เพื่อแสดงว่า</p>
-                <h1 id="cert-name" class="text-4xl md:text-5xl font-black text-[#d63434] border-b-4 border-[#3e2723] inline-block px-8 py-2 mb-6 min-w-[300px] tracking-wide"></h1>
-                
-                <p class="text-xl mb-4 font-bold text-[#3e2723]">ได้ผ่านการอบรมและทดสอบทักษะเชิงตรรกะหัวข้อ</p>
-                <p class="text-3xl font-black text-blue-700 mb-6 drop-shadow-sm">"หลักการทำงานของระบบคอมพิวเตอร์"</p>
-                
-                <p class="text-2xl font-bold text-[#8b5a2b] mb-12 bg-white inline-block px-6 py-2 rounded-full border-4 border-[#8b5a2b]">
-                    คะแนนรวม: <span id="cert-score" class="text-green-600"></span> คะแนน
-                </p>
-                
-                <div class="flex justify-between items-end mt-8 px-4 md:px-12">
-                    <div class="text-center">
-                        <div class="w-28 h-28 bg-yellow-100 rounded-full mx-auto mb-4 flex items-center justify-center border-4 border-yellow-500 shadow-md">
-                            <span class="text-5xl drop-shadow-md">🏆</span>
+                <!-- Tab 1: 5W1H & Problem Analysis Table -->
+                <div id="tab-content-1" class="tab-content">
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 1: การระบุปัญหา & ตารางวิเคราะห์รายละเอียด 🔎</h3>
+                    <p class="mb-4 text-base md:text-lg leading-relaxed text-yellow-50">เมื่อพบปัญหาหรือความต้องการ นวัตกรและวิศวกรจะต้องใช้ <b>กรอบ 5W1H</b> นำมาจัดทำเป็น <b>"ตารางวิเคราะห์รายละเอียดของปัญหา"</b> เพื่อทำความเข้าใจปัญหาอย่างถ่องแท้ก่อนเริ่มลงมือออกแบบและพัฒนา</p>
+                    
+                    <!-- Interactive Case Study Selector -->
+                    <div class="bg-amber-100 p-3 rounded-lg border-2 border-amber-400 text-slate-900 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+                        <span class="font-heading text-base font-semibold">🔄 เลือกกรณีศึกษาเพื่อดูตัวอย่างตาราง:</span>
+                        <div class="flex gap-2">
+                            <button onclick="switchCaseStudy('garbage')" id="btn-case-garbage" class="px-3 py-1 rounded bg-blue-600 text-white font-semibold text-xs md:text-sm">1) กลิ่นขยะใน รร.</button>
+                            <button onclick="switchCaseStudy('pm25')" id="btn-case-pm25" class="px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm">2) ฝุ่น PM 2.5</button>
+                            <button onclick="switchCaseStudy('elderly')" id="btn-case-elderly" class="px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm">3) ลืมกินยา</button>
                         </div>
-                        <p class="font-bold text-lg text-[#3e2723]">วิศวกรระบบระดับต้น</p>
                     </div>
-                    <div class="text-center">
-                        <div class="border-b-4 border-[#3e2723] w-48 mb-2 mx-auto"></div>
-                        <p class="font-bold text-lg text-[#3e2723]">( ผู้สอน AI )</p>
-                        <p class="text-sm font-bold text-gray-500 mt-1">ผู้อำนวยการศูนย์วิทยาการคำนวณ</p>
+
+                    <!-- Problem Analysis Table Widget -->
+                    <div class="bg-amber-50 p-4 rounded-xl border-4 border-amber-200 text-slate-900 shadow-lg">
+                        <h4 class="font-heading text-lg text-amber-900 mb-3 text-center border-b border-amber-300 pb-1 flex justify-center items-center gap-2">
+                            📋 ตารางวิเคราะห์รายละเอียดของปัญหา: <span id="table-case-title" class="text-blue-800">ปัญหาถังขยะโรงเรียนส่งกลิ่นรบกวน</span>
+                        </h4>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-xs md:text-sm border-collapse">
+                                <thead>
+                                    <tr class="bg-amber-200 text-slate-900 font-heading">
+                                        <th class="border border-amber-300 p-2 text-center w-24">คำถาม (5W1H)</th>
+                                        <th class="border border-amber-300 p-2 text-center w-40">ประเด็นวิเคราะห์</th>
+                                        <th class="border border-amber-300 p-2 text-left">รายละเอียดผลการวิเคราะห์</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-800">
+                                    <tr>
+                                        <td class="border border-amber-300 p-2 font-bold text-center bg-blue-50">Who</td>
+                                        <td class="border border-amber-300 p-2 font-semibold bg-blue-50 text-center">ใครคือผู้เผชิญปัญหา?</td>
+                                        <td id="td-who" class="border border-amber-300 p-2 bg-white">นักเรียน ครู และบุคลากรที่ต้องเดินผ่านบริเวณถังขยะ</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-amber-300 p-2 font-bold text-center bg-red-50">What</td>
+                                        <td class="border border-amber-300 p-2 font-semibold bg-red-50 text-center">ปัญหาที่ต้องแก้ไขคืออะไร?</td>
+                                        <td id="td-what" class="border border-amber-300 p-2 bg-white">กลิ่นเหม็นอับจากเศษอาหารในถังขยะและมีแมลงวันตอมส่งผลเสียต่อสุขอนามัย</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-amber-300 p-2 font-bold text-center bg-green-50">Where</td>
+                                        <td class="border border-amber-300 p-2 font-semibold bg-green-50 text-center">ปัญหาเกิดขึ้นที่ไหน?</td>
+                                        <td id="td-where" class="border border-amber-300 p-2 bg-white">บริเวณจุดพักขยะข้างโรงอาหารและใต้อาคารเรียน 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-amber-300 p-2 font-bold text-center bg-amber-50">When</td>
+                                        <td class="border border-amber-300 p-2 font-semibold bg-amber-50 text-center">ปัญหาเกิดเมื่อใด?</td>
+                                        <td id="td-when" class="border border-amber-300 p-2 bg-white">ช่วงพักกลางวันจนถึงช่วงเย็นหลังเลิกเรียนที่มีเศษอาหารสะสมมาก</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-amber-300 p-2 font-bold text-center bg-purple-50">Why</td>
+                                        <td class="border border-amber-300 p-2 font-semibold bg-purple-50 text-center">ทำไมต้องแก้ไขปัญหานี้?</td>
+                                        <td id="td-why" class="border border-amber-300 p-2 bg-white">เพื่อปรับปรุงทัศนียภาพ ป้องกันกลิ่นรบกวนสมาธิเรียน และลดความเสี่ยงโรคทางเดินอาหาร</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="border border-amber-300 p-2 font-bold text-center bg-orange-50">How</td>
+                                        <td class="border border-amber-300 p-2 font-semibold bg-orange-50 text-center">จะแก้ไขปัญหานี้อย่างไร?</td>
+                                        <td id="td-how" class="border border-amber-300 p-2 bg-white">ออกแบบถังขยะที่มีฝาเปิด-ปิดอัตโนมัติเมื่อยื่นมือเข้าใกล้ และมีตัวกรองกลิ่นอับด้านใน</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div class="no-print text-center mt-8 absolute top-4 right-4">
-                <button onclick="window.print()" class="blocky-btn bg-green-500 text-white shadow-lg">🖨️ พิมพ์เกียรติบัตร</button>
+
+                <!-- Tab 2: Gantt Chart -->
+                <div id="tab-content-2" class="tab-content hidden">
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 4: การวางแผนการทำงานด้วย Gantt Chart 📊</h3>
+                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">ในการพัฒนาเทคโนโลยี การวางแผนและกำหนดเวลาเป็นสิ่งสำคัญมาก วิศวกรจะใช้ <b>Gantt Chart (แผนภูมิแกนต์)</b> เพื่อระบุกิจกรรมย่อย ระยะเวลา และผู้รับผิดชอบอย่างเป็นระบบ</p>
+                    
+                    <div class="bg-amber-50 p-4 rounded-xl border-4 border-amber-200 text-slate-900 overflow-x-auto shadow-inner">
+                        <table class="w-full text-sm border-collapse min-w-[500px]">
+                            <thead>
+                                <tr class="bg-amber-100 font-heading">
+                                    <th class="border border-amber-300 p-3 text-left">กิจกรรมหลักของวิศวกร</th>
+                                    <th class="border border-amber-300 p-3 text-center">สัปดาห์ 1</th>
+                                    <th class="border border-amber-300 p-3 text-center">สัปดาห์ 2</th>
+                                    <th class="border border-amber-300 p-3 text-center">สัปดาห์ 3</th>
+                                    <th class="border border-amber-300 p-3 text-center">สัปดาห์ 4</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="border border-amber-200 p-3 font-semibold">1. ระบุปัญหา & หาข้อมูลย้อนหลัง</td>
+                                    <td class="border border-amber-200 p-3 bg-blue-500 rounded text-center text-white font-bold text-xs">ดำเนินงาน</td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-amber-200 p-3 font-semibold">2. ออกแบบวิธีการแก้ปัญหาและร่างแบบ</td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                    <td class="border border-amber-200 p-3 bg-blue-500 rounded text-center text-white font-bold text-xs">ดำเนินงาน</td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-amber-200 p-3 font-semibold">3. ลงมือสร้างต้นแบบ (Build Hardware/Software)</td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                    <td class="border border-amber-200 p-3 bg-blue-500 rounded text-center text-white font-bold text-xs">ดำเนินงาน</td>
+                                    <td class="border border-amber-200 p-3 bg-blue-500 rounded text-center text-white font-bold text-xs">ดำเนินงาน</td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                </tr>
+                                <tr>
+                                    <td class="border border-amber-200 p-3 font-semibold">4. ทดสอบความถูกต้อง ปรับปรุง และนำเสนอผลงาน</td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                    <td class="border border-amber-200 p-3"></td>
+                                    <td class="border border-amber-200 p-3 bg-blue-500 rounded text-center text-white font-bold text-xs">ดำเนินงาน</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Rubrics -->
+                <div id="tab-content-3" class="tab-content hidden">
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">ขั้นที่ 5: เกณฑ์การประเมินผล (Testing Criteria) 📝</h3>
+                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">การทดสอบชิ้นงานไม่ใช่เรื่องของการเดาสุ่ม แต่ต้องตั้งเป้าเกณฑ์การวัดผลที่มีขอบเขตชัดเจนและทำออกมาเป็นรูปแบบ <b>เกณฑ์ระดับคะแนน (Rubrics)</b> เพื่อประเมินว่าเทคโนโลยีนั้นทำงานได้สำเร็จจริงหรือไม่</p>
+                    
+                    <div class="bg-amber-50 text-slate-900 p-6 rounded-lg border-2 border-yellow-600 shadow-md">
+                        <h4 class="font-heading text-xl text-amber-900 mb-4 flex items-center gap-2">
+                            <span>💡</span> ประเด็นสำคัญที่ใช้ในเกณฑ์การประเมินผล
+                        </h4>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <strong class="font-heading text-base md:text-lg block text-slate-800">1. ด้านการใช้งานตรงเป้าหมาย (Functionality)</strong>
+                                <span class="text-sm md:text-base text-slate-600">สามารถทำงานได้ตรงตามกรอบขอบเขตของปัญหาที่วิเคราะห์ไว้ (เช่น ถังขยะต้องเปิดฝาเองอัตโนมัติเมื่อยื่นมือเข้าไปในระยะ 30 ซม. ได้ถูกต้องสม่ำเสมอ)</span>
+                            </div>
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <strong class="font-heading text-base md:text-lg block text-slate-800">2. ด้านความแข็งแรงและปลอดภัย (Safety & Durability)</strong>
+                                <span class="text-sm md:text-base text-slate-600">โครงสร้างชิ้นงานมีความมั่นคง ไม่พังทลายง่ายระหว่างใช้งาน และไม่มีวัสดุที่เป็นเหลี่ยมคมหรือสารอันตรายที่จะส่งผลเสียต่อตัวผู้ใช้งาน</span>
+                            </div>
+                            <div class="border-l-4 border-orange-500 pl-4">
+                                <strong class="font-heading text-base md:text-lg block text-slate-800">3. ด้านความคุ้มค่าและสิ่งแวดล้อม (Eco-Friendly & Value)</strong>
+                                <span class="text-sm md:text-base text-slate-600">การประหยัดทรัพยากร การเลือกใช้วัสดุที่ประหยัด หาได้ง่ายในท้องถิ่น และไม่ก่อเกิดมลพิษหรือย่อยสลายได้ง่ายหลังสิ้นอายุการใช้งาน</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Invention vs Innovation -->
+                <div id="tab-content-4" class="tab-content hidden">
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">สิ่งประดิษฐ์ vs นวัตกรรม 💡</h3>
+                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">เทคโนโลยีที่สร้างการเปลี่ยนแปลงที่ดีควรได้รับการต่อยอดพัฒนาไปสู่ระดับ <b>"นวัตกรรม" (Innovation)</b> มากกว่าจบลงที่เพียงการเป็น <b>"สิ่งประดิษฐ์" (Invention)</b> เท่านั้น</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                        <div class="bg-amber-50 p-5 rounded-xl border-4 border-green-500 text-slate-900 shadow-md">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-3xl">🕯️</span>
+                                <h4 class="font-heading text-xl text-green-700">สิ่งประดิษฐ์ (Invention)</h4>
+                            </div>
+                            <p class="text-sm md:text-base text-slate-700 leading-relaxed">
+                                การประดิษฐ์คิดค้นสิ่งของเครื่องมือ หรือกระบวนการแนวคิดใหม่ ๆ ขึ้นมาเป็นครั้งแรกในโลก แต่อาจจะยังไม่ได้ต่อยอดในระดับอุตสาหกรรม หรือสร้างผลกระทบความคุ้งค่าในการแก้ปัญหาแก่คนหมู่มากอย่างยั่งยืน
+                            </p>
+                        </div>
+
+                        <div class="bg-amber-50 p-5 rounded-xl border-4 border-blue-500 text-slate-900 shadow-md">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-3xl">💡</span>
+                                <h4 class="font-heading text-xl text-blue-700">นวัตกรรม (Innovation)</h4>
+                            </div>
+                            <p class="text-sm md:text-base text-slate-700 leading-relaxed">
+                                การนำแนวคิดหรือสิ่งประดิษฐ์ที่มีอยู่แล้วมาผสมผสานความคิดสร้างสรรค์ร่วมกับ <b>Empathy</b> เพื่อสร้างสรรค์สิ่งที่ดีกว่าเดิมอย่างมีนัยสำคัญ เกิดการ <b>สร้างมูลค่าเพิ่ม (Value Creation)</b> และมีผู้คนจำนวนมากนำไปใช้งานได้จริงอย่างแพร่หลาย
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 5: Intellectual Property -->
+                <div id="tab-content-5" class="tab-content hidden">
+                    <h3 class="font-heading text-2xl md:text-3xl mb-4 text-yellow-300 border-b-2 border-yellow-600 pb-2 text-stroke-wood">กฎหมายคุ้มครองผลงาน: ทรัพย์สินทางปัญญา 🛡️</h3>
+                    <p class="mb-6 text-base md:text-lg leading-relaxed text-yellow-50">เมื่อคุณผ่านกระบวนการเทคโนโลยีจนได้ผลงานอันทรงคุณค่าแล้ว การคุ้มครองผลงานด้วยกฎหมายสิทธิ์ <b>ทรัพย์สินทางปัญญา (Intellectual Property)</b> คือสิ่งที่ขาดไม่ได้:</p>
+
+                    <div class="space-y-4 text-slate-900">
+                        <div class="bg-amber-50 p-4 rounded-lg border-2 border-purple-500 shadow-md">
+                            <h4 class="font-heading text-lg text-purple-700 mb-1">⚙️ สิทธิบัตรการประดิษฐ์ (Patent)</h4>
+                            <p class="text-sm md:text-base text-slate-700">ให้การคุ้มครองแนวคิด โครงสร้าง กลไกการทำงาน ส่วนผสม หรือกระบวนการผลิตทางเทคโนโลยีใหม่ที่มีความซับซ้อนเชิงวิศวกรรมสูง (ระยะเวลาคุ้มครองยาวนานถึง 20 ปีนับแต่วันขอรับสิทธิบัตร)</p>
+                        </div>
+
+                        <div class="bg-amber-50 p-4 rounded-lg border-2 border-indigo-500 shadow-md">
+                            <h4 class="font-heading text-lg text-indigo-700 mb-1">🛠️ อนุสิทธิบัตร (Petty Patent)</h4>
+                            <p class="text-sm md:text-base text-slate-700">คุ้มครองการประดิษฐ์ขนาดเล็กหรือเทคโนโลยีที่ได้รับการปรับแต่งเล็กน้อย ไม่ซับซ้อนมากนัก เพื่ออำนวยความสะดวกในชีวิตประจำวัน (มีอายุคุ้มครองรวมสูงสุดไม่เกิน 10 ปี)</p>
+                        </div>
+
+                        <div class="bg-amber-50 p-4 rounded-lg border-2 border-emerald-500 shadow-md">
+                            <h4 class="font-heading text-lg text-emerald-700 mb-1">🎨 สิทธิบัตรการออกแบบผลิตภัณฑ์ (Design Patent)</h4>
+                            <p class="text-sm md:text-base text-slate-700">ให้สิทธิ์คุ้มครองเฉพาะลวดลาย รูปทรง สีสันภายนอก ความสวยงามของตัวผลิตภัณฑ์ทั้งหมด โดยกฎหมายจะไม่ให้ความคุ้มครองกลไกการทำหน้าที่ด้านในของเครื่องมือนั้น ๆ (มีระยะเวลาคุ้มครอง 10 ปี)</p>
+                        </div>
+
+                        <div class="bg-amber-50 p-4 rounded-lg border-2 border-pink-500 shadow-md">
+                            <h4 class="font-heading text-lg text-pink-700 mb-1">📝 ลิขสิทธิ์ (Copyright)</h4>
+                            <p class="text-sm md:text-base text-slate-700">คุ้มครองผลงานสร้างสรรค์ประเภทวรรณกรรม ดนตรี ศิลปะ รวมถึง <b>โปรแกรมคอมพิวเตอร์ (Software/Application)</b> โดยจะ<b>ได้รับสิทธิ์ความคุ้มครองโดยอัตโนมัติทันทีที่สร้างผลงานเสร็จ</b> โดยไม่จำเป็นต้องยื่นจดทะเบียนอย่างเป็นทางการ</p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <!-- ==========================================
-         MODALS (Custom UI replacing alert/confirm)
-         ========================================== -->
-    <!-- Choice Modal (PvZ Trivia Style) -->
-    <div id="modal-choices" class="fixed inset-0 pvz-modal-overlay hidden z-50 flex items-center justify-center p-4 md:p-8">
-        <div class="pvz-night-sky w-full max-w-4xl rounded-3xl overflow-hidden relative flex flex-col min-h-[60vh] max-h-[90vh]">
-            <!-- Moon & Trees -->
-            <div class="absolute top-4 right-12 w-20 h-20 bg-white rounded-full opacity-90 shadow-[0_0_40px_#fff]"></div>
-            <div class="absolute top-10 left-10 text-6xl opacity-30">🌲</div>
-            <div class="absolute top-16 right-32 text-7xl opacity-30">🌳</div>
+    <!-- ================= 3. GAMEPLAY SCREEN ================= -->
+    <div id="game-screen" class="hidden min-h-screen flex flex-col max-w-5xl mx-auto p-4 relative">
+        <!-- HUD -->
+        <div class="wood-board w-full p-3 flex justify-between items-center mb-4 z-10 shadow-lg">
+            <div class="flex items-center gap-4">
+                <div class="bg-gray-900 border-2 border-gray-600 px-4 py-1 rounded-full text-white font-heading text-lg md:text-xl">
+                    ด่าน: <span id="hud-level" class="text-green-400">1</span> / 15
+                </div>
+                <div class="text-base font-heading hidden md:block text-yellow-300" id="hud-title">ด่านที่ 1</div>
+            </div>
+            <div class="flex items-center gap-2 font-heading text-xl md:text-2xl">
+                ☀️ <span id="hud-score" class="text-yellow-300 text-2xl md:text-3xl font-extrabold">0</span>
+            </div>
+            <button onclick="confirmExit()" class="btn-wood px-5 py-1 text-sm bg-red-700">ออก</button>
+        </div>
+
+        <!-- Lawn / Gameplay Area -->
+        <div class="flex-grow flex relative">
+            <!-- Left Side: Plants -->
+            <div class="w-16 md:w-24 flex flex-col justify-around text-4xl md:text-5xl border-r-4 border-black/20 pr-2 select-none">
+                🌱<br>🌻<br>🥔<br>🌶️
+            </div>
             
-            <!-- Zombies peeking (Left & Right) -->
-            <div class="absolute top-24 left-4 md:left-24 text-8xl drop-shadow-[0_5px_0_#000] z-0 opacity-80" style="transform: scaleX(-1);">🧟</div>
-            <div class="absolute top-20 right-4 md:right-24 text-8xl drop-shadow-[0_5px_0_#000] z-0 opacity-80">🧟‍♂️</div>
+            <!-- Center: Flowchart Area -->
+            <div class="flex-grow flex items-center justify-center p-4 overflow-y-auto" id="flowchart-container">
+                <!-- Flowchart elements will be injected here via JS -->
+            </div>
 
-            <!-- Fence Background -->
-            <div class="pvz-fence absolute bottom-0 left-0 w-full h-[60%] z-10 border-t-8 border-[#3e2723] rounded-b-2xl"></div>
+            <!-- Right Side: Zombies -->
+            <div class="w-16 md:w-24 flex flex-col justify-around text-4xl md:text-5xl border-l-4 border-black/20 pl-2 text-right select-none">
+                🧟<br>🪦<br>🧟‍♂️<br>🚧
+            </div>
+        </div>
+    </div>
 
-            <!-- Content container -->
-            <div class="relative z-20 flex flex-col h-full p-6 md:p-10">
-                <div class="flex justify-between items-start mb-8 md:mb-16">
-                    <h3 class="text-4xl md:text-6xl font-black text-white drop-shadow-[0_5px_0_#000] tracking-wide" style="-webkit-text-stroke: 2px black; font-family: 'Itim', cursive;">
-                        ระบบต้องการ...
-                    </h3>
-                    <button onclick="closeModal('modal-choices')" class="text-white hover:text-red-400 font-bold text-5xl md:text-6xl drop-shadow-[0_4px_0_#000] leading-none transition-transform hover:scale-110">&times;</button>
+    <!-- ================= EXAM SCREEN (โหมดทำข้อสอบเก็บคะแนน 20 ข้อ) ================= -->
+    <div id="exam-screen" class="hidden min-h-screen p-4 md:p-8 flex flex-col justify-center items-center">
+        <div class="wood-board w-full max-w-2xl p-6 shadow-2xl relative">
+            <div class="flex justify-between items-center border-b-2 border-yellow-600 pb-3 mb-4">
+                <span class="font-heading text-xl text-yellow-300">📝 โหมดสอบเก็บคะแนน</span>
+                <span class="font-heading text-lg bg-gray-900 px-3 py-1 rounded border border-gray-600">ข้อที่ <span id="exam-progress-num">1</span>/20</span>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-900 rounded-full h-3 mb-6 border border-gray-700 overflow-hidden">
+                <div id="exam-progress-bar" class="bg-indigo-500 h-full transition-all duration-300" style="width: 5%"></div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="bg-amber-50 rounded-xl p-5 border-4 border-amber-200 text-slate-900 mb-6 shadow-inner">
+                <h3 id="exam-question-text" class="font-heading text-lg md:text-xl leading-relaxed">คำถามข้อสอบจะปรากฏที่นี่...</h3>
+            </div>
+
+            <!-- Answer Options -->
+            <div class="grid grid-cols-1 gap-3" id="exam-options-container">
+                <!-- 4 Options will be dynamically injected here -->
+            </div>
+
+            <div class="flex justify-between items-center mt-6 pt-3 border-t border-yellow-700/50">
+                <button onclick="confirmExitExam()" class="btn-wood px-5 py-2 bg-red-700 text-sm">❌ ยกเลิกการสอบ</button>
+                <span class="text-xs text-yellow-200 font-semibold italic">*วิเคราะห์คำตอบอย่างระมัดระวังก่อนส่งคะแนน</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= 4. CERTIFICATE SCREEN ================= -->
+    <div id="cert-screen" class="hidden min-h-screen p-4 flex flex-col items-center justify-center">
+        
+        <!-- UI สำหรับกรอกชื่อ (ไม่พิมพ์) -->
+        <div class="wood-board p-8 max-w-lg w-full text-center mb-8 no-print shadow-2xl">
+            <h2 class="font-heading text-3xl md:text-4xl text-yellow-300 mb-4 text-stroke-wood">🏆 ผลการสอบประเมิน!</h2>
+            <div class="text-xl md:text-2xl mb-4 font-heading">
+                <span id="cert-score-type">พลังแสงแดดที่เก็บได้:</span> 
+                <span id="final-score" class="text-3xl text-yellow-400 font-extrabold">0</span>
+            </div>
+            <p id="cert-summary-msg" class="mb-6 text-sm md:text-base leading-relaxed text-yellow-50">ยินดีด้วย! คุณได้เรียนรู้และผ่านความท้าทายเรียบร้อยแล้ว!</p>
+            
+            <input type="text" id="player-name-input" placeholder="กรอกชื่อ-นามสกุลจริงของคุณ เพื่อพิมพ์เกียรติบัตร" class="w-full p-3 rounded text-slate-900 font-heading text-lg border-2 border-yellow-800 mb-4 focus:outline-none focus:border-green-600 bg-amber-50">
+            
+            <div class="flex gap-4 justify-center">
+                <button onclick="generateCertificate()" class="btn-wood px-6 py-3 bg-green-600 text-xl font-heading">📜 สร้างเกียรติบัตร</button>
+                <button onclick="location.reload()" class="btn-wood px-6 py-3 bg-blue-600 text-xl font-heading">🏠 กลับหน้าแรก</button>
+            </div>
+        </div>
+
+        <!-- ใบประกาศเกียรติบัตรสไตล์มินิมอล/PvZ ที่สวยงามสำหรับพิมพ์ส่งครู -->
+        <div id="certificate-view" class="hidden bg-white w-full max-w-4xl p-10 border-8 border-green-800 relative shadow-2xl">
+            <div class="absolute top-4 left-4 text-6xl select-none">🌻</div>
+            <div class="absolute top-4 right-4 text-6xl select-none">🌱</div>
+            <div class="absolute bottom-4 left-4 text-6xl select-none">🛡️</div>
+            <div class="absolute bottom-4 right-4 text-6xl select-none">🏆</div>
+            
+            <div class="border-4 border-green-600 p-8 text-center h-full flex flex-col justify-center bg-green-50">
+                <h1 class="font-heading text-4xl text-green-800 mb-2">กระบวนการเทคโนโลยี (Technological Process)</h1>
+                <h2 class="font-heading text-2xl text-gray-700 mb-8" id="cert-mode-title">Certificate of Completion</h2>
+                
+                <p class="text-lg text-gray-600 mb-4">ขอมอบเกียรติบัตรฉบับนี้เพื่อแสดงว่า</p>
+                <h3 class="font-heading text-4xl text-slate-900 mb-6 border-b-2 border-gray-400 inline-block pb-2 px-10" id="cert-name">ชื่อผู้เรียน</h3>
+                
+                <p class="text-lg text-gray-800 mb-2">ได้ผ่านการทดสอบวัดความรู้เพื่อแก้ปัญหาและประยุกต์ใช้งานเทคโนโลยีขั้นพื้นฐาน</p>
+                <p class="text-lg text-gray-800 mb-8" id="cert-score-desc">ในเรื่อง <b>กระบวนการเทคโนโลยี นวัตกรรม และสิทธิ์ทรัพย์สินทางปัญญา ม.2</b></p>
+                
+                <div class="mt-8 flex justify-between items-end px-12">
+                    <div class="text-center font-heading text-sm text-slate-700">
+                        <div class="w-48 border-b border-slate-400 mb-2"></div>
+                        <p>หัวหน้าผู้ควบคุมระบบและทดสอบความรู้</p>
+                    </div>
+                    <div class="text-4xl">👷‍♂️ 🔧 🛡️ 📊</div>
+                </div>
+            </div>
+            
+            <button onclick="window.print()" class="btn-wood px-8 py-3 bg-blue-600 mt-8 absolute -bottom-20 left-1/2 transform -translate-x-1/2 no-print font-heading text-xl">🖨️ สั่งปริ้นต์เกียรติบัตร</button>
+        </div>
+    </div>
+
+    <!-- ================= MODALS ================= -->
+    
+    <!-- 1. Choice Modal (Night Sky PvZ Style) -->
+    <div id="choice-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="night-modal-content rounded-xl w-full max-w-lg shadow-[0_0_30px_rgba(0,0,0,1)] text-white flex flex-col h-[520px] relative">
+            <div class="p-6 relative z-10 flex flex-col h-full justify-between">
+                <div>
+                    <h3 class="font-heading text-xl md:text-2xl text-center text-yellow-300 mb-4 drop-shadow-md">เลือกคำตอบที่ถูกต้องเพื่อสกัดซอมบี้!</h3>
                 </div>
                 
-                <div id="choices-container" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12 mt-auto pb-4">
-                    <!-- Choices injected by JS -->
+                <div id="choices-container" class="flex flex-col gap-3 my-auto">
+                    <!-- Buttons will be injected here -->
                 </div>
+                
+                <!-- Spacer for layout -->
+                <div class="h-10"></div>
+            </div>
+            
+            <!-- Decor -->
+            <div class="night-fence"></div>
+            <div class="absolute bottom-2 right-2 text-6xl z-0 select-none" style="transform: scaleX(-1);">🧟</div>
+            
+            <button onclick="closeModal('choice-modal')" class="absolute top-2 right-2 bg-red-600 text-white rounded-full w-8 h-8 font-bold border-2 border-red-800 z-20 flex items-center justify-center">✕</button>
+        </div>
+    </div>
+
+    <!-- 2. Feedback Modal (Correct/Incorrect) -->
+    <div id="feedback-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+        <div id="feedback-card" class="wood-board w-full max-w-sm p-6 text-center transform transition-transform duration-300 scale-90">
+            <div id="feedback-icon" class="text-7xl mb-4 select-none">🌻</div>
+            <h3 id="feedback-title" class="font-heading text-3xl mb-2 text-green-400">ถูกต้อง!</h3>
+            <p id="feedback-msg" class="text-lg mb-6">+100 พลังแสงแดด</p>
+            <button id="feedback-btn" class="btn-wood px-8 py-3 bg-green-600 font-heading text-xl">ไปด่านต่อไป ➡️</button>
+        </div>
+    </div>
+
+    <!-- 3. Alert/Confirm Custom Modal -->
+    <div id="alert-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        <div class="wood-board p-6 max-w-sm w-full text-center">
+            <h3 id="alert-msg" class="font-heading text-xl mb-6">คุณแน่ใจหรือไม่?</h3>
+            <div class="flex justify-center gap-4" id="alert-actions">
+                <button onclick="closeModal('alert-modal')" class="btn-wood px-5 py-2 bg-gray-500">ยกเลิก</button>
+                <button id="alert-confirm-btn" class="btn-wood px-5 py-2 bg-red-600">ยืนยัน</button>
             </div>
         </div>
     </div>
 
-    <!-- Feedback Modal -->
-    <div id="modal-feedback" class="fixed inset-0 bg-black bg-opacity-70 hidden z-50 flex items-center justify-center p-4">
-        <div id="feedback-card" class="blocky-element p-8 w-full max-w-sm text-center relative overflow-hidden">
-            <div id="feedback-icon" class="text-7xl mb-4 drop-shadow-[0_4px_0_rgba(0,0,0,0.3)] z-10 relative">✅</div>
-            <h3 id="feedback-title" class="text-3xl font-black mb-3 z-10 relative drop-shadow-sm" style="font-family: 'Itim', cursive;"></h3>
-            <p id="feedback-message" class="text-lg mb-6 font-bold text-[#3e2723] z-10 relative"></p>
-            <button id="feedback-btn" class="blocky-btn w-full text-xl z-10 relative shadow-[0_6px_0_rgba(0,0,0,0.5)]"></button>
-            
-            <!-- Confetti/Blood Background Decor -->
-            <div id="feedback-bg-decor" class="absolute inset-0 opacity-20 z-0"></div>
-        </div>
-    </div>
 
-
-    <!-- ==========================================
-         JAVASCRIPT LOGIC
-         ========================================== -->
+    <!-- ================= JAVASCRIPT ================= -->
     <script>
-        /** * STATE MANAGEMENT
-         */
-        const state = {
-            currentLevel: 0,
-            score: 0,
-            selectedAnswers: {}, // Format: { "slot_1": "text answer", ... }
-            totalRequiredSlots: 0
+        // --- 1. STATE & DATA ---
+        let currentLevelIndex = 0;
+        let score = 0;
+        let playerName = "";
+        let isExamMode = false;
+        let currentExamIndex = 0;
+        let examScore = 0;
+
+        // ข้อมูลตัวอย่างสำหรับ ตารางวิเคราะห์รายละเอียดของปัญหา
+        const caseStudyData = {
+            garbage: {
+                title: "ปัญหาถังขยะโรงเรียนส่งกลิ่นรบกวน",
+                who: "นักเรียน ครู และบุคลากรที่ต้องเดินผ่านหรือนั่งเรียนบริเวณจุดพักขยะใกล้เคียง",
+                what: "กลิ่นเหม็นอับจากเศษอาหารและของเสียในถังขยะ รวมถึงมีแมลงวันตอมซึ่งเป็นพาหะนำโรค",
+                where: "บริเวณโรงอาหาร ข้างตึกเรียน 1 และโรงคัดแยกขยะของโรงเรียน",
+                when: "เกิดบ่อยครั้งในช่วงพักกลางวัน ช่วงบ่าย และช่วงเย็นหลังรับประทานอาหาร",
+                why: "เพื่อปรับปรุงทัศนียภาพของโรงเรียน รักษาสุขอนามัย และป้องกันกลิ่นรบกวนสมาธิเรียน",
+                how: "ออกแบบกลไกถังขยะอัจฉริยะที่มีฝาเปิด-ปิดอัตโนมัติด้วยเซนเซอร์และระบบกรองกลิ่นคาร์บอนภายใน"
+            },
+            pm25: {
+                title: "ปัญหาฝุ่นละออง PM 2.5 ภายในห้องเรียน",
+                who: "นักเรียน ม.2 และครูผู้สอนที่ทำกิจกรรมในห้องเรียนปรับอากาศ",
+                what: "ปริมาณค่าฝุ่นละอองขนาดเล็ก PM 2.5 สูงเกินเกณฑ์มาตรฐานจนส่งผลกระทบต่อระบบหายใจ",
+                where: "ห้องเรียนวิชาเทคโนโลยี ชั้น 3 อาคารนวัตกรรม",
+                when: "ในช่วงฤดูแล้ง (ธันวาคม - มีนาคม) ที่มีสภาพอากาศปิดและปริมาณฝุ่นสะสมภายนอกสูง",
+                why: "เพื่อรักษาสุขภาพปอดของเด็ก ๆ ลดความเหนื่อยล้า และเพิ่มประสิทธิภาพในการเรียนรู้",
+                how: "สร้างตู้ระบายอากาศแรงดันบวกดึงอากาศจากภายนอกผ่านแผ่นกรอง HEPA เข้ามาฟอกอากาศในห้อง"
+            },
+            elderly: {
+                title: "ปัญหาการลืมทานยาตรงเวลาของผู้สูงอายุ",
+                who: "ผู้สูงอายุที่มีโรคประจำตัว (ความดัน, เบาหวาน) และอาศัยอยู่คนเดียวในเวลากลางวัน",
+                what: "ผู้สูงอายุลืมรับประทานยารอบกลางวันบ่อยครั้ง ทำให้ประสิทธิภาพในการควบคุมโรคลดลง",
+                where: "ที่บ้านพักอาศัยหรือห้องนั่งเล่นของผู้สูงอายุ",
+                when: "ทุกวันในช่วงเวลาหลังอาหารเช้า กลางวัน และก่อนนอน",
+                why: "เพื่อให้ผู้สูงอายุได้รับยาตามคำแนะนำแพทย์อย่างแม่นยำ ป้องกันอาการเจ็บป่วยกำเริบกะทันหัน",
+                how: "ออกแบบกล่องจ่ายยาสมาร์ทที่ส่งเสียงแจ้งเตือนและส่งข้อความไปหาญาติเมื่อถึงเวลาทานยา"
+            }
         };
 
-        /**
-         * LEVEL DATA (20 Levels: Sequence, Condition, Loop, Mixed)
-         * อ้างอิงหลักการทำงานของระบบคอมพิวเตอร์ (Input, Process, Output, Storage)
-         */
-        const levels = [
-            // ---------------- SEQUENCES (ด่าน 1-5) ----------------
-            {
-                type: "sequence",
-                scenario: "การใช้คีย์บอร์ดพิมพ์งาน: ผู้ใช้พิมพ์ตัวอักษร 'ก' และแสดงบนหน้าจอ",
-                badge: "ลำดับขั้นตอน (Sequence)",
-                nodes: [
-                    { type: "box", text: "ผู้ใช้กดปุ่ม 'ก' บนคีย์บอร์ด (Input)" },
-                    { type: "slot", id: "s1", answer: "ส่งสัญญาณไฟฟ้าไปที่ CPU", choices: ["บันทึกรูปลงฮาร์ดดิสก์", "ส่งสัญญาณไฟฟ้าไปที่ CPU", "สั่งเครื่องพิมพ์ทำงาน"] },
-                    { type: "box", text: "CPU ประมวลผลและแปลงเป็นรหัสตัวอักษร" },
-                    { type: "slot", id: "s2", answer: "ส่งข้อมูลไปแสดงผลที่จอภาพ", choices: ["ส่งข้อมูลไปแสดงผลที่จอภาพ", "ปิดระบบคอมพิวเตอร์", "ลบข้อมูลใน RAM"] },
-                ]
-            },
-            {
-                type: "sequence",
-                scenario: "การบันทึกไฟล์งาน (Saving File)",
-                badge: "ลำดับขั้นตอน (Sequence)",
-                nodes: [
-                    { type: "box", text: "คลิกปุ่ม 'Save' ในโปรแกรม" },
-                    { type: "slot", id: "s1", answer: "CPU สั่งการให้นำข้อมูลจาก RAM", choices: ["CPU สั่งการให้นำข้อมูลจาก RAM", "หน้าจอดับลงชั่วคราว", "อ่านข้อมูลจากแผ่น CD"] },
-                    { type: "slot", id: "s2", answer: "เขียนข้อมูลลงใน Hard Disk หรือ SSD", choices: ["ส่งเสียงเตือนผ่านลำโพง", "เขียนข้อมูลลงใน Hard Disk หรือ SSD", "ส่งข้อมูลไปที่เมาส์"] },
-                    { type: "box", text: "บันทึกเสร็จสิ้น ข้อมูลไม่สูญหายเมื่อปิดเครื่อง" },
-                ]
-            },
-            {
-                type: "sequence",
-                scenario: "การทำงานของไมโครโฟนและลำโพง",
-                badge: "ลำดับขั้นตอน (Sequence)",
-                nodes: [
-                    { type: "slot", id: "s1", answer: "รับเสียงคลื่นอนาล็อก (Input)", choices: ["แสดงภาพบนจอ", "รับเสียงคลื่นอนาล็อก (Input)", "จ่ายกระแสไฟ"] },
-                    { type: "box", text: "แปลงเป็นสัญญาณดิจิทัลให้คอมพิวเตอร์เข้าใจ" },
-                    { type: "box", text: "CPU ประมวลผลและปรับแต่งเสียง" },
-                    { type: "slot", id: "s2", answer: "ส่งสัญญาณออกทางลำโพง (Output)", choices: ["สแกนไวรัสในแฟลชไดร์ฟ", "ส่งสัญญาณออกทางลำโพง (Output)", "เก็บข้อมูลใน ROM"] },
-                ]
-            },
-            {
-                type: "sequence",
-                scenario: "การเปิดโปรแกรมเกม",
-                badge: "ลำดับขั้นตอน (Sequence)",
-                nodes: [
-                    { type: "box", text: "ดับเบิลคลิกไอคอนเกม (Input)" },
-                    { type: "slot", id: "s1", answer: "CPU อ่านข้อมูลเกมจาก Storage", choices: ["CPU อ่านข้อมูลเกมจาก Storage", "CPU สั่งพิมพ์เอกสาร", "เคลียร์หน่วยความจำ RAM"] },
-                    { type: "slot", id: "s2", answer: "โหลดข้อมูลเกมขึ้นมาไว้ใน RAM", choices: ["โหลดข้อมูลเกมขึ้นมาไว้ใน RAM", "ปิดหน้าจอเพื่อประหยัดไฟ", "อัปเดตระบบปฏิบัติการ"] },
-                    { type: "box", text: "CPU ประมวลผลจาก RAM และแสดงผลบนจอ" },
-                ]
-            },
-            {
-                type: "sequence",
-                scenario: "การใช้กล้องเว็บแคม",
-                badge: "ลำดับขั้นตอน (Sequence)",
-                nodes: [
-                    { type: "box", text: "กล้องรับภาพเคลื่อนไหว (Input)" },
-                    { type: "slot", id: "s1", answer: "แปลงภาพเป็นข้อมูลดิจิทัล", choices: ["ลบไฟล์ขยะ", "แปลงภาพเป็นข้อมูลดิจิทัล", "เปิดพัดลมระบายความร้อน"] },
-                    { type: "slot", id: "s2", answer: "CPU/GPU ประมวลผลภาพ", choices: ["บันทึกลงแผ่นดิสก์", "ส่งเข้าสู่โหมดสลีป", "CPU/GPU ประมวลผลภาพ"] },
-                    { type: "box", text: "แสดงผลภาพบนจอ (Output)" },
-                ]
-            },
+        // ฟังก์ชันสลับตัวอย่างตารางวิเคราะห์ใน Almanac
+        function switchCaseStudy(caseKey) {
+            const data = caseStudyData[caseKey];
+            if (!data) return;
 
-            // ---------------- CONDITIONS (ด่าน 6-10) ----------------
-            {
-                type: "condition",
-                scenario: "ระบบล็อกอินเข้าคอมพิวเตอร์",
-                badge: "เงื่อนไข (Condition)",
-                nodes: [
-                    { type: "box", text: "ผู้ใช้พิมพ์รหัสผ่าน" },
-                    { type: "diamond", text: "รหัสผ่านตรงกับที่บันทึกไว้หรือไม่?" },
-                    { type: "branch", 
-                        truePath: [ { type: "slot", id: "s1", answer: "เข้าสู่หน้าจอ Desktop", choices: ["เข้าสู่หน้าจอ Desktop", "ปิดเครื่อง"] } ],
-                        falsePath: [ { type: "slot", id: "s2", answer: "แสดงข้อความ 'รหัสผ่านผิด'", choices: ["ลบข้อมูลทั้งหมด", "แสดงข้อความ 'รหัสผ่านผิด'"] } ]
-                    }
-                ]
-            },
-            {
-                type: "condition",
-                scenario: "การจัดการหน่วยความจำ RAM",
-                badge: "เงื่อนไข (Condition)",
-                nodes: [
-                    { type: "box", text: "เปิดโปรแกรมตัดต่อวิดีโอขนาดใหญ่" },
-                    { type: "diamond", text: "พื้นที่ RAM ว่างเพียงพอหรือไม่?" },
-                    { type: "branch", 
-                        truePath: [ { type: "box", text: "โหลดโปรแกรมลง RAM สำเร็จ" } ],
-                        falsePath: [ { type: "slot", id: "s1", answer: "ดึงพื้นที่ Storage มาทำ Virtual Memory", choices: ["คอมพิวเตอร์ระเบิด", "ดึงพื้นที่ Storage มาทำ Virtual Memory"] } ]
-                    }
-                ]
-            },
-            {
-                type: "condition",
-                scenario: "การสั่งพิมพ์งาน (Printer Check)",
-                badge: "เงื่อนไข (Condition)",
-                nodes: [
-                    { type: "box", text: "CPU สั่งการพิมพ์เอกสาร" },
-                    { type: "diamond", text: "มีกระดาษในเครื่องพิมพ์หรือไม่?" },
-                    { type: "branch", 
-                        truePath: [ { type: "slot", id: "s1", answer: "ดึงกระดาษและพิมพ์ข้อความ", choices: ["ดึงกระดาษและพิมพ์ข้อความ", "ไฟดับ"] } ],
-                        falsePath: [ { type: "slot", id: "s2", answer: "แจ้งเตือน 'กระดาษหมด' (Output)", choices: ["รีสตาร์ทเครื่องอัตโนมัติ", "แจ้งเตือน 'กระดาษหมด' (Output)"] } ]
-                    }
-                ]
-            },
-            {
-                type: "condition",
-                scenario: "ระบบระบายความร้อน CPU",
-                badge: "เงื่อนไข (Condition)",
-                nodes: [
-                    { type: "box", text: "เซ็นเซอร์วัดอุณหภูมิ CPU (Input)" },
-                    { type: "diamond", text: "อุณหภูมิสูงเกิน 80 องศาเซลเซียส?" },
-                    { type: "branch", 
-                        truePath: [ { type: "slot", id: "s1", answer: "เพิ่มความเร็วรอบพัดลม", choices: ["เพิ่มความเร็วรอบพัดลม", "ลดความสว่างหน้าจอ"] } ],
-                        falsePath: [ { type: "box", text: "พัดลมหมุนด้วยความเร็วปกติ" } ]
-                    }
-                ]
-            },
-            {
-                type: "condition",
-                scenario: "การดึงข้อมูลจาก Cache",
-                badge: "เงื่อนไข (Condition)",
-                nodes: [
-                    { type: "box", text: "CPU ต้องการข้อมูลเพื่อประมวลผล" },
-                    { type: "diamond", text: "มีข้อมูลอยู่ใน Cache Memory หรือไม่?" },
-                    { type: "branch", 
-                        truePath: [ { type: "slot", id: "s1", answer: "ดึงข้อมูลจาก Cache (เร็วสุด)", choices: ["ดึงข้อมูลจาก Cache (เร็วสุด)", "เชื่อมต่ออินเทอร์เน็ต"] } ],
-                        falsePath: [ { type: "slot", id: "s2", answer: "ดึงข้อมูลจาก RAM (ช้ากว่า)", choices: ["โหลดจากฮาร์ดดิสก์ทันที", "ดึงข้อมูลจาก RAM (ช้ากว่า)"] } ]
-                    }
-                ]
-            },
+            // อัปเดตข้อมูลตาราง
+            document.getElementById('td-who').innerText = data.who;
+            document.getElementById('td-what').innerText = data.what;
+            document.getElementById('td-where').innerText = data.where;
+            document.getElementById('td-when').innerText = data.when;
+            document.getElementById('td-why').innerText = data.why;
+            document.getElementById('td-how').innerText = data.how;
+            document.getElementById('table-case-title').innerText = data.title;
 
-            // ---------------- LOOPS (ด่าน 11-15) ----------------
-            {
-                type: "loop",
-                scenario: "วัฏจักรการทำงานของ CPU (Machine Cycle)",
-                badge: "การทำซ้ำ (Loop)",
-                nodes: [
-                    { type: "box", text: "Fetch: ดึงคำสั่งจาก RAM" },
-                    { type: "slot", id: "s1", answer: "Decode: ถอดรหัสคำสั่งให้เป็นภาษาเครื่อง", choices: ["ปิดระบบไฟ", "Decode: ถอดรหัสคำสั่งให้เป็นภาษาเครื่อง", "สั่งปรินต์เอกสาร"] },
-                    { type: "box", text: "Execute: ประมวลผลคำสั่ง" },
-                    { type: "diamond", text: "ยังมีคำสั่งต่อไปในโปรแกรมหรือไม่?" },
-                    { type: "loopBack", conditionText: "ใช่, มีคำสั่งต่อ", targetIndex: 0 },
-                    { type: "slot", id: "s2", answer: "สิ้นสุดการทำงานของโปรแกรม", choices: ["เริ่มการทำงานใหม่", "สิ้นสุดการทำงานของโปรแกรม"] }
-                ]
-            },
-            {
-                type: "loop",
-                scenario: "การดาวน์โหลดไฟล์ผ่านเครือข่าย",
-                badge: "การทำซ้ำ (Loop)",
-                nodes: [
-                    { type: "box", text: "ร้องขอไฟล์จาก Server" },
-                    { type: "slot", id: "s1", answer: "รับชุดข้อมูล (Data Packet) ทีละส่วน", choices: ["รับชุดข้อมูล (Data Packet) ทีละส่วน", "แสดงวิดีโอ 4K", "ฟอร์แมตฮาร์ดดิสก์"] },
-                    { type: "box", text: "นำข้อมูลมาบันทึกลง Storage" },
-                    { type: "diamond", text: "ดาวน์โหลดครบ 100% หรือยัง?" },
-                    { type: "loopBack", conditionText: "ยังไม่ครบ", targetIndex: 1 },
-                    { type: "slot", id: "s2", answer: "แจ้งเตือน 'ดาวน์โหลดสำเร็จ'", choices: ["แจ้งเตือน 'ดาวน์โหลดสำเร็จ'", "ลบไฟล์ต้นฉบับ"] }
-                ]
-            },
-            {
-                type: "loop",
-                scenario: "การเรนเดอร์ภาพกราฟิกเกม (60 FPS)",
-                badge: "การทำซ้ำ (Loop)",
-                nodes: [
-                    { type: "slot", id: "s1", answer: "รับตำแหน่ง Input จากเมาส์/คีย์บอร์ด", choices: ["รับตำแหน่ง Input จากเมาส์/คีย์บอร์ด", "สลีปโหมด"] },
-                    { type: "box", text: "GPU คำนวณแสงเงาและพิกเซล (Process)" },
-                    { type: "slot", id: "s2", answer: "แสดงผลภาพ 1 เฟรมขึ้นจอ (Output)", choices: ["เปิดเพลง", "แสดงผลภาพ 1 เฟรมขึ้นจอ (Output)"] },
-                    { type: "diamond", text: "ผู้ใช้กดปิดเกมหรือไม่?" },
-                    { type: "loopBack", conditionText: "ยังไม่ปิดเกม (วาดเฟรมถัดไป)", targetIndex: 0 },
-                    { type: "box", text: "ปิดเกม เคลียร์ RAM" }
-                ]
-            },
-            {
-                type: "loop",
-                scenario: "การค้นหาไฟล์สแกนไวรัส (Antivirus Scan)",
-                badge: "การทำซ้ำ (Loop)",
-                nodes: [
-                    { type: "box", text: "เลือกโฟลเดอร์ที่ต้องการสแกน" },
-                    { type: "slot", id: "s1", answer: "อ่านไฟล์ 1 ไฟล์จาก Storage ขึ้น RAM", choices: ["สั่งพิมพ์ไฟล์", "อ่านไฟล์ 1 ไฟล์จาก Storage ขึ้น RAM"] },
-                    { type: "box", text: "CPU เปรียบเทียบรหัสไวรัส (Process)" },
-                    { type: "diamond", text: "ตรวจสอบครบทุกไฟล์ในโฟลเดอร์หรือยัง?" },
-                    { type: "loopBack", conditionText: "ยังไม่ครบ", targetIndex: 1 },
-                    { type: "slot", id: "s2", answer: "แสดงรายงานผลการสแกน (Output)", choices: ["ไวรัสกินเครื่อง", "แสดงรายงานผลการสแกน (Output)"] }
-                ]
-            },
-            {
-                type: "loop",
-                scenario: "การคัดลอกไฟล์ขนาดใหญ่ (Copy File)",
-                badge: "การทำซ้ำ (Loop)",
-                nodes: [
-                    { type: "box", text: "เริ่มคำสั่งคัดลอก" },
-                    { type: "slot", id: "s1", answer: "อ่านข้อมูลจาก Drive ต้นทางลง RAM", choices: ["อ่านข้อมูลจาก Drive ต้นทางลง RAM", "ปิดหน้าจอ"] },
-                    { type: "slot", id: "s2", answer: "เขียนข้อมูลจาก RAM ลง Drive ปลายทาง", choices: ["ลบข้อมูลทิ้ง", "เขียนข้อมูลจาก RAM ลง Drive ปลายทาง"] },
-                    { type: "diamond", text: "ข้อมูลทั้งหมดถูกเขียนเสร็จหรือยัง?" },
-                    { type: "loopBack", conditionText: "ยังไม่เสร็จ", targetIndex: 1 },
-                    { type: "box", text: "สิ้นสุดการคัดลอก" }
-                ]
-            },
+            // เปลี่ยนสีปุ่ม active
+            const buttons = ['garbage', 'pm25', 'elderly'];
+            buttons.forEach(b => {
+                const btn = document.getElementById(`btn-case-${b}`);
+                if (b === caseKey) {
+                    btn.className = "px-3 py-1 rounded bg-blue-600 text-white font-semibold text-xs md:text-sm";
+                } else {
+                    btn.className = "px-3 py-1 rounded bg-gray-300 text-slate-800 font-semibold text-xs md:text-sm hover:bg-gray-400";
+                }
+            });
+        }
 
-            // ---------------- MIXED / ADVANCED (ด่าน 16-20) ----------------
-            {
-                type: "sequence",
-                scenario: "ลำดับการเปิดเครื่อง (Boot Process / POST)",
-                badge: "ขั้นสูง (Advanced Sequence)",
-                nodes: [
-                    { type: "box", text: "กดปุ่ม Power สั่งจ่ายไฟเข้าเมนบอร์ด" },
-                    { type: "slot", id: "s1", answer: "ROM โหลดโปรแกรม BIOS/UEFI", choices: ["RAM อ่านข้อมูลจากอินเทอร์เน็ต", "ROM โหลดโปรแกรม BIOS/UEFI", "เปิดเกมเล่น"] },
-                    { type: "box", text: "POST: ตรวจสอบฮาร์ดแวร์พื้นฐาน (RAM, Keyboard)" },
-                    { type: "slot", id: "s2", answer: "ค้นหาและโหลด OS จาก Storage ขึ้น RAM", choices: ["สแกนใบหน้า", "พิมพ์เอกสารทดสอบ", "ค้นหาและโหลด OS จาก Storage ขึ้น RAM"] },
-                    { type: "box", text: "OS ควบคุมระบบและแสดงหน้า Desktop" }
-                ]
-            },
-            {
-                type: "condition",
-                scenario: "ระบบประมวลผลการสั่งซื้อสินค้าออนไลน์",
-                badge: "ขั้นสูง (Advanced Condition)",
-                nodes: [
-                    { type: "box", text: "ลูกค้ากดปุ่ม 'ชำระเงิน' (Input)" },
-                    { type: "slot", id: "s1", answer: "CPU ส่งข้อมูลตรวจสอบกับเซิร์ฟเวอร์ธนาคาร", choices: ["บันทึกลงแผ่น CD", "CPU ส่งข้อมูลตรวจสอบกับเซิร์ฟเวอร์ธนาคาร"] },
-                    { type: "diamond", text: "ยอดเงินคงเหลือเพียงพอหรือไม่?" },
-                    { type: "branch", 
-                        truePath: [ 
-                            { type: "box", text: "หักเงินและบันทึกออเดอร์" },
-                            { type: "slot", id: "s2", answer: "แสดงผล 'ชำระเงินสำเร็จ' (Output)", choices: ["จอฟ้า", "แสดงผล 'ชำระเงินสำเร็จ' (Output)"] }
-                        ],
-                        falsePath: [ 
-                            { type: "box", text: "ปฏิเสธการทำรายการ" }
-                        ]
-                    }
-                ]
-            },
-            {
-                type: "loop",
-                scenario: "การพิมพ์เอกสาร 50 หน้า (Spooling & Printing)",
-                badge: "ขั้นสูง (Advanced Loop)",
-                nodes: [
-                    { type: "box", text: "รับข้อมูลเอกสาร 50 หน้าเข้าหน่วยความจำปริ้นเตอร์" },
-                    { type: "slot", id: "s1", answer: "ดึงกระดาษ 1 แผ่น (Input)", choices: ["ดึงกระดาษ 1 แผ่น (Input)", "เปลี่ยนตลับหมึก"] },
-                    { type: "box", text: "พิมพ์ข้อความลงบนกระดาษ (Process & Output)" },
-                    { type: "diamond", text: "พิมพ์ครบจำนวน 50 หน้าแล้วหรือยัง?" },
-                    { type: "loopBack", conditionText: "ยังไม่ครบ", targetIndex: 1 },
-                    { type: "slot", id: "s2", answer: "จบการทำงานและเข้าสู่โหมด Standby", choices: ["ทำลายเอกสารทิ้ง", "จบการทำงานและเข้าสู่โหมด Standby"] }
-                ]
-            },
-            {
-                type: "sequence",
-                scenario: "การทำงานของระบบแปลภาษา (AI Translation)",
-                badge: "ขั้นสูง (Advanced Sequence)",
-                nodes: [
-                    { type: "slot", id: "s1", answer: "ผู้ใช้พูดภาษาไทยผ่านไมโครโฟน", choices: ["เมาส์สั่น", "ผู้ใช้พูดภาษาไทยผ่านไมโครโฟน", "ฮาร์ดดิสก์หมุนเร็วขึ้น"] },
-                    { type: "box", text: "แปลงเสียงเป็นข้อความดิจิทัล" },
-                    { type: "slot", id: "s2", answer: "CPU ประมวลผลแปลข้อความเป็นภาษาอังกฤษ", choices: ["ปิดอินเทอร์เน็ต", "ส่งออกทางเครื่องพิมพ์", "CPU ประมวลผลแปลข้อความเป็นภาษาอังกฤษ"] },
-                    { type: "box", text: "สังเคราะห์ข้อความเป็นเสียงและส่งออกลำโพง" }
-                ]
-            },
-            {
-                type: "condition",
-                scenario: "ระบบ Smart Home: เซ็นเซอร์ตรวจจับแสง",
-                badge: "ขั้นสูง (Final Boss - Mixed)",
-                nodes: [
-                    { type: "box", text: "เซ็นเซอร์วัดค่าความสว่างของแสง (Input)" },
-                    { type: "slot", id: "s1", answer: "ส่งค่าแสงไปให้ไมโครคอนโทรลเลอร์ (Process)", choices: ["บันทึกลงแฟลชไดร์ฟ", "ส่งค่าแสงไปให้ไมโครคอนโทรลเลอร์ (Process)"] },
-                    { type: "diamond", text: "สภาพแวดล้อมมืดเกินค่าที่ตั้งไว้?" },
-                    { type: "branch", 
-                        truePath: [ { type: "slot", id: "s2", answer: "ส่งสัญญาณเปิดหลอดไฟ (Output)", choices: ["ปิดประตู", "ส่งสัญญาณเปิดหลอดไฟ (Output)"] } ],
-                        falsePath: [ { type: "box", text: "ส่งสัญญาณปิดหลอดไฟ (Output)" } ]
-                    }
-                ]
-            }
+        // เก็บข้อมูลในตัวแปรแยกเพื่อง่ายในการเข้าถึง
+        const caseStudyData = {
+            garbage: caseStudyData.garbage,
+            pm25: caseStudyData.pm25,
+            elderly: caseStudyData.elderly
+        };
+
+        // ข้อมูลด่าน 15 ด่านผังงาน (ฝึกฝนทั่วไป)
+        const levelData = [
+            { type: 'seq', title: "ด่าน 1: เริ่มต้นวิเคราะห์ปัญหา 3 มิติ", 
+              nodes: ["เริ่ม", "ระบุปัญหาหรือความต้องการ", "BLANK", "กำหนดสถานที่เกิดปัญหา (Where)", "จบ"],
+              blankOptions: ["ระบุผู้ที่เผชิญปัญหานั้น ๆ (Who)", "วางแผนซื้ออุปกรณ์ทันที", "ยื่นจดสิทธิบัตรการประดิษฐ์"], answer: 0 },
+            { type: 'seq', title: "ด่าน 2: การค้นหาข้อมูลอ้างอิงที่เชื่อถือได้", 
+              nodes: ["เริ่ม", "ตั้งคำถามนำทางด้วย 5W1H", "BLANK", "เปรียบเทียบวิธีการแก้ปัญหาที่มีอยู่", "จบ"],
+              blankOptions: ["รวบรวมข้อมูลความรู้วิทยาศาสตร์ & เทคโนโลยี", "มโนคำตอบเอาเองจากความคุ้นเคย", "ร่างภาพทันทีโดยไม่ต้องศึกษาข้อมูล"], answer: 0 },
+            { type: 'cond', title: "ด่าน 3: การเริ่มต้นแก้ไขปัญหาด้วย Empathy",
+              start: "พบปัญหาคนตาบอดเดินทางลำบาก", condition: "BLANK", 
+              trueNode: "เข้าใจความต้องการที่แท้จริงของผู้ใช้", falseNode: "ออกแบบอุปกรณ์ที่ผู้ใช้ใช้งานยาก", end: "จบ",
+              blankOptions: ["ใช้ Empathy เอาใจใส่ความรู้สึกผู้ใช้?", "คิดหาทางประหยัดงบที่สุดไว้ก่อน?", "รีบสร้างสิ่งประดิษฐ์เพื่อประกวด?"], answer: 0 },
+            { type: 'seq', title: "ด่าน 4: การวางแผนและการจัดลำดับเวลา", 
+              nodes: ["เริ่ม", "เลือกวิธีแก้ปัญหาที่ดีที่สุด", "BLANK", "ลงมือประดิษฐ์ต้นแบบเทคโนโลยี", "จบ"],
+              blankOptions: ["เขียนตารางวางแผนเวลาทำงาน (Gantt Chart)", "นำสไลด์พรีเซนต์ไปหาอาจารย์", "รวบรวมแนวคิด 5W1H ซ้ำอีกรอบ"], answer: 0 },
+            { type: 'cond', title: "ด่าน 5: การทดสอบชิ้นงานอย่างเป็นระบบ",
+              start: "สร้างต้นแบบสำเร็จแล้ว", condition: "BLANK", 
+              trueNode: "ประเมินผลด้วยเกณฑ์ Rubrics ที่ตรงกรอบปัญหา", falseNode: "ใช้ความพึงพอใจของตนเองตัดสิน", end: "จบ",
+              blankOptions: ["สร้างตารางเกณฑ์ประเมินผล (Testing Criteria)?", "ส่งขายในอินเทอร์เน็ตทันที?", "เปลี่ยนไปเริ่มระบุปัญหาใหม่?"], answer: 0 },
+            { type: 'loop', title: "ด่าน 6: ลูปการแก้ไขปรับปรุงชิ้นงาน",
+              start: "กำหนดเกณฑ์ Rubrics และทำการทดสอบ", loopNode: "6. ปรับปรุง แก้ไข และประเมินใหม่", condition: "BLANK",
+              trueLabel: "ผ่านเกณฑ์อย่างสมบูรณ์", falseLabel: "ไม่ผ่านเกณฑ์ทดสอบ",
+              blankOptions: ["ชิ้นงานบรรลุวัตถุประสงค์และปลอดภัยหรือไม่?", "ทำสไลด์นำเสนอเสร็จแล้วหรือยัง?", "ยื่นจดลิขสิทธิ์โปรแกรมหรือยัง?"], answer: 0 },
+            { type: 'cond', title: "ด่าน 7: ปลดล็อกสู่การเป็นนวัตกรรม",
+              start: "มีสิ่งประดิษฐ์ชิ้นใหม่", condition: "BLANK", 
+              trueNode: "พัฒนาเป็นนวัตกรรม (Innovation)", falseNode: "ยังคงเป็นเพียงสิ่งประดิษฐ์ (Invention)", end: "จบ",
+              blankOptions: ["สร้างมูลค่าเพิ่มและแก้ปัญหาของสังคมจริง?", "มีหน้าตาแปลกใหม่ไม่ซ้ำใคร?", "ใช้วัสดุราคาสูงในการประดิษฐ์?"], answer: 0 },
+            { type: 'seq', title: "ด่าน 8: การต่อยอดเทคโนโลยีแสงสว่าง", 
+              nodes: ["สิ่งประดิษฐ์เดิม: หลอดไส้แบบร้อน", "ปัญหา: กินไฟมากและอุณหภูมิสูง", "BLANK", "นวัตกรรม: หลอดประหยัดไฟ LED ไม่ร้อน", "จบ"],
+              blankOptions: ["คิดค้นต่อยอดแก้ไขข้อเสียจนเกิดมูลค่าใหม่", "ซื้อหลอดไส้เพิ่มจำนวนมาก ๆ", "เลิกใช้พลังงานไฟฟ้า"], answer: 0 },
+            { type: 'cond', title: "ด่าน 9: คุ้มครองความลับวิศวกรรม",
+              start: "คิดค้นกลไกปั๊มน้ำพลังงานลมรุ่นใหม่", condition: "ต้องการคุ้มครองเทคนิคและส่วนประกอบใหม่เป็นเวลา 20 ปี?", 
+              trueNode: "BLANK", falseNode: "ยื่นจดสิทธิบัตรการออกแบบ", end: "จบ",
+              blankOptions: ["ยื่นจดสิทธิบัตรการประดิษฐ์ (Patent)", "ยื่นขอจดทะเบียนเครื่องหมายการค้า", "แอบเก็บไว้ใช้ส่วนตัวไม่ต้องบอกใคร"], answer: 0 },
+            { type: 'cond', title: "ด่าน 10: คุ้มครองการประดิษฐ์แบบง่าย",
+              start: "ปรับแต่งพัดลมธรรมดาให้ปรับความสูงได้", condition: "BLANK", 
+              trueNode: "จดทะเบียนอนุสิทธิบัตร คุ้มครอง 10 ปี", falseNode: "ยื่นสิทธิบัตรการประดิษฐ์ 20 ปี", end: "จบ",
+              blankOptions: ["กลไกไม่ซับซ้อน แต่มีประโยชน์ใช้งานดีขึ้น?", "มีรูปร่างสีสันสวยงามสะดุดตา?", "ต้องการนำไปพิมพ์เป็นหนังสือ?"], answer: 0 },
+            { type: 'seq', title: "ด่าน 11: คุ้มครองดีไซน์ภายนอก", 
+              nodes: ["ออกแบบลวดลายและรูปทรงขวดน้ำใหม่", "เน้นรูปลักษณ์ภายนอกสวยงามและลื่นไหล", "BLANK", "ได้รับการคุ้มครองสิทธิ์ด้านความสวยงาม 10 ปี", "จบ"],
+              blankOptions: ["ยื่นสิทธิบัตรการออกแบบผลิตภัณฑ์", "จดอนุสิทธิบัตรกลไก", "จดลิขสิทธิ์วรรณกรรม"], answer: 0 },
+            { type: 'cond', title: "ด่าน 12: คุ้มครองซอฟต์แวร์/แอปพลิเคชัน",
+              start: "เขียนโปรแกรมคำนวณสูตรอาหารเสร็จ", condition: "ต้องการได้รับการคุ้มครองทันทีโดยอัตโนมัติโดยไม่ต้องไปยื่นจดทะเบียน?", 
+              trueNode: "BLANK", falseNode: "ไปจดทะเบียนสิทธิบัตรการประดิษฐ์", end: "จบ",
+              blankOptions: ["ใช้สิทธิ์ความคุ้มครองลิขสิทธิ์ (Copyright)", "ยื่นสิทธิบัตรการออกแบบแอปพลิเคชัน", "เปิดเป็นโปรแกรมแจกฟรีทันที"], answer: 0 },
+            { type: 'seq', title: "ด่าน 13: นวัตกรรมปากกาลบได้สากล", 
+              nodes: ["เริ่ม", "ระบุปัญหา: การลบหมึกสกปรกเลอะเทอะ", "ค้นคว้าปฏิกิริยาเคมีของหมึกกับความร้อน", "BLANK", "จบ"],
+              blankOptions: ["ออกแบบยางลบเสียดสีสร้างความร้อน (นวัตกรรม)", "ใช้กระดาษที่มีคุณสมบัติหนาขึ้น", "แจกจ่ายลิขสิทธิ์ให้สาธารณะ"], answer: 0 },
+            { type: 'cond', title: "ด่าน 14: การนำเสนอผลงานสู่สังคมอย่างมั่นใจ",
+              start: "ได้รับสิทธิบัตรเรียบร้อย", condition: "ต้องการเผยแพร่ผลงานให้ผู้อื่นรับรู้โดยไม่กลัวการลอกเลียนแบบ?", 
+              trueNode: "BLANK", falseNode: "เก็บชิ้นงานไว้ในโกดังอย่างลึกลับ", end: "จบ",
+              blankOptions: ["นำเสนอผลงานอธิบายจุดเด่นความคุ้มค่าอย่างโปร่งใส", "แชร์โค้ดทั้งหมดลงอินเทอร์เน็ตโดยไม่ใส่เครดิต", "ฟ้องร้องผู้ที่เดินผ่านบูธจัดแสดง"], answer: 0 },
+            { type: 'seq', title: "ด่าน 15: บทสรุปนวัตกรเทคโนโลยี ม.2", 
+              nodes: ["ระบุปัญหาด้วย 5W1H", "ออกแบบพัฒนาและทดสอบด้วยเกณฑ์ Rubrics", "จดทะเบียนคุ้มครองสิทธิ์ทรัพย์สินทางปัญญา", "BLANK", "จบ"],
+              blankOptions: ["ส่งต่อเทคโนโลยีเพื่อพัฒนาและสร้างมูลค่าสู่สังคม", "ลบข้อมูลทุกอย่างทิ้งเมื่อเรียนจบ", "เลิกให้ความสนใจและเปลี่ยนบทเรียน"], answer: 0 }
         ];
 
-        /**
-         * CORE LOGIC
-         */
-        
-        function showScreen(screenId) {
-            document.querySelectorAll('body > div[id^="screen-"]').forEach(el => {
-                el.classList.add('hidden');
-                el.classList.remove('flex');
+        // คลังข้อสอบโหมดสอบจริง 20 ข้อ
+        const examQuestions = [
+            { q: "ขั้นตอนแรกสุดในกระบวนการเทคโนโลยีและขั้นตอนแก้ปัญหาของวิศวกรคือข้อใด?",
+              opt: ["ก. ค้นหาข้อมูลที่เกี่ยวข้อง", "ข. ออกแบบวิธีการแก้ปัญหา", "ค. ระบุปัญหาหรือความต้องการ", "ง. เลือกวิธีการแก้ปัญหา"], ans: 2 },
+            { q: "หัวใจสำคัญในการระบุปัญหาของนวัตกรที่ช่วยให้เข้าถึงปัญหาของผู้ใช้จริง ๆ คือแนวคิดใด?",
+              opt: ["ก. ความคิดสร้างสรรค์อิสระ", "ข. ความเข้าใจและเอาใจใส่ (Empathy)", "ค. ความมุ่งมั่นส่วนตัวของตนเอง", "ง. การลดต้นทุนการผลิตให้ต่ำที่สุด"], ans: 1 },
+            { q: "ข้อใดเป็นกรอบคิดวิเคราะห์ปัญหาเบื้องต้น 3 มิติที่วิศวกรต้องหาคำตอบให้ได้?",
+              opt: ["ก. แหล่งวัสดุมาจากไหน? ราคาเท่าไหร่? ทำอย่างไร?", "ข. ปัญหาคืออะไร? ใครเผชิญปัญหา? เหตุใดต้องแก้ไข?", "ค. ใครขายเก่งกว่า? ใช้แรงงานมากไหม? คุ้มทุนเมื่อใด?", "ง. โครงสร้างแข็งแรงไหม? สวยงามเพียงใด? ผลิตจำนวนเท่าไหร่?"], ans: 1 },
+            { q: "คำถาม 'Where' ในตารางวิเคราะห์รายละเอียดของปัญหาด้วยกรอบ 5W1H มีจุดประสงค์เพื่อวิเคราะห์ประเด็นใด?",
+              opt: ["ก. ช่วงเวลาที่เกิดสถานการณ์ปัญหาทั้งหมด", "ข. สถานที่ตั้ง สภาพแวดล้อม หรือพิกัดที่ปัญหานั้นเกิดขึ้น", "ค. รายชื่อบุคคลที่เป็นผู้ใช้งานหลัก", "ง. เหตุผลความจำเป็นในการลงมือวิจัย"], ans: 1 },
+            { q: "ในการสืบค้นรวบรวมข้อมูลเกี่ยวข้องกับปัญหา แหล่งข้อมูลประเภทใดมีความน่าเชื่อถือสูงสุดทางวิชาการ?",
+              opt: ["ก. บอร์ดกระทู้สนทนาออนไลน์ทั่วไป", "ข. เอกสารอ้างอิงสถาบันวิจัย/ตำราเรียนทางการศึกษา", "ค. การคุยและคาดคะเนของตนเองร่วมกับเพื่อน", "ง. ข้อมูลจากหน้าฟีดบนโซเชียลมีเดีย"], ans: 1 },
+            { q: "การประยุกต์ใช้ความรู้วิศวกรรมศาสตร์ร่วมกับกระบวนการเทคโนโลยีจำเป็นต้องนำความรู้เรื่องใดมาร่วมผสมผสาน?",
+              opt: ["ก. ศิลปะการป้องกันตัว", "ข. วิทยาศาสตร์และคณิตศาสตร์", "ค. ความเชื่อเรื่องการทำนายทายทัก", "ง. การจัดการการเงินอย่างง่าย"], ans: 1 },
+            { q: "เครื่องมือในการควบคุมและจัดลำดับเวลาในการพัฒนาโครงการเทคโนโลยี เพื่อไม่ให้งานล่าช้า เรียกว่าอะไร?",
+              opt: ["ก. Flowchart", "ข. Gantt Chart (แผนภูมิแกนต์)", "ค. Mind Map", "ง. Rubrics"], ans: 1 },
+            { q: "การนำเสนอภาพร่าง 3 มิติ (Sketch) หรือการวาดแผนผังก่อนลงมือทำงาน จัดอยู่ในกระบวนการขั้นตอนใด?",
+              opt: ["ก. ขั้นระบุปัญหา", "ข. ขั้นเลือกวิธีการแก้ปัญหา", "ค. ขั้นออกแบบวิธีการแก้ปัญหา", "ง. ขั้นทดสอบและปรับปรุง"], ans: 2 },
+            { q: "เกณฑ์ประเมินผลที่มีการแบ่งระดับความสำเร็จ (Testing Criteria / Rubrics) ข้อใดสะท้อนถึงประเด็น 'ด้านการใช้งาน (Functionality)'?",
+              opt: ["ก. ผลิตภัณฑ์ทำจากพลาสติกย่อยสลายได้", "ข. ผลิตภัณฑ์สามารถทำงานเปิด-ปิดฝาเองได้สมบูรณ์ในระยะ 30 ซม.", "ค. ผลิตภัณฑ์ไม่มีขอบมุมคมเป็นอันตรายแก่เด็กเล็ก", "ง. ผลิตภัณฑ์ใช้ต้นทุนการผลิตเพียง 150 บาท"], ans: 1 },
+            { q: "หากนำชิ้นงานที่สร้างเสร็จไปทดสอบแล้วพบว่า 'ชิ้นงานไม่ผ่านเกณฑ์การประเมิน' ควรดำเนินขั้นตอนใดเป็นลำดับถัดไป?",
+              opt: ["ก. นำเสนอสไลด์อธิบายว่าชิ้นงานใช้งานไม่ได้", "ข. นำกลับไปสืบค้นหาปัญหาใหม่ทั้งหมดตั้งแต่ต้น", "ค. ปรับปรุง แก้ไข และย้อนประเมินผลตรวจสอบซ้ำ", "ง. ถอดปลั๊กเก็บไว้ในตู้ล็อคเกอร์แล้วลืมมันไป"], ans: 2 },
+            { q: "ความแตกต่างข้อใดที่แยก 'นวัตกรรม (Innovation)' ออกจาก 'สิ่งประดิษฐ์ (Invention)' ได้อย่างชัดเจน?",
+              opt: ["ก. นวัตกรรมต้องมีราคาแพงกว่าเสมอ", "ข. นวัตกรรมส่งผลต่อการสร้างมูลค่าเพิ่มและแก้ปัญหาสังคมในวงกว้าง", "ค. นวัตกรรมทำได้ยากกว่าและไม่มีการต่อยอด", "ง. สิ่งประดิษฐ์เป็นสิ่งที่ถูกทำซ้ำ ๆ จากแนวคิดของผู้อื่น"], ans: 1 },
+            { q: "ตัวอย่างการพัฒนาต่อยอด 'ปากกาลูกลื่นธรรมดาเขียนผิดลบยาก' ไปสู่ 'ปากกาลบได้ด้วยปฏิกิริยาเคมีจากความร้อน' จัดเป็นอะไร?",
+              opt: ["ก. สิ่งประดิษฐ์ดั้งเดิม", "ข. การสวมสิทธิ์ลิขสิทธิ์", "ค. การสร้างนวัตกรรมที่แก้ปัญหาและตอบโจทย์ผู้ใช้", "ง. การทำสำเนางานวรรณกรรม"], ans: 2 },
+            { q: "เมื่อสร้างสรรค์นวัตกรรมใหม่ที่กลไก โครงสร้าง มีความซับซ้อนและใช้เทคนิคการแก้ปัญหาขั้นสูง ควรจดสิทธิ์ข้อใดเพื่อปกป้องความลับ 20 ปี?",
+              opt: ["ก. อนุสิทธิบัตร", "ข. สิทธิบัตรการประดิษฐ์", "ค. สิทธิบัตรการออกแบบผลิตภัณฑ์", "ง. การคุ้มครองลิขสิทธิ์"], ans: 1 },
+            { q: "การประดิษฐ์อุปกรณ์ช่วยอำนวยความสะดวกเล็ก ๆ น้อย ๆ เช่น ตลับหมุนเก็บพลาสติกคลุมพัดลม ซึ่งมีกลไกเรียบง่าย ควรขอรับความคุ้มครองประเภทใด?",
+              opt: ["ก. สิทธิบัตรการประดิษฐ์", "ข. อนุสิทธิบัตร (Petty Patent)", "ค. สิทธิบัตรการออกแบบผลิตภัณฑ์", "ง. เครื่องหมายการค้า"], ans: 1 },
+            { q: "สิทธิบัตรการออกแบบผลิตภัณฑ์ ให้ความคุ้มครองประเด็นใดของตัวผลิตภัณฑ์?",
+              opt: ["ก. ส่วนผสมของสารเคมีด้านใน", "ข. ความทนทานต่อน้ำร้อน", "ค. ลวดลาย รูปร่างภายนอก และสีสันสวยงามภายนอก", "ง. ราคาขายในตลาด"], ans: 2 },
+            { q: "งานประเภท 'โปรแกรมคอมพิวเตอร์ หรือ ซอฟต์แวร์แอปพลิเคชัน' ได้รับการคุ้มครองตามทรัพย์สินทางปัญญาประเภทใด?",
+              opt: ["ก. ลิขสิทธิ์ (Copyright)", "ข. สิทธิบัตรการประดิษฐ์", "ค. สิทธิบัตรการออกแบบ", "ง. อนุสิทธิบัตร"], ans: 0 },
+            { q: "ลิขสิทธิ์ (Copyright) มีคุณลักษณะเด่นเรื่องการเริ่มต้นคุ้มครองสิทธิ์อย่างไร?",
+              opt: ["ก. ได้รับการคุ้มครองทันทีที่สร้างสรรค์ผลงานขึ้นมาโดยไม่ต้องจดทะเบียน", "ข. คุ้มครองหลังจากยื่นเรื่องที่กระทรวงพาณิชย์ไปแล้ว 5 ปี", "ค. ต้องผ่านการทำระบบตรวจสอบความปลอดภัยของโรงเรียนก่อน", "ง. จะไม่ได้รับสิทธิ์ความคุ้มครองหากไม่มีการซื้อขายผลิตภัณฑ์จริง"], ans: 0 },
+            { q: "หากบุคคลใดแอบนำสไลด์พรีเซนต์ของกลุ่มอื่นไปอัปโหลดเป็นชื่อตัวเอง ถือว่าละเมิดกฎหมายทรัพย์สินทางปัญญาประเภทใด?",
+              opt: ["ก. สิทธิบัตรการประดิษฐ์", "ข. อนุสิทธิบัตร", "ค. ลิขสิทธิ์", "ง. สิทธิบัตรการออกแบบ"], ans: 2 },
+            { q: "การนำกรอบคิด 5W1H มาจัดทำ 'ตารางวิเคราะห์รายละเอียดของปัญหา' มีประโยชน์สูงสุดอย่างไรต่อกระบวนการเทคโนโลยี?",
+              opt: ["ก. ช่วยให้สามารถย่นระยะเวลาการจดทะเบียนสิทธิบัตรให้เร็วขึ้น", "ข. ช่วยแจกแจงขอบเขตปัญหาอย่างชัดเจนเพื่อป้องกันการวิเคราะห์ผิดจุด", "ค. ช่วยให้คำนวณราคาขายของผลิตภัณฑ์ได้ชัดเจนที่สุด", "ง. ช่วยสุ่มหาคำตอบแนวทางแก้ไขปัญหาโดยไม่ต้องวิจัย"], ans: 1 },
+            { q: "กระบวนการเทคโนโลยีทั้ง 7 ขั้นตอน หากผู้ใช้ทำตามขั้นตอนครบถ้วนแต่ไม่มีจริยธรรมในการจดสิทธิ์สิทธิบัตรที่ถูกต้อง จะส่งผลต่อผลงานอย่างไร?",
+              opt: ["ก. ผลงานใช้งานไม่ได้จริง", "ข. ผลงานขาดการปกป้องสิทธิ์และเสี่ยงต่อการถูกลอกเลียนแบบความคิด", "ค. ผลงานกลายเป็นสิ่งประดิษฐ์คุณภาพต่ำทันที", "ง. ไม่ส่งผลกระทบใด ๆ ทรัพย์สินทางปัญญาเป็นทางเลือกไม่มีกฎหมายบังคับ"], ans: 1 }
+        ];
+
+        // --- 2. UI NAVIGATION LOGIC ---
+        function switchScreen(screenId) {
+            document.querySelectorAll('body > div').forEach(div => {
+                if (div.id.endsWith('-screen')) div.classList.add('hidden');
             });
-            const target = document.getElementById(screenId);
-            target.classList.remove('hidden');
-            target.classList.add('flex');
-            window.scrollTo(0, 0);
+            document.getElementById(screenId).classList.remove('hidden');
         }
 
-        function openTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('[id^="btn-tab"]').forEach(el => {
-                el.classList.remove('bg-blue-500', 'text-white');
-                el.classList.add('bg-white', 'text-[#3e2723]');
-            });
-            
-            document.getElementById(tabId).classList.remove('hidden');
-            const btn = document.getElementById('btn-' + tabId);
-            btn.classList.remove('bg-white', 'text-[#3e2723]');
-            btn.classList.add('bg-blue-500', 'text-white');
-        }
-
-        function startGame() {
-            state.currentLevel = 0;
-            state.score = 0;
-            updateHUD();
-            showScreen('screen-game');
-            loadLevel();
-        }
-
-        function quitGame() {
-            // Can use custom modal, but simple route is home screen
-            showScreen('screen-home');
-        }
-
-        function updateHUD() {
-            document.getElementById('level-display').innerText = state.currentLevel + 1;
-            document.getElementById('score-display').innerText = state.score;
-        }
-
-        function loadLevel() {
-            const level = levels[state.currentLevel];
-            state.selectedAnswers = {};
-            state.totalRequiredSlots = 0;
-            
-            document.getElementById('scenario-text').innerText = level.scenario;
-            
-            const badge = document.getElementById('logic-type-badge');
-            badge.innerText = level.badge;
-            
-            // Set badge colors based on type
-            badge.className = "inline-block mt-3 px-3 py-1 rounded text-sm font-bold border-2 border-black ";
-            if(level.type === 'sequence') badge.classList.add('bg-blue-200', 'text-blue-800');
-            else if(level.type === 'condition') badge.classList.add('bg-yellow-200', 'text-yellow-800');
-            else if(level.type === 'loop') badge.classList.add('bg-red-200', 'text-red-800');
-
-            renderFlowchart(level);
-            checkReadyToSubmit();
-        }
-
-        /**
-         * FLOWCHART RENDERER (HTML/CSS Builder)
-         */
-        function renderFlowchart(level) {
-            const container = document.getElementById('flowchart-area');
-            container.innerHTML = ''; // Clear old
-
-            // Start node
-            container.appendChild(createNodeBox("🌻 เริ่มต้นระบบ", "bg-yellow-400 text-[#3e2723] border-[#3e2723] rounded-full px-8 shadow-[0_4px_0_#27140c]"));
-            container.appendChild(createArrow());
-
-            // Render Nodes dynamically
-            if(level.type === 'sequence' || level.type === 'loop') {
-                renderLinearNodes(level.nodes, container);
-            } else if (level.type === 'condition') {
-                renderConditionNodes(level.nodes, container);
+        function showTab(tabIndex) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+            // Reset button styles
+            for(let i=1; i<=5; i++) {
+                document.getElementById('tab-btn-'+i).className = "btn-wood w-full text-left px-4 py-3 text-sm md:text-base whitespace-nowrap md:whitespace-normal";
             }
-
-            // End node
-            container.appendChild(createArrow());
-            container.appendChild(createNodeBox("🧠 สิ้นสุดการทำงาน", "bg-purple-600 text-white border-[#3e2723] rounded-full px-8 shadow-[0_4px_0_#27140c]"));
-        }
-
-        function renderLinearNodes(nodes, container) {
-            nodes.forEach((node, index) => {
-                if (node.type === 'box') {
-                    container.appendChild(createNodeBox(node.text));
-                } 
-                else if (node.type === 'slot') {
-                    state.totalRequiredSlots++;
-                    container.appendChild(createSlot(node));
-                }
-                else if (node.type === 'diamond') {
-                    container.appendChild(createDiamond(node.text));
-                }
-                else if (node.type === 'loopBack') {
-                    // Visual loop back representation
-                    const loopBox = document.createElement('div');
-                    loopBox.className = "text-red-600 font-bold border-l-8 border-b-8 border-red-600 p-2 ml-32 rounded-bl-3xl bg-[#4ade80]/80 shadow-[inset_4px_-4px_0_rgba(0,0,0,0.2)]";
-                    loopBox.innerHTML = `↑ วนกลับไปตรวจสอบเงื่อนไข: <br/><span class="text-black bg-white/50 px-2 rounded">(${node.conditionText})</span>`;
-                    container.appendChild(loopBox);
-                }
-
-                // Add arrow between elements if not last (and not after a loopback which implies a jump)
-                if (index < nodes.length - 1 && node.type !== 'loopBack') {
-                    container.appendChild(createArrow());
-                }
-            });
-        }
-
-        function renderConditionNodes(nodes, container) {
-            nodes.forEach((node, index) => {
-                if (node.type === 'box') {
-                    container.appendChild(createNodeBox(node.text));
-                    container.appendChild(createArrow());
-                } 
-                else if (node.type === 'diamond') {
-                    container.appendChild(createDiamond(node.text));
-                    container.appendChild(createArrow());
-                }
-                else if (node.type === 'branch') {
-                    const splitDiv = document.createElement('div');
-                    splitDiv.className = 'flow-split';
-                    
-                    // True Path
-                    const trueBranch = document.createElement('div');
-                    trueBranch.className = 'flow-branch';
-                    trueBranch.innerHTML = `<div class="branch-label bg-green-500 border-2 border-black font-bold text-lg shadow-md">✅ ใช่/จริง</div><div class="h-6 border-l-8 border-[#3e2723]"></div>`;
-                    renderLinearNodes(node.truePath, trueBranch);
-                    
-                    // False Path
-                    const falseBranch = document.createElement('div');
-                    falseBranch.className = 'flow-branch';
-                    falseBranch.innerHTML = `<div class="branch-label bg-red-500 border-2 border-black font-bold text-lg shadow-md">❌ ไม่ใช่/เท็จ</div><div class="h-6 border-l-8 border-[#3e2723]"></div>`;
-                    renderLinearNodes(node.falsePath, falseBranch);
-
-                    splitDiv.appendChild(trueBranch);
-                    splitDiv.appendChild(falseBranch);
-                    container.appendChild(splitDiv);
-                }
-            });
-        }
-
-        // Helper components for Renderer
-        function createNodeBox(text, extraClass = "") {
-            const div = document.createElement('div');
-            div.className = `flow-node ${extraClass}`;
-            div.innerText = text;
-            return div;
-        }
-
-        function createDiamond(text) {
-            const wrapper = document.createElement('div');
-            wrapper.className = "flow-diamond-wrapper";
-            const div = document.createElement('div');
-            div.className = "flow-diamond";
-            div.innerText = text;
-            wrapper.appendChild(div);
-            return wrapper;
-        }
-
-        function createSlot(slotData) {
-            const div = document.createElement('div');
-            div.className = "flow-slot";
-            div.id = `slot-${slotData.id}`;
-            div.innerText = "คลิกเพื่อเลือกคำตอบ";
-            div.onclick = () => openChoiceModal(slotData);
-            return div;
-        }
-
-        function createArrow() {
-            const div = document.createElement('div');
-            div.className = "arrow-down";
-            div.innerText = "⬇";
-            return div;
-        }
-
-        /**
-         * INTERACTION LOGIC
-         */
-        let currentActiveSlot = null;
-
-        function openChoiceModal(slotData) {
-            currentActiveSlot = slotData;
-            const container = document.getElementById('choices-container');
-            container.innerHTML = '';
             
-            // Shuffle choices
-            const choices = [...slotData.choices].sort(() => Math.random() - 0.5);
-            
-            choices.forEach(choice => {
-                const wrapper = document.createElement('div');
-                wrapper.className = "relative flex items-center cursor-pointer group mt-4 md:mt-0";
-                wrapper.onclick = () => selectChoice(choice);
-                
-                // Peashooter Icon (🌱) and Red Choice Box
-                wrapper.innerHTML = `
-                    <div class="absolute -left-6 md:-left-8 z-30 text-7xl md:text-8xl transition-transform group-hover:scale-110 drop-shadow-[0_5px_0_rgba(0,0,0,0.8)]">
-                        🌱
-                    </div>
-                    <div class="pvz-choice-box w-full py-5 pr-4 pl-20 md:pl-24 relative z-20 flex items-center justify-center min-h-[90px] text-center leading-tight">
-                        ${choice}
-                    </div>
-                `;
-                container.appendChild(wrapper);
-            });
-
-            document.getElementById('modal-choices').classList.remove('hidden');
+            // Show active
+            document.getElementById('tab-content-' + tabIndex).classList.remove('hidden');
+            document.getElementById('tab-btn-' + tabIndex).classList.add('bg-yellow-700', 'border-yellow-900');
         }
 
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
         function closeModal(modalId) {
             document.getElementById(modalId).classList.add('hidden');
         }
 
-        function selectChoice(choiceText) {
-            if(!currentActiveSlot) return;
-            
-            // Update state
-            state.selectedAnswers[currentActiveSlot.id] = choiceText;
-            
-            // Update UI
-            const slotEl = document.getElementById(`slot-${currentActiveSlot.id}`);
-            slotEl.innerText = choiceText;
-            slotEl.classList.add('filled');
-            slotEl.classList.remove('error'); // Clear error state if any
-            
-            closeModal('modal-choices');
-            checkReadyToSubmit();
-        }
-
-        function checkReadyToSubmit() {
-            const btnCheck = document.getElementById('btn-check');
-            const answeredCount = Object.keys(state.selectedAnswers).length;
-            
-            if (answeredCount === state.totalRequiredSlots && state.totalRequiredSlots > 0) {
-                btnCheck.disabled = false;
-                btnCheck.classList.remove('bg-gray-400');
-                btnCheck.classList.add('bg-green-500', 'animate-bounce');
-            } else {
-                btnCheck.disabled = true;
-                btnCheck.classList.add('bg-gray-400');
-                btnCheck.classList.remove('bg-green-500', 'animate-bounce');
-            }
-        }
-
-        /**
-         * VALIDATION LOGIC
-         */
-        function checkAnswer() {
-            const level = levels[state.currentLevel];
-            let allCorrect = true;
-            
-            // Helper to recursively find slot answers in nodes
-            const validateNodes = (nodes) => {
-                nodes.forEach(node => {
-                    if (node.type === 'slot') {
-                        const playerAnswer = state.selectedAnswers[node.id];
-                        const slotEl = document.getElementById(`slot-${node.id}`);
-                        
-                        if (playerAnswer !== node.answer) {
-                            allCorrect = false;
-                            // Show error state on this slot
-                            slotEl.classList.remove('filled');
-                            slotEl.classList.add('error');
-                            slotEl.innerText = "สมองโดนกิน! เลือกใหม่นะ";
-                            delete state.selectedAnswers[node.id]; // Reset this specific answer
-                        }
-                    } else if (node.type === 'branch') {
-                        validateNodes(node.truePath);
-                        validateNodes(node.falsePath);
-                    }
-                });
+        // Custom Confirm
+        function confirmExit() {
+            document.getElementById('alert-msg').innerText = "คุณต้องการออกจากด่านและกลับไปหน้าแรกหรือไม่? (คะแนนจะเริ่มใหม่)";
+            const confirmBtn = document.getElementById('alert-confirm-btn');
+            confirmBtn.onclick = () => {
+                closeModal('alert-modal');
+                switchScreen('home-screen');
             };
-            
-            validateNodes(level.nodes);
+            openModal('alert-modal');
+        }
 
-            if (allCorrect) {
-                // Success
-                state.score += 100;
-                updateHUD();
-                showFeedback(true);
-            } else {
-                // Error
-                showFeedback(false);
-                checkReadyToSubmit(); // Disable check button since some slots are reset
+        function confirmExitExam() {
+            document.getElementById('alert-msg').innerText = "คุณต้องการออกจากการทำแบบทดสอบหรือไม่? (ข้อมูลคะแนนที่ทำไว้จะหายไป)";
+            const confirmBtn = document.getElementById('alert-confirm-btn');
+            confirmBtn.onclick = () => {
+                closeModal('alert-modal');
+                switchScreen('home-screen');
+            };
+            openModal('alert-modal');
+        }
+
+        // --- 3. GAMEPLAY SCREEN LOGIC ---
+        function startGame() {
+            isExamMode = false;
+            currentLevelIndex = 0;
+            score = 0;
+            updateHUD();
+            loadLevel();
+            switchScreen('game-screen');
+        }
+
+        function updateHUD() {
+            document.getElementById('hud-level').innerText = currentLevelIndex + 1;
+            document.getElementById('hud-score').innerText = score;
+            if(levelData[currentLevelIndex]) {
+                document.getElementById('hud-title').innerText = levelData[currentLevelIndex].title;
             }
         }
 
-        function showFeedback(isSuccess) {
-            const modal = document.getElementById('modal-feedback');
+        function loadLevel() {
+            const data = levelData[currentLevelIndex];
+            const container = document.getElementById('flowchart-container');
+            container.innerHTML = ""; // Clear old
+            
+            let html = "";
+            const dirtHtml = `<div class="dirt-mound font-heading text-3xl text-yellow-300" onclick="showChoiceModal()">❓</div>`;
+
+            if (data.type === 'seq') {
+                html += `<div class="flex flex-col items-center">`;
+                data.nodes.forEach((node, index) => {
+                    if (node === 'BLANK') {
+                        html += dirtHtml;
+                    } else if (node === 'เริ่ม' || node === 'จบ') {
+                        html += `<div class="flow-box rounded-full bg-green-200 border-green-700 font-heading text-lg text-slate-900 shadow-md">${node}</div>`;
+                    } else {
+                        html += `<div class="flow-box text-sm md:text-base">${node}</div>`;
+                    }
+                    if (index < data.nodes.length - 1) html += `<div class="flow-line-v"></div>`;
+                });
+                html += `</div>`;
+            } 
+            else if (data.type === 'cond') {
+                const isCondBlank = data.condition === 'BLANK';
+                const isTrueBlank = data.trueNode === 'BLANK';
+                const isFalseBlank = data.falseNode === 'BLANK';
+                
+                html += `
+                <div class="flex flex-col items-center text-white">
+                    <div class="flow-box rounded-full bg-green-200 text-slate-900 border-green-700 font-heading text-lg shadow-md">${data.start}</div>
+                    <div class="flow-line-v"></div>
+                    ${isCondBlank ? dirtHtml : `<div class="flow-diamond text-xs md:text-sm font-heading">${data.condition}</div>`}
+                    
+                    <div class="flex w-full min-w-[340px] justify-between relative mt-4">
+                        <!-- Horizontal connector -->
+                        <div class="absolute top-0 left-1/4 right-1/4 h-[4px] bg-white"></div>
+                        <div class="absolute top-[-10px] left-1/4 bg-black/50 px-2 rounded text-xs font-heading">จริง</div>
+                        <div class="absolute top-[-10px] right-1/4 bg-black/50 px-2 rounded text-xs font-heading">เท็จ</div>
+                        
+                        <div class="flex flex-col items-center w-1/2">
+                            <div class="w-[4px] h-[20px] bg-white mb-2 relative"><div class="absolute bottom-[-5px] left-[-5px]">▼</div></div>
+                            ${isTrueBlank ? dirtHtml : `<div class="flow-box w-[150px] text-xs md:text-sm">${data.trueNode}</div>`}
+                        </div>
+                        <div class="flex flex-col items-center w-1/2">
+                            <div class="w-[4px] h-[20px] bg-white mb-2 relative"><div class="absolute bottom-[-5px] left-[-5px]">▼</div></div>
+                            ${isFalseBlank ? dirtHtml : `<div class="flow-box w-[150px] text-xs md:text-sm">${data.falseNode}</div>`}
+                        </div>
+                    </div>
+                    
+                    <!-- Join back -->
+                    <div class="flex w-full min-w-[340px] justify-between relative mt-4">
+                        <div class="flex flex-col items-center w-1/2"><div class="w-[4px] h-[30px] bg-white"></div></div>
+                        <div class="flex flex-col items-center w-1/2"><div class="w-[4px] h-[30px] bg-white"></div></div>
+                        <div class="absolute bottom-0 left-1/4 right-1/4 h-[4px] bg-white"></div>
+                    </div>
+                    <div class="w-[4px] h-[20px] bg-white mb-2 relative"><div class="absolute bottom-[-5px] left-[-5px]">▼</div></div>
+                    <div class="flow-box rounded-full bg-green-200 text-slate-900 border-green-700 font-heading text-lg shadow-md">${data.end}</div>
+                </div>`;
+            }
+            else if (data.type === 'loop') {
+                const isLoopBlank = data.loopNode === 'BLANK';
+                const isCondBlank = data.condition === 'BLANK';
+
+                html += `
+                <div class="flex flex-col items-center text-white relative pl-12">
+                    <div class="flow-box rounded-full bg-green-200 text-slate-900 border-green-700 font-heading text-lg shadow-md">${data.start}</div>
+                    <div class="flow-line-v"></div>
+                    
+                    <div id="loop-start-point" class="w-full flex justify-center">
+                        ${isLoopBlank ? dirtHtml : `<div class="flow-box text-xs md:text-sm">${data.loopNode}</div>`}
+                    </div>
+                    
+                    <div class="flow-line-v"></div>
+                    
+                    ${isCondBlank ? dirtHtml : `<div class="flow-diamond text-xs md:text-sm font-heading">${data.condition}</div>`}
+                    
+                    <div class="flow-line-v relative">
+                        <span class="absolute left-4 top-2 text-xs bg-black/50 px-2 rounded font-heading">${data.falseLabel}</span>
+                    </div>
+                    
+                    <!-- Loop back arrow -->
+                    <div class="absolute left-4 top-[90px] bottom-[110px] w-[50px] border-l-4 border-t-4 border-b-4 border-yellow-400">
+                         <span class="absolute -top-3 right-0 text-yellow-400">▶</span>
+                         <span class="absolute top-1/2 -left-20 transform -translate-y-1/2 text-xs text-yellow-400 bg-black/50 p-1.5 rounded w-[70px] text-center font-heading">${data.trueLabel}</span>
+                    </div>
+                    
+                    <div class="flow-box rounded-full bg-green-200 text-slate-900 border-green-700 font-heading text-lg shadow-md">จบ</div>
+                </div>`;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function showChoiceModal() {
+            const data = levelData[currentLevelIndex];
+            const container = document.getElementById('choices-container');
+            container.innerHTML = "";
+
+            // Create buttons and shuffle them randomly
+            let optionsWithIndex = data.blankOptions.map((opt, idx) => ({text: opt, isCorrect: idx === data.answer}));
+            optionsWithIndex = optionsWithIndex.sort(() => Math.random() - 0.5);
+
+            optionsWithIndex.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left bg-red-800 border-4 border-red-950 rounded-lg p-3 text-sm md:text-base font-heading shadow-lg hover:bg-red-700 transition flex items-center gap-3 text-white text-shadow-none";
+                btn.innerHTML = `<span class="text-2xl flex-shrink-0">🌱</span> <span class="leading-relaxed">${opt.text}</span>`;
+                btn.onclick = () => checkAnswer(opt.isCorrect);
+                container.appendChild(btn);
+            });
+
+            openModal('choice-modal');
+        }
+
+        function checkAnswer(isCorrect) {
+            closeModal('choice-modal');
             const card = document.getElementById('feedback-card');
             const icon = document.getElementById('feedback-icon');
             const title = document.getElementById('feedback-title');
-            const msg = document.getElementById('feedback-message');
+            const msg = document.getElementById('feedback-msg');
             const btn = document.getElementById('feedback-btn');
-            const bgDecor = document.getElementById('feedback-bg-decor');
 
-            modal.classList.remove('hidden');
-
-            if (isSuccess) {
-                card.className = "blocky-element p-8 w-full max-w-sm text-center border-4 border-green-600 relative overflow-hidden bg-gradient-to-b from-green-100 to-green-300";
+            if (isCorrect) {
+                // Success
+                score += 100;
+                updateHUD();
+                card.className = "wood-board w-full max-w-sm p-6 text-center transform transition-transform duration-300 scale-100 border-green-600 bg-green-900/95";
                 icon.innerText = "🌻";
-                title.innerText = "ระบบทำงานสมบูรณ์!";
-                title.className = "text-3xl font-black mb-3 z-10 relative drop-shadow-sm text-green-800";
-                msg.innerText = "คุณเรียงตรรกะกระบวนการได้ถูกต้อง รับพลังแสงแดดไปเลย 100 คะแนน ☀️";
-                btn.className = "blocky-btn bg-green-600 text-white w-full z-10 relative shadow-[0_6px_0_#1b5e20]";
-                bgDecor.className = "absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iMiIgZmlsbD0iIzIyYzU1ZSIgb3BhY2l0eT0iMC41Ii8+PC9zdmc+')] z-0";
-                
-                if (state.currentLevel < levels.length - 1) {
-                    btn.innerText = "ลุยด่านต่อไป ➡";
-                    btn.onclick = () => { closeModal('modal-feedback'); nextLevel(); };
-                } else {
-                    btn.innerText = "สรุปผลการทดสอบ 🏆";
-                    btn.onclick = () => { closeModal('modal-feedback'); finishGame(); };
-                }
+                title.innerText = "ถูกต้อง!";
+                title.className = "font-heading text-3xl mb-2 text-green-300";
+                msg.innerText = "+100 พลังแสงแดด";
+                msg.className = "text-lg font-heading text-white";
+                btn.innerText = "ด่านต่อไป ➡️";
+                btn.className = "btn-wood px-8 py-3 bg-green-600 font-heading text-xl";
+                btn.onclick = nextLevel;
             } else {
-                card.className = "blocky-element p-8 w-full max-w-sm text-center border-4 border-red-800 relative overflow-hidden bg-gradient-to-b from-red-200 to-red-400";
+                // Fail
+                card.className = "wood-board w-full max-w-sm p-6 text-center transform transition-transform duration-300 scale-100 border-red-600 bg-red-900/95";
                 icon.innerText = "🧟";
                 title.innerText = "ซอมบี้บุกระบบ!";
-                title.className = "text-3xl font-black mb-3 z-10 relative drop-shadow-sm text-red-900";
-                msg.innerText = "มีกระบวนการที่ทำงานผิดพลาด! ต้นไม้โดนกินไปบางส่วน รีบกลับไปแก้ไขด่วนเลย!";
-                btn.className = "blocky-btn bg-red-700 text-white w-full z-10 relative shadow-[0_6px_0_#4a0404]";
-                btn.innerText = "ซ่อมแซมระบบ ↺";
-                bgDecor.className = "absolute inset-0 bg-red-900 opacity-10 z-0";
-                btn.onclick = () => closeModal('modal-feedback');
+                title.className = "font-heading text-3xl mb-2 text-red-300";
+                msg.innerText = "คำตอบไม่ถูกต้อง! ลองศึกษารายละเอียดของขั้นตอนหรือขอบเขตทรัพย์สินทางปัญญาอีกครั้ง";
+                msg.className = "text-base font-medium text-slate-100 leading-relaxed";
+                btn.innerText = "🔄 ลองใหม่";
+                btn.className = "btn-wood px-8 py-3 bg-red-600 font-heading text-xl";
+                btn.onclick = () => { closeModal('feedback-modal'); };
+                
+                // Shake screen effect
+                document.getElementById('game-screen').classList.add('animate-bounce-fast');
+                setTimeout(() => document.getElementById('game-screen').classList.remove('animate-bounce-fast'), 500);
             }
+            openModal('feedback-modal');
         }
 
         function nextLevel() {
-            state.currentLevel++;
-            updateHUD();
-            loadLevel();
+            closeModal('feedback-modal');
+            currentLevelIndex++;
+            
+            if (currentLevelIndex >= levelData.length) {
+                endGame();
+            } else {
+                updateHUD();
+                loadLevel();
+            }
         }
 
-        function finishGame() {
-            showScreen('screen-end');
-            document.getElementById('final-score').innerText = state.score;
+        // --- 4. EXAM MODE LOGIC (โหมดทำข้อสอบจริง 20 ข้อ) ---
+        function startExam() {
+            isExamMode = true;
+            currentExamIndex = 0;
+            examScore = 0;
+            loadExamQuestion();
+            switchScreen('exam-screen');
         }
 
-        /**
-         * CERTIFICATE GENERATION
-         */
+        function loadExamQuestion() {
+            const questionData = examQuestions[currentExamIndex];
+            
+            // Update UI/Header
+            document.getElementById('exam-progress-num').innerText = currentExamIndex + 1;
+            const progressPercent = ((currentExamIndex + 1) / 20) * 100;
+            document.getElementById('exam-progress-bar').style.width = progressPercent + "%";
+
+            // Update Question
+            document.getElementById('exam-question-text').innerText = questionData.q;
+
+            // Render Options
+            const container = document.getElementById('exam-options-container');
+            container.innerHTML = "";
+
+            questionData.opt.forEach((optionText, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left bg-amber-50 border-2 border-amber-300 rounded-xl p-4 text-base font-heading font-medium text-slate-800 shadow hover:bg-amber-100 hover:border-amber-400 transition-all active:scale-[0.99]";
+                btn.innerHTML = `<span class="inline-block bg-indigo-100 text-indigo-800 w-8 h-8 rounded-full text-center leading-8 font-bold mr-3">${String.fromCharCode(65 + idx)}</span> ${optionText}`;
+                btn.onclick = () => selectExamOption(idx);
+                container.appendChild(btn);
+            });
+        }
+
+        function selectExamOption(selectedIdx) {
+            const questionData = examQuestions[currentExamIndex];
+            const isCorrect = (selectedIdx === questionData.ans);
+
+            const card = document.getElementById('feedback-card');
+            const icon = document.getElementById('feedback-icon');
+            const title = document.getElementById('feedback-title');
+            const msg = document.getElementById('feedback-msg');
+            const btn = document.getElementById('feedback-btn');
+
+            if (isCorrect) {
+                examScore++;
+                card.className = "wood-board w-full max-w-sm p-6 text-center transform transition-transform duration-300 scale-100 border-green-600 bg-green-900/95";
+                icon.innerText = "🌻";
+                title.innerText = "ถูกต้อง!";
+                title.className = "font-heading text-3xl mb-2 text-green-300";
+                msg.innerText = "เก็บคะแนนสอบสะสมสำเร็จ!";
+                msg.className = "text-base font-heading text-white";
+            } else {
+                card.className = "wood-board w-full max-w-sm p-6 text-center transform transition-transform duration-300 scale-100 border-red-600 bg-red-900/95";
+                icon.innerText = "🧟";
+                title.innerText = "ผิดพลาด!";
+                title.className = "font-heading text-3xl mb-2 text-red-300";
+                msg.innerText = "คำตอบที่ถูกต้องคือ: " + questionData.opt[questionData.ans];
+                msg.className = "text-sm font-medium text-slate-100 leading-relaxed";
+            }
+
+            btn.innerText = "ถัดไป ➡️";
+            btn.className = "btn-wood px-8 py-3 bg-indigo-600 font-heading text-xl border-indigo-800";
+            btn.onclick = handleNextExam;
+            
+            openModal('feedback-modal');
+        }
+
+        function handleNextExam() {
+            closeModal('feedback-modal');
+            currentExamIndex++;
+            if (currentExamIndex >= 20) {
+                endExam();
+            } else {
+                loadExamQuestion();
+            }
+        }
+
+        function endExam() {
+            switchScreen('cert-screen');
+            document.getElementById('cert-score-type').innerText = "คะแนนทำข้อสอบเก็บคะแนน:";
+            document.getElementById('final-score').innerText = examScore + " / 20 คะแนน";
+            
+            // คำนวณร้อยละและผลประเมินครู
+            const percentage = (examScore / 20) * 100;
+            let evalMsg = "";
+            if (percentage >= 80) evalMsg = "ผ่านเกณฑ์การประเมินระดับ ดีเยี่ยม (เกรด 4) 🌟";
+            else if (percentage >= 70) evalMsg = "ผ่านเกณฑ์การประเมินระดับ ดี (เกรด 3) 👍";
+            else if (percentage >= 50) evalMsg = "ผ่านเกณฑ์ระดับ พอใช้ (เกรด 2) เพื่อส่งครูเก็บคะแนน";
+            else evalMsg = "ไม่ผ่านเกณฑ์ทดสอบความปลอดภัย ควรเข้าศึกษา Almanac และทดสอบใหม่อีกครั้ง";
+
+            document.getElementById('cert-summary-msg').innerText = `คุณสอบผ่านระดับร้อยละ ${percentage}% โดยทำได้ ${examScore} ข้อ ${evalMsg}`;
+        }
+
+        // สิ้นสุดแบบฝึกปราบซอมบี้ธรรมดา
+        function endGame() {
+            switchScreen('cert-screen');
+            document.getElementById('cert-score-type').innerText = "พลังแสงแดดสะสม:";
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('cert-summary-msg').innerText = "ยินดีด้วย! คุณได้สกัดกั้นซอมบี้และปูเส้นทางความปลอดภัยเรียบร้อยแล้ว!";
+        }
+
         function generateCertificate() {
-            const nameInput = document.getElementById('player-name').value.trim();
-            if (!nameInput) {
-                alert("กรุณาพิมพ์ชื่อของคุณก่อนสร้างเกียรติบัตร"); // Native alert used here just for simple input validation
+            const nameInput = document.getElementById('player-name-input').value.trim();
+            if (nameInput === "") {
+                document.getElementById('alert-msg').innerText = "กรุณากรอกชื่อ-นามสกุลก่อนสร้างเกียรติบัตรครับ!";
+                document.getElementById('alert-actions').innerHTML = `<button onclick="closeModal('alert-modal')" class="btn-wood px-6 py-2 bg-blue-600 font-heading">ตกลง</button>`;
+                openModal('alert-modal');
                 return;
             }
             
             document.getElementById('cert-name').innerText = nameInput;
-            document.getElementById('cert-score').innerText = state.score;
+
+            if (isExamMode) {
+                document.getElementById('cert-mode-title').innerText = "เกียรติบัตรผ่านการสอบเก็บคะแนนระบบดิจิทัล";
+                const percentage = (examScore / 20) * 100;
+                document.getElementById('cert-score-desc').innerHTML = `ได้ผ่านการทดสอบวัดผลวิชาออกแบบเทคโนโลยีและกระบวนการคิดระดับ ม.2<br>ด้วยคะแนนสอบ <b><span class="text-indigo-600 text-xl font-heading">${examScore} / 20 คะแนน</span> (คิดเป็นร้อยละ ${percentage}%)</b> เพื่อส่งมอบคะแนนให้แก่คุณครูผู้สอน`;
+            } else {
+                document.getElementById('cert-mode-title').innerText = "Certificate of Completion (Flowchart Mission)";
+                document.getElementById('cert-score-desc').innerHTML = `ได้ผ่านการทดสอบฝึกฝนโครงสร้างผังงานและหลักนวัตกรรมปราบซอมบี้ ม.2<br>ด้วยพลังแสงแดดรวมทั้งสิ้น <b><span class="text-green-600 text-xl font-heading">${score}☀️</span></b> ประจำปีการศึกษาปัจจุบัน`;
+            }
             
-            document.getElementById('certificateArea').classList.remove('hidden');
+            // ซ่อนกล่อง UI กรอกข้อมูล, แสดงผลเกียรติบัตรจริง
+            document.querySelector('.no-print').classList.add('hidden'); 
+            document.getElementById('certificate-view').classList.remove('hidden');
         }
-        
+
+        // Init Setup
+        showTab(1); // Default tab in lesson
     </script>
 </body>
 </html>
